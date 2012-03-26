@@ -19,14 +19,14 @@
 
 package "varnish"
 
-template "#{node[:varnish][:dir]}default.vcl" do
+template "#{node['varnish']['dir']}default.vcl" do
   source "default.vcl.erb"
   owner "root"
   group "root"
   mode 0644
 end
 
-template "#{node[:varnish][:default]}" do
+template "#{node['varnish']['default']}" do
   source "ubuntu-default.erb"
   owner "root"
   group "root"
