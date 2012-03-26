@@ -26,7 +26,7 @@ template "#{node['varnish']['dir']}default.vcl" do
   mode 0644
 end
 
-template "#{node['varnish']['default']}" do
+template node['varnish']['default'] do
   source "ubuntu-default.erb"
   owner "root"
   group "root"
