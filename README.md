@@ -28,7 +28,7 @@ Attributes
 * `node['varnish']['listen_address']` -  Default address to bind to. Blank address (the default) means all IPv4 and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted quad, or an IPv6 address in brackets
 * `node['varnish']['listen_port']` - Default port to listen on (6081)
 * `node['varnish']['vcl_conf']` - Main configuration file. (default.vcl)
-* `node['varnish']['secret_file']` - 
+* `node['varnish']['secret_file']` - Path to a file containing a secret used for authorizing access to the management port. (/etc/varnish/secret)
 * `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
 * `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
 * `node['varnish']['user']` - Specifies the name of an unprivileged user to which the child process should switch before it starts  accepting  connections (varnish)
@@ -37,9 +37,14 @@ Attributes
 * `node['varnish']['min_threads']` - Start at least this many threads (5)
 * `node['varnish']['max_threads']` - Start no more then this max amount of threads (500)
 * `node['varnish']['thread_timeout']` - Thread idle timeout (300)
-* `node['varnish']['storage']` -  = 'file'
-* `node['varnish']['storage_file']` -  = '/var/lib/varnish/$INSTANCE/varnish_storage.bin'
-* `node['varnish']['storage_size']` -  = '1G'
+* `node['varnish']['storage']` - The storage type used ('file')
+* `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/$INSTANCE/varnish_storage.bin')
+* `node['varnish']['storage_size']` -  Specifies the size of the backing file or max memory allocation.  The size is assumed to be in bytes, unless followed by one of the following suffixes: K,k,M,m,G,g,T,g,% (1G)
+
+If you don't specify your own vcl_conf file, then these attributes are used in the cookbook `default.vcl` template:
+
+* `node['varnish']['backend_host']` = Host to serve/cache content from (localhost)
+* `node['varnish']['backend_port']` = Port on backend host to access (8080)
 
 Recipes
 =======

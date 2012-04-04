@@ -17,6 +17,8 @@ MEMLOCK=<%= node['varnish']['memlock'] %>
 # the -n switch, to have more instances on a single server.
 INSTANCE=<%= node['varnish']['instance'] %>
 
+
+
 # Pass the Daemon options
 
 DAEMON_OPTS="-a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['listen_port'] %> \
@@ -25,6 +27,6 @@ DAEMON_OPTS="-a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['li
               -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
               -t <%= node['varnish']['ttl'] %> \
               -w <%= node['varnish']['min_threads'] %>,<%= node['varnish']['max_threads'] %>,<%= node['varnish']['thread_timeout'] %> \
-              -s <%= node['varnish']['storage'] %>,<%= node['varnish']['storage_file'] %>,<%= node['varnish']['storage_size'] %> \
+              -s <%= node['varnish']['storage'] %>,<%= (node['varnish']['storage']=='file')?"#{node['varnish']['storage_file']},":'' %><%= node['varnish']['storage_size'] %> \
               -S <%= node['varnish']['secret_file'] %> \
               -n $INSTANCE"
