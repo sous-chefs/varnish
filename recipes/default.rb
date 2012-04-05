@@ -1,6 +1,7 @@
 # Cookbook Name:: varnish
 # Recipe:: default
 # Author:: Joe Williams <joe@joetify.com>
+# Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 #
 # Copyright 2008-2009, Joe Williams
 #
@@ -31,6 +32,7 @@ template node['varnish']['default'] do
   owner "root"
   group "root"
   mode 0644
+  notifies :restart, "service[varnish]"
 end
 
 service "varnish" do
