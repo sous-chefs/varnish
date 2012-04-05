@@ -1,10 +1,11 @@
 maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
-description       "Instsalls and configures varnish"
+description       "Installs and configures varnish"
 version           "0.8"
 
-recipe "varnish", "Installs and configures varnish"
+recipe "varnish",      "Installs and configures varnish"
+recipe "varnish_repo", "Adds the official varnish project apt repository"
 
 %w{ubuntu debian}.each do |os|
   supports os
