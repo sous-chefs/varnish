@@ -5,7 +5,7 @@ description       "Installs and configures varnish"
 version           "0.8"
 
 recipe "varnish",      "Installs and configures varnish"
-recipe "varnish_repo", "Adds the official varnish project apt repository"
+recipe "apt_repo", "Adds the official varnish project apt repository"
 
 %w{ubuntu debian}.each do |os|
   supports os

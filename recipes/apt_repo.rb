@@ -1,5 +1,5 @@
 # Cookbook Name:: varnish
-# Recipe:: varnish_repo
+# Recipe:: apt_repo
 # Author:: Patrick Connolly <patrick@myplanetdigital.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
