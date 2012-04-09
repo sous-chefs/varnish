@@ -21,6 +21,8 @@ Attributes
   directory
 * `node['varnish']['default']` - location of the `default` file that
   controls the varnish init script on Debian/Ubuntu systems.
+* `node['varnish']['version']` - If retrieving from official Varnish project
+  repository, may choose 2.1 or 3.0. No effect when using default ubuntu repo. (2.1)
 * `node['varnish']['start']` - Should we start varnishd at boot?  Set to "no" to disable (yes)
 * `node['varnish']['nfiles']` -  Open files (131072)
 * `node['varnish']['memlock']` -  Maxiumum locked memory size for shared memory log (82000)
@@ -55,6 +57,13 @@ default
 Installs the varnish package, manages the default varnish
 configuration file, and the init script defaults file.
 
+varnish_repo
+------------
+
+If placed before the default recipe in the run list, the official
+Varnish project apt repository will offer access to more version and
+platform support.
+
 Usage
 =====
 
@@ -67,7 +76,11 @@ a simple `default.vcl`.
 License and Author
 ==================
 
-Author:: Joe Williams <joe@joetify.com>   Author:: Lew Goettner <lew@goettner.net>
+Author:: Joe Williams <joe@joetify.com>
+
+Author:: Lew Goettner <lew@goettner.net>
+
+Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 
 Copyright:: 2008-2009, Joe Williams
 
