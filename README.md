@@ -57,7 +57,7 @@ default
 Installs the varnish package, manages the default varnish
 configuration file, and the init script defaults file.
 
-varnish_repo
+apt_repo
 ------------
 
 If placed before the default recipe in the run list, the official
