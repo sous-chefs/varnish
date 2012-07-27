@@ -20,8 +20,8 @@
 
 package "varnish"
 
-template "#{node['varnish']['dir']}/default.vcl" do
-  source "default.vcl.erb"
+template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
+  source "#{node['varnish']['vcl_conf']}.erb"
   owner "root"
   group "root"
   mode 0644
@@ -43,4 +43,10 @@ end
 service "varnishlog" do
   supports :restart => true, :reload => true
   action [ :enable, :start ]
+end
+
+directory "/var/lib/varnish/#{node['varnish']['instance']}" do
+  action :create
+  recursive true
+  owner "varnish"
 end
