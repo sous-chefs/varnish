@@ -1,3 +1,7 @@
+## v0.9.3:
+
+* Address default.vcl template-related issues and limitations
+
 ## v0.9.0:
 
 * [COOK-873] - full daemon configuration through attributes
