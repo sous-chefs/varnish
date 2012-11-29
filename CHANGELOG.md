@@ -1,3 +1,7 @@
+## v0.9.4:
+
+* [COOK-1261] - fix issues with default.vcl handling
+
 ## v0.9.0:
 
 * [COOK-873] - full daemon configuration through attributes
