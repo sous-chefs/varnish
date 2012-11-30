@@ -44,6 +44,10 @@ service "varnish" do
   action [ :enable, :start ]
 end
 
+directory "/var/lib/varnish/#{node['varnish']['instance']}" do
+  action :create
+end
+
 service "varnishlog" do
   supports :restart => true, :reload => true
   action [ :enable, :start ]
