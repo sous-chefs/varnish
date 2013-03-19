@@ -39,6 +39,10 @@ template node['varnish']['default'] do
   notifies :restart, "service[varnish]"
 end
 
+# Make sure the directory actually exists. Otherwise it fails on RHEL.
+directory "/var/lib/varnish/#{node['varnish']['instance']}" do
+end
+
 service "varnish" do
   supports :restart => true, :reload => true
   action [ :enable, :start ]
