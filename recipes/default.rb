@@ -18,7 +18,11 @@
 # limitations under the License.
 #
 
-package "varnish"
+package "varnish" do
+  if node[:platform] == 'redhat'
+    options '--nogpgcheck'
+  end
+end
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   source node['varnish']['vcl_source']
