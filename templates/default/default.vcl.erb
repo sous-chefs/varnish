@@ -3,3 +3,48 @@ backend default {
         .port = "<%= node['varnish']['backend_port'] %>";
 }
 
+sub vcl_recv {
+     if (req.restarts == 0) {
+        if (req.http.x-forwarded-for) {
+            set req.http.X-Forwarded-For =
+                req.http.X-Forwarded-For + ", " + client.ip;
+        } else {
+            set req.http.X-Forwarded-For = client.ip;
+        }
+     }
+
+     if (req.request != "GET" &&
+       req.request != "HEAD" &&
+       req.request != "PUT" &&
+       req.request != "POST" &&
+       req.request != "TRACE" &&
+       req.request != "OPTIONS" &&
+       req.request != "DELETE") {
+       return (pipe);
+     }
+
+     if (req.request != "GET" && req.request != "HEAD") {
+         return (pass);
+     }
+
+     if (req.http.Authorization) {
+         return (pass);
+     }
+     return (lookup);
+}
+
+sub vcl_fetch {
+    if (beresp.ttl <= 0s ||
+        beresp.http.Vary == "*") {
+                set beresp.ttl = 120 s;
+                return (hit_for_pass);
+     }
+     return (deliver);
+}
+
+sub vcl_deliver {
+    remove resp.http.X-Varnish;
+    remove resp.http.X-Powered-By;
+    remove resp.http.Server;
+    return (deliver);
+}

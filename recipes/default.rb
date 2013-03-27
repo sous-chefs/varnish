@@ -18,7 +18,11 @@
 # limitations under the License.
 #
 
-package "varnish"
+package "varnish" do
+  if node[:platform] == 'redhat'
+    options '--nogpgcheck'
+  end
+end
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   source node['varnish']['vcl_source']
@@ -37,6 +41,10 @@ template node['varnish']['default'] do
   group "root"
   mode 0644
   notifies :restart, "service[varnish]"
+end
+
+# Make sure the directory actually exists. Otherwise it fails on RHEL.
+directory "/var/lib/varnish/#{node['varnish']['instance']}" do
 end
 
 service "varnish" do
