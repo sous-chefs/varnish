@@ -27,9 +27,5 @@ sub vcl_recv {
          return (pass);
      }
 
-     if (req.http.Authorization) {
-         /* Not cacheable by default */
-         return (pass);
-     }
      return (lookup);
 }
