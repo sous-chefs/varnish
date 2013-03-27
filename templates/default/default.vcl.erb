@@ -29,3 +29,10 @@ sub vcl_recv {
 
      return (lookup);
 }
+
+sub vcl_deliver {
+    remove resp.http.X-Varnish;
+    remove resp.http.X-Powered-By;
+    remove resp.http.Server;
+    return (deliver);
+}
