@@ -27,7 +27,19 @@ sub vcl_recv {
          return (pass);
      }
 
+     if (req.http.Authorization) {
+         return (pass);
+     }
      return (lookup);
+}
+
+sub vcl_fetch {
+    if (beresp.ttl <= 0s ||
+        beresp.http.Vary == "*") {
+                set beresp.ttl = 120 s;
+                return (hit_for_pass);
+     }
+     return (deliver);
 }
 
 sub vcl_deliver {
