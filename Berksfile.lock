@@ -1,0 +1,3 @@
+cookbook 'varnish', :path => 'C:/git/dpetzel/opscode-cookbooks/opscode-cookbook-varnish'
+cookbook 'minitest-handler', :locked_version => '0.2.1'
+cookbook 'chef_handler', :locked_version => '1.0.8'
