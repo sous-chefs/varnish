@@ -1,3 +1,10 @@
+## v0.9.6:
+
+### Bug
+
+- [COOK-2892]: Varnish restarts when vcl is updated instead of
+  reloading
+
 ## v0.9.4:
 
 * [COOK-1261] - fix issues with default.vcl handling
