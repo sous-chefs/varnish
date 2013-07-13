@@ -2,6 +2,7 @@ require_relative "./test_helper.rb"
 
 
 describe_recipe "varnish::default" do
+  include Helpers::VarnishTest
   describe "services" do
     it "starts the varnish service" do
       service("varnish").must_be_running
@@ -14,13 +15,13 @@ describe_recipe "varnish::default" do
   
 	it "listens on the desired HTTP Port" do
     begin
-      tries ||= 10
+      tries ||= 1
       http_port = node['varnish']['listen_port']
-      response = Net::HTTP.get_response(node[:ipaddress], "/", http_port)
+      response = Net::HTTP.get_response(node['ipaddress'], "/", http_port)
     rescue
       #We don't care to do much other then let this test fail and others
       Chef::Log.info("Varnish HTTP listner is not available yet")
-      sleep(10)
+      sleep(5)
       retry unless (tries -= 1).zero?
     end
 
