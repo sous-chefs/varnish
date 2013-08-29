@@ -70,7 +70,7 @@ Usage
 On systems that need a high performance caching server, use
 `recipe[varnish]`. Additional configuration can be done by modifying
 the `default.vcl.erb` and `ubuntu-default.erb` templates. By default
-the `custom-default.erb` is set up to run with the varnish defaults, and 
+the `custom-default.erb` is set up to run with the varnish defaults, and
 a simple `default.vcl`.
 
 License and Author
