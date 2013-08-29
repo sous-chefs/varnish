@@ -3,6 +3,11 @@ varnish Cookbook CHANGELOG
 This file is used to list changes made in each version of the varnish cookbook.
 
 
+v0.9.8
+------
+### Improvement
+- **[COOK-3095](https://tickets.opscode.com/browse/COOK-3095)** - Add MiniTest Chef Handler and Test Kitchen
+
 v0.9.6
 ------
 ### Bug
