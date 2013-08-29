@@ -1,12 +1,11 @@
-Description
-===========
-
+varnish Cookbook
+================
 Installs and configures varnish.
 
-Requirements
-============
 
-## Platform:
+Requirements
+------------
+### Platforms
 
 Tested on:
 
@@ -14,9 +13,9 @@ Tested on:
 * Ubuntu 10.04
 * Debian 6.0
 
-Attributes
-==========
 
+Attributes
+----------
 * `node['varnish']['dir']` - location of the varnish configuration
   directory
 * `node['varnish']['default']` - location of the `default` file that
@@ -48,40 +47,28 @@ If you don't specify your own vcl_conf file, then these attributes are used in t
 * `node['varnish']['backend_host']` = Host to serve/cache content from (localhost)
 * `node['varnish']['backend_port']` = Port on backend host to access (8080)
 
+
 Recipes
-=======
-
-default
 -------
+### default
+Installs the varnish package, manages the default varnish configuration file, and the init script defaults file.
 
-Installs the varnish package, manages the default varnish
-configuration file, and the init script defaults file.
+### apt_repo
+If placed before the default recipe in the run list, the official Varnish project apt repository will offer access to more version and platform support.
 
-apt_repo
-------------
-
-If placed before the default recipe in the run list, the official
-Varnish project apt repository will offer access to more version and
-platform support.
 
 Usage
-=====
+-----
+On systems that need a high performance caching server, use `recipe[varnish]`. Additional configuration can be done by modifying the `default.vcl.erb` and `ubuntu-default.erb` templates. By default the `custom-default.erb` is set up to run with the varnish defaults, and a simple `default.vcl`.
 
-On systems that need a high performance caching server, use
-`recipe[varnish]`. Additional configuration can be done by modifying
-the `default.vcl.erb` and `ubuntu-default.erb` templates. By default
-the `custom-default.erb` is set up to run with the varnish defaults, and
-a simple `default.vcl`.
 
-License and Author
-==================
+License & Authors
+-----------------
+- Author:: Joe Williams <joe@joetify.com>
+- Author:: Lew Goettner <lew@goettner.net>
+- Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 
-Author:: Joe Williams <joe@joetify.com>
-
-Author:: Lew Goettner <lew@goettner.net>
-
-Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
-
+```text
 Copyright:: 2008-2009, Joe Williams
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -95,3 +82,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
