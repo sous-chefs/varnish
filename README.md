@@ -39,7 +39,7 @@ Attributes
 * `node['varnish']['max_threads']` - Start no more then this max amount of threads (500)
 * `node['varnish']['thread_timeout']` - Thread idle timeout (300)
 * `node['varnish']['storage']` - The storage type used ('file')
-* `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/$INSTANCE/varnish_storage.bin')
+* `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/${INSTANCE}/varnish_storage.bin')
 * `node['varnish']['storage_size']` -  Specifies the size of the backing file or max memory allocation.  The size is assumed to be in bytes, unless followed by one of the following suffixes: K,k,M,m,G,g,T,g,% (1G)
 
 If you don't specify your own vcl_conf file, then these attributes are used in the cookbook `default.vcl` template:
