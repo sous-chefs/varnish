@@ -47,6 +47,7 @@ If you don't specify your own vcl_conf file, then these attributes are used in t
 * `node['varnish']['backend_host']` = Host to serve/cache content from (localhost)
 * `node['varnish']['backend_port']` = Port on backend host to access (8080)
 
+* `node['varnish']['parameters']` = Set  the  parameter specified by param to the specified value.  See Run-Time Parameters for a list of parameters. This option can be used  multiple  times  to  specifymultiple parameters.
 
 Recipes
 -------

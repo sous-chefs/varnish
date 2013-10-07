@@ -30,3 +30,8 @@ default['varnish']['storage_size'] = '1G'
 
 default['varnish']['backend_host'] = 'localhost'
 default['varnish']['backend_port'] = '8080'
+
+default['varnish']['parameters']['thread_pools'] = "4"
+default['varnish']['parameters']['thread_pool_min'] = "400"
+default['varnish']['parameters']['thread_pool_max'] = "4000"
+default['varnish']['parameters']['thread_pool_add_delay'] = "2"
