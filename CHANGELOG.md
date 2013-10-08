@@ -3,6 +3,12 @@ varnish Cookbook CHANGELOG
 This file is used to list changes made in each version of the varnish cookbook.
 
 
+v0.9.10
+-------
+### Bug
+- **[COOK-3531](https://tickets.opscode.com/browse/COOK-3531)** - Fix default instance name
+
+
 v0.9.8
 ------
 ### Improvement
