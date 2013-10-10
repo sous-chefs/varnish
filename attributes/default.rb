@@ -2,6 +2,9 @@ case platform
 when "debian","ubuntu"
   set['varnish']['dir']     = "/etc/varnish"
   set['varnish']['default'] = "/etc/default/varnish"
+when "redhat","centos","fedora","suse"
+  set['varnish']['dir']     = "/etc/varnish"
+  set['varnish']['default'] = "/etc/sysconfig/varnish"
 end
 
 default['varnish']['version'] = "2.1"
@@ -25,7 +28,7 @@ default['varnish']['min_threads'] ='5'
 default['varnish']['max_threads'] = '500'
 default['varnish']['thread_timeout'] = '300'
 default['varnish']['storage'] = 'file'
-default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE/varnish_storage.bin'
+default['varnish']['storage_file'] = '/var/lib/varnish/$HOSTNAME/varnish_storage.bin'
 default['varnish']['storage_size'] = '1G'
 
 default['varnish']['backend_host'] = 'localhost'
