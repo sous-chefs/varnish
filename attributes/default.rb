@@ -1,5 +1,5 @@
 case platform
-when "debian","ubuntu"
+when "debian","ubuntu", "redhat", "amazon", "centos"
   set['varnish']['dir']     = "/etc/varnish"
   set['varnish']['default'] = "/etc/default/varnish"
 end
