@@ -28,7 +28,9 @@ Attributes
 * `node['varnish']['instance']` - Default varnish instance name (node['fqdn'])
 * `node['varnish']['listen_address']` -  Default address to bind to. Blank address (the default) means all IPv4 and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted quad, or an IPv6 address in brackets
 * `node['varnish']['listen_port']` - Default port to listen on (6081)
-* `node['varnish']['vcl_conf']` - Main configuration file. (default.vcl)
+* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl)
+* `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl)
+* `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (nil)
 * `node['varnish']['secret_file']` - Path to a file containing a secret used for authorizing access to the management port. (/etc/varnish/secret)
 * `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
 * `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
