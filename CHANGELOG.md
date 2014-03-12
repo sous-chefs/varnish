@@ -3,6 +3,11 @@ varnish Cookbook CHANGELOG
 This file is used to list changes made in each version of the varnish cookbook.
 
 
+v0.9.12 (2014-03-12)
+--------------------
+- [COOK-4368] - Improve documentation to include all attributes
+
+
 v0.9.10
 -------
 ### Bug
