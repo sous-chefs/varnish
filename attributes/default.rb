@@ -15,6 +15,7 @@ default['varnish']['listen_port'] = 6081
 default['varnish']['vcl_conf'] = 'default.vcl'
 default['varnish']['vcl_source'] = 'default.vcl.erb'
 default['varnish']['vcl_cookbook'] = nil
+default['varnish']['vcl_generated'] = true
 default['varnish']['secret_file'] = '/etc/varnish/secret'
 default['varnish']['admin_listen_address'] = '127.0.0.1'
 default['varnish']['admin_listen_port'] = '6082'
