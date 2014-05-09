@@ -20,15 +20,17 @@
 
 package "varnish"
 
-template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
-  source node['varnish']['vcl_source']
-  if node['varnish']['vcl_cookbook']
-    cookbook node['varnish']['vcl_cookbook']
-  end
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :reload, "service[varnish]"
+if node['varnish']['vcl_generated'] then
+    template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
+      source node['varnish']['vcl_source']
+      if node['varnish']['vcl_cookbook']
+        cookbook node['varnish']['vcl_cookbook']
+      end
+      owner "root"
+      group "root"
+      mode 0644
+      notifies :reload, "service[varnish]"
+    end
 end
 
 template node['varnish']['default'] do
