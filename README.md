@@ -12,6 +12,10 @@ Tested on:
 * Ubuntu 11.10
 * Ubuntu 10.04
 * Debian 6.0
+* Centos 5
+* Centos 6.3
+* Centos 6.4
+* Amazon AMI 2013.03
 
 
 Attributes
@@ -58,6 +62,9 @@ Installs the varnish package, manages the default varnish configuration file, an
 ### apt_repo
 If placed before the default recipe in the run list, the official Varnish project apt repository will offer access to more version and platform support.
 
+### yum_repo
+If placed before the default recipe in the run list, the official Varnish project yum repository will offer access to more version and platform support.
+
 
 Usage
 -----
@@ -69,6 +76,7 @@ License & Authors
 - Author:: Joe Williams <joe@joetify.com>
 - Author:: Lew Goettner <lew@goettner.net>
 - Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
+- Contributor:: Antonio Fernández Vara <antoniofernandezvara@gmail.com>
 
 ```text
 Copyright:: 2008-2009, Joe Williams
