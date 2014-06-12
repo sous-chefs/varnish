@@ -7,7 +7,8 @@ version           "0.9.13"
 
 recipe "varnish",      "Installs and configures varnish"
 recipe "varnish::apt_repo", "Adds the official varnish project apt repository"
+recipe "varnish::yum_repo", "Adds the official varnish project yum repository"
 
-%w{ubuntu debian}.each do |os|
+%w{ubuntu debian redhat amazon centos}.each do |os|
   supports os
 end
