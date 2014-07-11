@@ -34,6 +34,7 @@ Attributes
 * `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl)
 * `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl)
 * `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (nil)
+* `node['varnish']['vcl_generated']` - Generate the varnish configuration using the supplied template. (true)
 * `node['varnish']['secret_file']` - Path to a file containing a secret used for authorizing access to the management port. (/etc/varnish/secret)
 * `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
 * `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
