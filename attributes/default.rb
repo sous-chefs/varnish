@@ -2,15 +2,18 @@ case platform
 when "debian","ubuntu"
   set['varnish']['dir']     = "/etc/varnish"
   set['varnish']['default'] = "/etc/default/varnish"
+when "centos","redhat","fedora","scientific"
+  set['varnish']['dir']     = "/etc/varnish"
+  set['varnish']['default'] = "/etc/sysconfig/varnish"
 end
 
-default['varnish']['version'] = "2.1"
+default['varnish']['version'] = "4.0"
 
 default['varnish']['start'] = 'yes'
 default['varnish']['nfiles'] = 131072
 default['varnish']['memlock'] = 82000
-default['varnish']['instance'] = node['hostname']
-default['varnish']['listen_address'] = ''
+default['varnish']['instance'] = node['fqdn']
+default['varnish']['listen_address'] = nil
 default['varnish']['listen_port'] = 6081
 default['varnish']['vcl_conf'] = 'default.vcl'
 default['varnish']['vcl_source'] = 'default.vcl.erb'
