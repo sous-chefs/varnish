@@ -16,19 +16,19 @@
 #
 
 case node['platform_family']
-when "debian"
-  apt_repository "varnish-cache" do
+when 'debian'
+  apt_repository 'varnish-cache' do
     uri "http://repo.varnish-cache.org/#{node['platform']}"
     distribution node['lsb']['codename']
     components ["varnish-#{node['varnish']['version']}"]
     key "http://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
   end
-when "rhel","fedora"
-  yum_repository "varnish" do
+when 'rhel', 'fedora'
+  yum_repository 'varnish' do
     description "Varnish #{node['varnish']['version']} repo (#{node['platform_version']} - $basearch)"
     url "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['platform_version'].to_i}/$basearch/"
     gpgcheck false
-    gpgkey "http://repo.varnish-cache.org/debian/GPG-key.txt"
-    action :create
+    gpgkey 'http://repo.varnish-cache.org/debian/GPG-key.txt'
+    action 'create'
   end
 end

@@ -20,13 +20,11 @@
 
 include_recipe 'varnish::repo'
 
-package "varnish"
+package 'varnish'
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   source node['varnish']['vcl_source']
-  if node['varnish']['vcl_cookbook']
-    cookbook node['varnish']['vcl_cookbook']
-  end
+  cookbook node['varnish']['vcl_cookbook'] if node['varnish']['vcl_cookbook']
   owner 'root'
   group 'root'
   mode 0644
@@ -35,19 +33,19 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
 end
 
 template node['varnish']['default'] do
-  source "default.erb"
-  owner "root"
-  group "root"
+  source 'default.erb'
+  owner 'root'
+  group 'root'
   mode 0644
-  notifies :restart, "service[varnish]"
+  notifies 'restart', 'service[varnish]'
 end
 
-service "varnish" do
-  supports :restart => true, :reload => true
-  action [ :enable, :start ]
+service 'varnish' do
+  supports restart: true, reload: true
+  action %w(enable start)
 end
 
-service "varnishlog" do
-  supports :restart => true, :reload => true
-  action [ :enable, :start ]
+service 'varnishlog' do
+  supports restart: true, reload: true
+  action %w(enable start)
 end
