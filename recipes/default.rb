@@ -32,7 +32,7 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   only_if { node['varnish']['vcl_generated'] == true }
 end
 
-template node['varnish']['default'] do
+template "#{node['varnish']['default']}" do
   source 'default.erb'
   owner 'root'
   group 'root'
