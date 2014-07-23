@@ -32,8 +32,14 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   only_if { node['varnish']['vcl_generated'] == true }
 end
 
+if platform_family?('debian')
+  template_source     = 'default.erb'
+elsif platform_family?('rhel')
+  template_source     = 'centos-default.erb'
+end
+
 template node['varnish']['default'] do
-  source 'default.erb'
+  source template_source
   owner 'root'
   group 'root'
   mode 0644

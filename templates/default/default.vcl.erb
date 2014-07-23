@@ -1,3 +1,6 @@
+<%- if node['varnish']['version'] == '4.0' %>
+vcl 4.0;
+<%- end %>
 backend default {
         .host = "<%= node['varnish']['backend_host'] %>";
         .port = "<%= node['varnish']['backend_port'] %>";
