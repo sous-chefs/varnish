@@ -1,13 +1,12 @@
 if platform_family?('debian')
-  set['varnish']['dir']     = '/etc/varnish'
   set['varnish']['default'] = '/etc/default/varnish'
-elsif platform_family?('rhel')
-  set['varnish']['dir']     = '/etc/varnish'
+else
   set['varnish']['default'] = '/etc/sysconfig/varnish'
 end
 
 default['varnish']['version'] = '4.0'
 
+default['varnish']['dir'] = '/etc/varnish'
 default['varnish']['start'] = 'yes'
 default['varnish']['nfiles'] = 131_072
 default['varnish']['memlock'] = 82_000
@@ -16,8 +15,10 @@ default['varnish']['listen_address'] = nil
 default['varnish']['listen_port'] = 6081
 default['varnish']['vcl_conf'] = 'default.vcl'
 default['varnish']['vcl_source'] = 'default.vcl.erb'
-default['varnish']['vcl_cookbook'] = nil
+default['varnish']['vcl_cookbook'] = 'varnish'
 default['varnish']['vcl_generated'] = true
+default['varnish']['conf_source'] = 'default.erb'
+default['varnish']['conf_cookbook'] = 'varnish'
 default['varnish']['secret_file'] = '/etc/varnish/secret'
 default['varnish']['admin_listen_address'] = '127.0.0.1'
 default['varnish']['admin_listen_port'] = '6082'

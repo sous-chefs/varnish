@@ -24,7 +24,7 @@ package 'varnish'
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   source node['varnish']['vcl_source']
-  cookbook node['varnish']['vcl_cookbook'] if node['varnish']['vcl_cookbook']
+  cookbook node['varnish']['vcl_cookbook']
   owner 'root'
   group 'root'
   mode 0644
@@ -33,7 +33,8 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
 end
 
 template node['varnish']['default'] do
-  source 'default.erb'
+  source node['varnish']['conf_source']
+  cookbook node['varnish']['conf_cookbook']
   owner 'root'
   group 'root'
   mode 0644

@@ -26,12 +26,14 @@ DAEMON_OPTS="-a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['li
               -T <%= node['varnish']['admin_listen_address'] %>:<%= node['varnish']['admin_listen_port'] %> \
               -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
               -t <%= node['varnish']['ttl'] %> \
+             <%- if node['platform_family'] == 'debian' %>
               -w <%= node['varnish']['min_threads'] %>,<%= node['varnish']['max_threads'] %>,<%= node['varnish']['thread_timeout'] %> \
+              -n $INSTANCE \
+             <%- end %>
               -s <%= node['varnish']['storage'] %>,<%= (node['varnish']['storage']=='file')?"#{node['varnish']['storage_file']},":'' %><%= node['varnish']['storage_size'] %> \
-              -S <%= node['varnish']['secret_file'] %> \
               <%- if !(node['varnish']['parameters']).nil? %>
                 <%- node['varnish']['parameters'].each do |param, value| %>
-                  -p <%= param + "=" + value %>
+                  -p <%= param + "=" + value %> \
                 <%- end %>
               <%- end %>
-              -n $INSTANCE"
+              -S <%= node['varnish']['secret_file'] %>"
