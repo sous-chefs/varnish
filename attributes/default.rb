@@ -1,13 +1,12 @@
 if platform_family?('debian')
-  set['varnish']['dir']     = '/etc/varnish'
   set['varnish']['default'] = '/etc/default/varnish'
-elsif platform_family?('rhel')
-  set['varnish']['dir']     = '/etc/varnish'
+else
   set['varnish']['default'] = '/etc/sysconfig/varnish'
 end
 
 default['varnish']['version'] = '4.0'
 
+default['varnish']['dir'] = '/etc/varnish'
 default['varnish']['start'] = 'yes'
 default['varnish']['nfiles'] = 131_072
 default['varnish']['memlock'] = 82_000
