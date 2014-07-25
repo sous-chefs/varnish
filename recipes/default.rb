@@ -24,7 +24,7 @@ package 'varnish'
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   source node['varnish']['vcl_source']
-  cookbook node['varnish']['vcl_cookbook'] if node['varnish']['vcl_cookbook']
+  cookbook node['varnish']['vcl_cookbook']
   owner 'root'
   group 'root'
   mode 0644
@@ -32,14 +32,9 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   only_if { node['varnish']['vcl_generated'] == true }
 end
 
-if platform_family?('debian')
-  template_source     = 'default.erb'
-elsif platform_family?('rhel')
-  template_source     = 'centos-default.erb'
-end
-
 template node['varnish']['default'] do
-  source template_source
+  source node['varnish']['conf_source']
+  cookbook node['varnish']['conf_cookbook']
   owner 'root'
   group 'root'
   mode 0644
