@@ -23,6 +23,7 @@ when 'debian'
     components ["varnish-#{node['varnish']['version']}"]
     key "http://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
   end
+  include_recipe 'apt'
 when 'rhel', 'fedora'
   yum_repository 'varnish' do
     description "Varnish #{node['varnish']['version']} repo (#{node['platform_version']} - $basearch)"
