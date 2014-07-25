@@ -31,10 +31,12 @@ Attributes
 * `node['varnish']['instance']` - Default varnish instance name (node['fqdn'])
 * `node['varnish']['listen_address']` -  Default address to bind to. Blank address (the default) means all IPv4 and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted quad, or an IPv6 address in brackets
 * `node['varnish']['listen_port']` - Default port to listen on (6081)
-* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl)
+* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl.erb)
 * `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl)
-* `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (nil)
+* `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (varnish)
 * `node['varnish']['vcl_generated']` - Generate the varnish configuration using the supplied template. (true)
+* `node['varnish']['conf_source']` - Name of the default system configuration file. (default.erb)
+* `node['varnish']['conf_cookbook` - Cookbook in which the default system configuration file is located. (varnish)
 * `node['varnish']['secret_file']` - Path to a file containing a secret used for authorizing access to the management port. (/etc/varnish/secret)
 * `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
 * `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
@@ -60,21 +62,19 @@ Recipes
 ### default
 Installs the varnish package, manages the default varnish configuration file, and the init script defaults file.
 
-### apt_repo
+### repo
 If placed before the default recipe in the run list, the official Varnish project apt repository will offer access to more version and platform support.
-
-### yum_repo
-If placed before the default recipe in the run list, the official Varnish project yum repository will offer access to more version and platform support.
 
 Usage
 -----
-On systems that need a high performance caching server, use `recipe[varnish]`. Additional configuration can be done by modifying the `default.vcl.erb` and `ubuntu-default.erb` templates. By default the `custom-default.erb` is set up to run with the varnish defaults, and a simple `default.vcl`.
+On systems that need a high performance caching server, use `recipe[varnish]`. Additional configuration can be done by modifying the `default.vcl.erb` and `default.erb` templates.
 
 
 License & Authors
 -----------------
 - Author:: Joe Williams <joe@joetify.com>
 - Author:: Lew Goettner <lew@goettner.net>
+- Author:: Matthew Thode <matt.thode@rackspace.com>
 - Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 - Contributor:: Antonio Fernández Vara <antoniofernandezvara@gmail.com>
 
