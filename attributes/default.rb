@@ -1,7 +1,7 @@
 if platform_family?('debian')
-  set['varnish']['default'] = '/etc/default/varnish'
+  default['varnish']['default'] = '/etc/default/varnish'
 else
-  set['varnish']['default'] = '/etc/sysconfig/varnish'
+  default['varnish']['default'] = '/etc/sysconfig/varnish'
 end
 
 default['varnish']['version'] = '4.0'
