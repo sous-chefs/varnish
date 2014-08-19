@@ -9,12 +9,14 @@ Requirements
 
 Tested on:
 
-* Ubuntu 11.10
 * Ubuntu 10.04
+* Ubuntu 12.04
+* Ubuntu 14.04
 * Debian 6.0
 * Centos 5
 * Centos 6.3
 * Centos 6.4
+* Centos 6.5
 * Amazon AMI 2013.03
 
 Attributes
@@ -23,8 +25,7 @@ Attributes
   directory
 * `node['varnish']['default']` - location of the `default` file that
   controls the varnish init script on Debian/Ubuntu systems.
-* `node['varnish']['version']` - If retrieving from official Varnish project
-  repository, may choose 2.1 or 3.0. No effect when using default ubuntu repo. (2.1)
+* `node['varnish']['version']` - If retrieving from official Varnish project repository, may choose 3.0 or 4.0.
 * `node['varnish']['start']` - Should we start varnishd at boot?  Set to "no" to disable (yes)
 * `node['varnish']['nfiles']` -  Open files (131072)
 * `node['varnish']['memlock']` -  Maxiumum locked memory size for shared memory log (82000)
@@ -66,6 +67,7 @@ Usage
 -----
 On systems that need a high performance caching server, use `recipe[varnish]`. Additional configuration can be done by modifying the `default.vcl.erb` and `default.erb` templates.
 
+If running on a Redhat derivative then you may need to include yum-epel as it provides the jemalloc dependency that varnish needs
 
 License & Authors
 -----------------
