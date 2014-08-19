@@ -4,6 +4,10 @@ driver_config:
   require_chef_omnibus: true
 
 platforms:
+- name: ubuntu-14.04
+  driver_config:
+    box: opscode-ubuntu-14.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box
 - name: ubuntu-12.04
   driver_config:
     box: opscode-ubuntu-12.04
@@ -12,6 +16,10 @@ platforms:
   driver_config:
     box: opscode-ubuntu-10.04
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
+- name: centos-6.5
+  driver_config:
+    box: opscode-centos-6.5
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box
 - name: centos-6.4
   driver_config:
     box: opscode-centos-6.4
@@ -22,17 +30,19 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
 
 suites:
-- name: varnish2
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[varnish]
-  attributes:
-    varnish:
-      version: "2.1"
 - name: varnish3
   run_list:
   - recipe[minitest-handler]
   - recipe[varnish]
   attributes:
     varnish:
-      version: "3.0.3"
+      version: '3.0'
+- name: varnish4
+  excludes:
+    - centos-5.9
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[varnish]
+  attributes:
+    varnish:
+      version: '4.0'
