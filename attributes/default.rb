@@ -35,5 +35,3 @@ default['varnish']['storage_size'] = '1G'
 
 default['varnish']['backend_host'] = 'localhost'
 default['varnish']['backend_port'] = '8080'
-
-default['varnish']['vmod_build_dir'] = '/tmp'
