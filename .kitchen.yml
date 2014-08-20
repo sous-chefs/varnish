@@ -3,6 +3,11 @@ driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
 
+provisioner:
+  attributes:
+    apt:
+      compiletime: true
+
 platforms:
 - name: ubuntu-14.04
   driver_config:
@@ -12,19 +17,21 @@ platforms:
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-- name: ubuntu-10.04
-  driver_config:
-    box: opscode-ubuntu-10.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-10.04_provisionerless.box
 - name: centos-6.5
+  run_list:
+    - recipe[yum-epel]
   driver_config:
     box: opscode-centos-6.5
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box
 - name: centos-6.4
+  run_list:
+    - recipe[yum-epel]
   driver_config:
     box: opscode-centos-6.4
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
 - name: centos-5.9
+  run_list:
+    - recipe[yum-epel]
   driver_config:
     box: opscode-centos-5.9
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
@@ -32,7 +39,6 @@ platforms:
 suites:
 - name: varnish3
   run_list:
-  - recipe[minitest-handler]
   - recipe[varnish]
   attributes:
     varnish:
@@ -41,7 +47,6 @@ suites:
   excludes:
     - centos-5.9
   run_list:
-  - recipe[minitest-handler]
   - recipe[varnish]
   attributes:
     varnish:

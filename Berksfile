@@ -1,7 +1,7 @@
-site :opscode
-
-metadata
+source "https://api.berkshelf.com"
 
 group :integration do
-  cookbook "minitest-handler", ">= 0.2.1"
+  cookbook 'yum-epel'
 end
+
+metadata
