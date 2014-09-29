@@ -30,7 +30,7 @@ when 'rhel', 'fedora'
   repourl = "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['platform_version'].to_i}/"
 
   if node['platform_version'].to_i != '7'
-    repourl = repoUrl + '$basearch/'
+    repourl += '$basearch/'
   end
 
   yum_repository 'varnish' do
