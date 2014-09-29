@@ -27,15 +27,9 @@ when 'debian'
     notifies 'nothing', 'execute[apt-get update]', 'immediately'
   end
 when 'rhel', 'fedora'
-  repourl = "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['platform_version'].to_i}/"
-
-  if node['platform_version'].to_i != '7'
-    repourl += '$basearch/'
-  end
-
   yum_repository 'varnish' do
     description "Varnish #{node['varnish']['version']} repo (#{node['platform_version']} - $basearch)"
-    url repourl
+    url "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['platform_version'].to_i}/"
     gpgcheck false
     gpgkey 'http://repo.varnish-cache.org/debian/GPG-key.txt'
     action 'create'
