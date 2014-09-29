@@ -35,7 +35,7 @@ when 'rhel', 'fedora'
   
   yum_repository 'varnish' do
     description "Varnish #{node['varnish']['version']} repo (#{node['platform_version']} - $basearch)"
-    url myUrl
+    url repoUrl
     gpgcheck false
     gpgkey 'http://repo.varnish-cache.org/debian/GPG-key.txt'
     action 'create'
