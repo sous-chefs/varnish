@@ -9,15 +9,12 @@ Requirements
 
 Tested on:
 
-* Ubuntu 10.04
 * Ubuntu 12.04
 * Ubuntu 14.04
 * Debian 6.0
-* Centos 5
-* Centos 6.3
-* Centos 6.4
+* Centos 5.9
 * Centos 6.5
-* Amazon AMI 2013.03
+* Centos 7.0
 
 Attributes
 ----------
