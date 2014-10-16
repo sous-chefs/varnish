@@ -32,6 +32,7 @@ default['varnish']['parameters']['thread_pool_timeout'] = '300'
 default['varnish']['storage'] = 'file'
 default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE_varnish_storage.bin'
 default['varnish']['storage_size'] = '1G'
+default['varnish']['log_daemon'] = true
 
 default['varnish']['backend_host'] = 'localhost'
 default['varnish']['backend_port'] = '8080'
