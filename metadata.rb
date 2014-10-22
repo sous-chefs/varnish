@@ -14,6 +14,5 @@ end
 
 depends 'apt', '~> 2.4'
 depends 'build-essential'
-depends 'disable_ipv6'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'
