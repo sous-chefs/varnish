@@ -48,5 +48,5 @@ end
 
 service 'varnishlog' do
   supports restart: true, reload: true
-  action %w(enable start)
+  action node['varnish']['log_daemon'] ? %w(enable start) : %w(disable stop)
 end
