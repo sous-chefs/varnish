@@ -33,6 +33,7 @@ default['varnish']['storage'] = 'file'
 default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE_varnish_storage.bin'
 default['varnish']['storage_size'] = '1G'
 default['varnish']['log_daemon'] = true
+default['varnish']['use_default_repo'] = true
 
 default['varnish']['backend_host'] = 'localhost'
 default['varnish']['backend_port'] = '8080'
