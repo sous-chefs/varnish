@@ -43,7 +43,7 @@ end
 
 service 'varnish' do
   supports restart: true, reload: true
-  action %w(enable start)
+  action %w(enable)
 end
 
 service 'varnishlog' do
