@@ -41,6 +41,29 @@ template node['varnish']['default'] do
   notifies 'restart', 'service[varnish]'
 end
 
+template "#{node['varnish']['default']}log" do
+  source 'log_default.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  notifies 'reload', 'service[varnishlog]', 'immediately'
+end
+
+template "#{node['varnish']['default']}ncsa" do
+  source 'ncsa_default.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+  notifies 'reload', 'service[varnishncsa]', 'immediately'
+end
+
+template node['varnish']['logrotate.d_path'] do
+  source 'logrotate.erb'
+  owner 'root'
+  group 'root'
+  mode 0644
+end
+
 service 'varnish' do
   supports restart: true, reload: true
   action %w(enable start)
@@ -49,4 +72,9 @@ end
 service 'varnishlog' do
   supports restart: true, reload: true
   action node['varnish']['log_daemon'] ? %w(enable start) : %w(disable stop)
+end
+
+service 'varnishncsa' do
+  supports restart: true, reload: true
+  action node['varnish']['ncsa_daemon'] ? %w(enable start) : %w(disable stop)
 end
