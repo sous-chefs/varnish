@@ -39,7 +39,7 @@ default['varnish']['ncsa_daemon'] = true
 default['varnish']['ncsa_file'] = '/var/log/varnish/varnishncsa.log'
 default['varnish']['ncsa_pid_file'] = '/var/run/varnishncsa.pid'
 default['varnish']['ncsa_format'] = '%h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"'
-default['varnish']['logrotate.d_path'] = '/etc/logrotate.d/varnish'
+default['varnish']['logrotate.d_path'] = '/etc/logrotate.d'
 default['varnish']['use_default_repo'] = true
 
 default['varnish']['backend_host'] = 'localhost'

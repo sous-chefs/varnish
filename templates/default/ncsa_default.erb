@@ -15,6 +15,6 @@ INSTANCE=<%= node['varnish']['instance'] %>
 # Override the Daemon options
 DAEMON_OPTS="-a -w $logfile -D -P $pidfile \
              <%- if node['platform_family'] == 'debian' %>
-              -n $INSTANCE \
+             -n $INSTANCE \
              <%- end %>
-			  -F '<%= node['varnish']['ncsa_format'] %>'"
+             -F '<%= node['varnish']['ncsa_format'] %>'"

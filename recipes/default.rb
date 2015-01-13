@@ -57,11 +57,12 @@ template "#{node['varnish']['default']}ncsa" do
   notifies 'reload', 'service[varnishncsa]', 'immediately'
 end
 
-template node['varnish']['logrotate.d_path'] do
+template "#{node['varnish']['logrotate.d_path']}/varnish" do
   source 'logrotate.erb'
   owner 'root'
   group 'root'
   mode 0644
+  only_if do File.exists?(node['varnish']['logrotate.d_path']) end
 end
 
 service 'varnish' do
