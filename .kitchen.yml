@@ -1,12 +1,15 @@
 ---
-driver_plugin: vagrant
+driver:
+  name: vagrant
+
 driver_config:
   require_chef_omnibus: true
 
 provisioner:
+  name: chef_zero
   attributes:
     apt:
-      compiletime: true
+      compile_time_update: true
 
 platforms:
 - name: ubuntu-14.04
@@ -56,3 +59,19 @@ suites:
   attributes:
     varnish:
       version: '4.0'
+      log_daemon: false
+      
+- name: distro_libraries
+  includes:
+    - ubuntu-14.04
+    - centos-7.0
+    - centos-6.5
+  run_list:
+    - recipe[install_varnish::distro_install]
+- name: vendor_libraries
+  includes:
+    - ubuntu-14.04
+    - centos-7.0
+    - centos-6.5
+  run_list:
+    - recipe[install_varnish::vendor_install]

@@ -1,0 +1,7 @@
+<%- if @varnish_version == '4' %>
+vcl 4.0;
+<%- end %>
+backend default {
+        .host = "<%= @config.backend_host %>";
+        .port = "<%= @config.backend_port %>";
+}

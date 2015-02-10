@@ -1,10 +1,10 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe 'debian::varnish::default' do
   let(:chef_run) do
-    runner = ChefSpec::Runner.new(
-                                   platform: 'debian', version: '7.4'
-                                 ) do |node|
+    runner = ChefSpec::SoloRunner.new(
+      platform: 'debian', version: '7.4'
+    ) do |node|
       node.automatic['memory']['total'] = '2048kB'
       node.automatic['ipaddress'] = '1.1.1.1'
     end
@@ -26,7 +26,6 @@ describe 'debian::varnish::default' do
 
   it 'Enable and start varnish service' do
     expect(chef_run).to enable_service('varnish')
-    expect(chef_run).to start_service('varnish')
   end
 
   it 'Start Varnishlog service' do
@@ -35,9 +34,9 @@ describe 'debian::varnish::default' do
 
   context 'Without repo installation && without log_deamon' do
     let(:chef_run) do
-      runner = ChefSpec::Runner.new(
-                                     platform: 'debian', version: '7.4'
-                                   ) do |node|
+      runner = ChefSpec::SoloRunner.new(
+        platform: 'debian', version: '7.4'
+      ) do |node|
         node.automatic['memory']['total'] = '2048kB'
         node.automatic['ipaddress'] = '1.1.1.1'
         node.set['varnish']['use_default_repo'] = false
