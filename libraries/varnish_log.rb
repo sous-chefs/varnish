@@ -42,7 +42,7 @@ class Chef
             source 'lib_varnishlog_systemd.erb'
           else
             path "/etc/sysconfig/#{new_resource.log_format}"
-            source 'varnishlog.erb'
+            source 'lib_varnishlog.erb'
           end
           cookbook 'varnish'
           owner 'root'
