@@ -8,8 +8,7 @@ module VarnishCookbook
 
       begin
         cmd.run_command
-        Chef::Log.info "varnish version detected: #{cmd}"
-        Chef::Log.info "varnish version detected: #{cmd.stdout}"
+        Chef::Log.debug "#{cmd} ran and detected varnish version: #{cmd.stdout}"
         return cmd.stdout.match(/varnish-([0-9])\./).captures[0]
       rescue => ex
         Chef::Log.warn "Unable to run varnishd to get version.\nMessage: #{ex.message}"
