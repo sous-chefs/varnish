@@ -1,3 +1,4 @@
+#TESTING
 name 'varnish'
 maintainer 'Opscode, Inc.'
 maintainer_email 'cookbooks@opscode.com'
