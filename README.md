@@ -67,6 +67,88 @@ On systems that need a high performance caching server, use `recipe[varnish]`. A
 
 If running on a Redhat derivative then you may need to include yum-epel as it provides the jemalloc dependency that varnish needs
 
+Resources
+-----
+See the distro_install and vendor_install recipes for examples of these resources in action.
+
+### varnish_install
+Installs Varnish with the default configuration supplied by the package.
+
+The `:install` action handles package installation. By default, it
+will install Varnish from your distro repositories. If you set the
+`vendor_repo` parameter to `true`, then it will install Varnish
+from the varnish-cache repositories.
+
+#### Parameters
+| Name | Type | Default Value |
+-------|------|---------------|
+| `package_name` | string | `'varnish'` |
+| `vendor_repo` | `true` or `false` | `false` |
+| `vendor_version` | string | `'4.0'` |
+
+#### Actions
+- `:install` - Installs and enables the Varnish service.
+
+### varnish_default_config
+Configures the Varnish service. If you do not include this, the config
+files that come with your distro package will be used instead.
+
+| Name | Type | Default Value |
+|------|------|---------------|
+|`start_on_boot` | `true` or `false` | `true` |
+|`max_open_files` | integer | `131_072` |
+| `max_locked_memory` | integer | `82_000` |
+| `instance_name` | string | `nil` |
+| `listen_address` | string | `nil` |
+| `listen_port` | integer | `6081` |
+| `admin_listen_address` | string | `'127.0.0.1'` |
+| `admin_plisten_port` | integer | `6082` |
+| `user` | string | `'varnish'` |
+| `group` | string | `'varnish'` |
+| `ttl` | integer | `120` |
+| `storage` | `'malloc'` or `'file'` | `'file'` |
+| `file_storage_path` | string | `nil` |
+| `file_storage_size` | string | `'1G'` |
+| `malloc_size` | string | `nil` |
+| `path_to_secret` | string | `'/etc/varnish/secret'` |
+
+You can also send a hash to `parameters` which will add additional parameters to the varnish daemon via the `-p` option. The default hash is:
+
+```
+{ 'thread_pools' => '4',
+  'thread_pool_min' => '5',
+  'thread_pool_max' => '500',
+  'thread_pool_timeout' => '300' }
+```
+
+#### Actions
+- `:configure` - Creates the varnish configuration file from template.
+
+### varnish_default_vcl
+| Name | Type | Default Value |
+|------|------|---------------|
+| `backend_host` | string | `'localhost'`
+| `backend_port` | integer | `8080` |
+
+
+#### Actions
+- `:configure` - Creates a default.vcl file.
+
+### varnish_log
+Configures varnishlog or varnishncsa service. You can define multiple
+logfiles by calling `varnish_log` more than once.
+
+| Name | Type | Default Value |
+|------|------|---------------|
+| `file_name` | string | `'/var/log/varnish/varnishlog.log'` |
+| `pid` | string | `'/var/run/varnishlog.pid'` |
+| `log_format` | `'varnishlog'` or `'varnishncsa'` | `'varnishlog'` |
+| `ncsa_format_string` | string | `'%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'`
+| `instance_name` | string | `nil` |
+
+#### Actions
+- `:configure` - configures the `varnishlog` or `varnishncsa` service.
+
 License & Authors
 -----------------
 - Author:: Joe Williams <joe@joetify.com>

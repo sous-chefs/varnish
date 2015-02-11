@@ -1,0 +1,11 @@
+[Unit]
+Description=Varnish HTTP accelerator logging daemon
+After=varnish.service
+
+[Service]
+Type=forking
+PIDFile=<%= @config.pid %>
+ExecStart=/usr/bin/<%= @config.log_format %> -a -w <%= @config.file_name %> -D -P <%= @config.pid %> -n <%= @config.instance_name || node['hostname'] %> <%- if @config.log_format == 'varnishncsa' && @varnish_version.to_i > 2 %> -F <%= @config.ncsa_format_string %> <%- end %>
+
+[Install]
+WantedBy=multi-user.target
