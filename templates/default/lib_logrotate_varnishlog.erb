@@ -1,0 +1,11 @@
+<%= @config.file_name %> {
+    daily
+    rotate 7
+    missingok
+    notifempty
+    compress
+    delaycompress
+    postrotate
+        /bin/kill -HUP `cat <%= @config.pid %> 2>/dev/null` 2> /dev/null || true
+    endscript
+}

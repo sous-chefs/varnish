@@ -21,3 +21,5 @@ test:
         timeout: 120
     - bundle exec rake integration:cloud:
         timeout: 600
+    - bundle exec kitchen destroy:
+        timeout: 120
