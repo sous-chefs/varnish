@@ -60,11 +60,21 @@ namespace :integration do
   task :cloud do
     if ENV['CI'] == 'true'
       Kitchen.logger = Kitchen.default_file_logger
-      @loader = Kitchen::Loader::YAML.new(local_config: '/var/lib/jenkins/.kitchen/config.yml')
+      @loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.cloud.yml')
       config = Kitchen::Config.new(loader: @loader)
-      config.instances.each do |instance|
-        instance.test(:always)
+      concurrency = config.instances.size
+      queue = Queue.new
+      config.instances.each {|i| queue << i }
+      concurrency.times { queue << nil }
+      threads = []
+      concurrency.times do
+        threads << Thread.new do
+          while instance = queue.pop
+            instance.test(:always)
+          end
+        end
       end
+      threads.map { |i| i.join }
     end
   end
 end

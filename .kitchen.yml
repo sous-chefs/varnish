@@ -34,13 +34,6 @@ platforms:
   driver_config:
     box: opscode-centos-6.5
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.5_provisionerless.box
-- name: centos-5.9
-  run_list:
-    - recipe[disable_ipv6::disable_ipv6]
-    - recipe[yum-epel]
-  driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
 
 suites:
 - name: varnish3
@@ -52,8 +45,6 @@ suites:
     varnish:
       version: '3.0'
 - name: varnish4
-  excludes:
-    - centos-5.9
   run_list:
   - recipe[varnish]
   attributes:
