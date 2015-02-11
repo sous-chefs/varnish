@@ -69,7 +69,6 @@ class Chef
     # Configure Varnish logging.
     class VarnishLog < Chef::Provider::LWRPBase
       include VarnishCookbook::Helpers
-      use_inline_resources
 
       def whyrun_supported?
         true
