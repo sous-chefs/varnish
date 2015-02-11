@@ -32,7 +32,14 @@ default['varnish']['parameters']['thread_pool_timeout'] = '300'
 default['varnish']['storage'] = 'file'
 default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE_varnish_storage.bin'
 default['varnish']['storage_size'] = '1G'
-default['varnish']['log_daemon'] = true
+default['varnish']['log_daemon'] = false
+default['varnish']['log_file'] = '/var/log/varnish/varnish.log'
+default['varnish']['log_pid_file'] = '/var/run/varnishlog.pid'
+default['varnish']['ncsa_daemon'] = true
+default['varnish']['ncsa_file'] = '/var/log/varnish/varnishncsa.log'
+default['varnish']['ncsa_pid_file'] = '/var/run/varnishncsa.pid'
+default['varnish']['ncsa_format'] = '%h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\"'
+default['varnish']['logrotate.d_path'] = '/etc/logrotate.d'
 default['varnish']['use_default_repo'] = true
 
 default['varnish']['backend_host'] = 'localhost'
