@@ -50,3 +50,8 @@ service 'varnishlog' do
   supports restart: true, reload: true
   action node['varnish']['log_daemon'] ? %w(enable start) : %w(disable stop)
 end
+
+service 'varnishncsa' do
+  supports restart: true, reload: true
+  action node['varnish']['ncsa_daemon'] ? %w(enable start) : %w(disable stop)
+end
