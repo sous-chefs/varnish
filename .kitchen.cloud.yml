@@ -4,5 +4,5 @@ driver:
   flavor_id: performance1-2
   rackspace_region: IAD
   require_chef_omnibus: latest
-  server_name: ci-<%= ENV['CIRCLE_PROJECT_REPONAME'] %>-<%= ENV['CIRCLE_BUILD_NUM'] %>-<%= require 'securerandom'; SecureRandom.hex(6) %>
+  server_name: ci-<%= ENV['CIRCLE_PROJECT_REPONAME'] %>-<%= ENV['CIRCLE_BUILD_NUM'] %>
   wait_for: 1200
