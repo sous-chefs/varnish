@@ -137,8 +137,9 @@ You can also send a hash to `parameters` which will add additional parameters to
 - `:configure` - Creates a default.vcl file.
 
 ### varnish_log
-Configures varnishlog or varnishncsa service. You can define multiple
-logfiles by calling `varnish_log` more than once.
+Configures varnishlog or varnishncsa service. You can define both
+logfiles by calling `varnish_log` more than once.  You can install logrotate
+config files if you wish as well.
 
 | Name | Type | Default Value |
 |------|------|---------------|
@@ -147,6 +148,8 @@ logfiles by calling `varnish_log` more than once.
 | `log_format` | `'varnishlog'` or `'varnishncsa'` | `'varnishlog'` |
 | `ncsa_format_string` | string | `'%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'`
 | `instance_name` | string | `nil` |
+| `logrotate` | `true` or `false` | true |
+| `logrotate_path` | `string` | `'/etc/logrotate.d'` |
 
 #### Actions
 - `:configure` - configures the `varnishlog` or `varnishncsa` service.
