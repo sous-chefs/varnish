@@ -159,6 +159,7 @@ License & Authors
 - Author:: Joe Williams <joe@joetify.com>
 - Author:: Lew Goettner <lew@goettner.net>
 - Author:: Matthew Thode <matt.thode@rackspace.com>
+- Author:: Matt Barlow <matt.barlow@rackspace.com>
 - Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 - Contributor:: Antonio Fernández Vara <antoniofernandezvara@gmail.com>
 

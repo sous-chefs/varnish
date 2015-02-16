@@ -2,6 +2,12 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v1.1.0 (2015-02-16)
+-------------------
+- Created libraries, to eventually replace recipe functionality, currently can be used along side recipes
+- Added CircleCI support for automated testing
+- Added logrotate support
+- Added varnish(log|nsca) support
 
 v0.9.12 (2014-03-12)
 --------------------
