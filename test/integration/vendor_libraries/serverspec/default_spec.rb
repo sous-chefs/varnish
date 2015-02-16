@@ -36,6 +36,13 @@ describe file('/etc/varnish/default.vcl') do
   its(:content) { should match(/vcl 4.0/) }
 end
 
+describe file('/etc/logrotate.d/varnishlog') do
+  it { should_not be_file }
+end
+describe file('/etc/logrotate.d/varnishncsa') do
+  it { should be_file }
+end
+
 def thread_pool_max
   'varnishadm -S /etc/varnish/secret -T localhost:6082 param.show thread_pool_max |grep Value'
 end
