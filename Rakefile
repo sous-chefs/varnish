@@ -25,61 +25,65 @@ task style: ['style:chef', 'style:ruby']
 
 # Rspec and ChefSpec
 desc 'Run ChefSpec unit tests'
-RSpec::Core::RakeTask.new(:spec) do |t, args|
+RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = 'test/unit'
 end
 
 # Chef-client why run
 desc 'Package Berkshelf'
 task :berkspackage do
-
   unless File.directory?('/tmp/chef')
     FileUtils.mkdir '/tmp/chef'
   end
-  
+
   if File.directory?('/tmp/chef/cookbooks')
-    FileUtils.rm_r('/tmp/chef/cookbooks', :force => true)
+    FileUtils.rm_r('/tmp/chef/cookbooks', force: true)
   end
 
-  berksfile = Berkshelf::Berksfile.from_options(:berksfile => 'Berksfile')
-  berksfile.vendor("/tmp/chef/cookbooks")
-  puts "cd /tmp/chef; sudo chef-client --once --why-run --local-mode --override-runlist ..."
+  berksfile = Berkshelf::Berksfile.from_options(berksfile: 'Berksfile')
+  berksfile.vendor('/tmp/chef/cookbooks')
+  puts 'cd /tmp/chef; sudo chef-client --once --why-run --local-mode --override-runlist ...'
 end
 
-# Integration tests. Kitchen.ci
+# Integration tests with test-kitchen (kitchen.ci)
+desc 'Run Test Kitchen'
 namespace :integration do
-  desc 'Run Test Kitchen with Vagrant'
+  Kitchen.logger = Kitchen.default_file_logger
+
+  desc 'Run kitchen test with Vagrant'
   task :vagrant do
-    Kitchen.logger = Kitchen.default_file_logger
     Kitchen::Config.new.instances.each do |instance|
       instance.test(:always)
     end
   end
 
-  desc 'Run Test Kitchen with cloud plugins'
-  task :cloud do
-    if ENV['CI'] == 'true'
-      Kitchen.logger = Kitchen.default_file_logger
-      @loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.cloud.yml')
-      config = Kitchen::Config.new(loader: @loader)
-      concurrency = config.instances.size
-      queue = Queue.new
-      config.instances.each {|i| queue << i }
-      concurrency.times { queue << nil }
-      threads = []
-      concurrency.times do
-        threads << Thread.new do
-          while instance = queue.pop
-            instance.test(:always)
+  %w(verify destroy).each do |t|
+    desc "Run kitchen #{t} with cloud plugins"
+    namespace :cloud do
+      task t do
+        @loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.cloud.yml')
+        config = Kitchen::Config.new(loader: @loader)
+        concurrency = config.instances.size
+        queue = Queue.new
+        config.instances.each { |i| queue << i }
+        concurrency.times { queue << nil }
+        threads = []
+        concurrency.times do
+          threads << Thread.new do
+            while instance = queue.pop
+              instance.send(t)
+            end
           end
         end
+        threads.map(&:join)
       end
-      threads.map { |i| i.join }
     end
   end
+
+  task cloud: ['cloud:verify', 'cloud:destroy']
 end
 
-desc 'Run all tests on CI Platform'
+desc 'Run all tests on a CI Platform'
 task ci: ['style', 'spec', 'integration:cloud']
 
 # Default

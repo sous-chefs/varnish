@@ -6,6 +6,15 @@ varnish_install 'default' do
   vendor_repo false
 end
 
+# needed for tests because this directory is not always on created instances
+directory 'logrotate' do
+  path '/etc/logrotate.d'
+  user 'root'
+  group 'root'
+  mode '0755'
+  action 'create'
+end
+
 varnish_default_config 'default' do
   start_on_boot true
   max_open_files 131_072
@@ -41,6 +50,8 @@ varnish_log 'default' do
   file_name '/var/log/varnish/varnishlog.log'
   pid '/var/run/varnishlog.pid'
   log_format 'varnishlog'
+  logrotate true
+  logrotate_path '/etc/logrotate.d'
 end
 
 varnish_log 'default_ncsa' do
@@ -48,4 +59,5 @@ varnish_log 'default_ncsa' do
   pid '/var/run/varnishncsa.pid'
   log_format 'varnishncsa'
   ncsa_format_string '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
+  logrotate false
 end

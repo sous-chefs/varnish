@@ -8,6 +8,8 @@ class Chef
 
       attribute :name, kind_of: String, name_attribute: true
       attribute :file_name, kind_of: String, default: '/var/log/varnish/varnishlog.log'
+      attribute :logrotate, kind_of: [TrueClass, FalseClass], default: true
+      attribute :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
       attribute :pid, kind_of: String, default: '/var/run/varnishlog.pid'
       attribute :log_format, kind_of: String, default: 'varnishlog',
                              equal_to: ['varnishlog', 'varnishncsa']
@@ -101,7 +103,19 @@ class Chef
           action :create
           notifies :restart, "service[#{new_resource.log_format}]", :delayed
         end
-
+        if new_resource.logrotate
+          template "#{new_resource.logrotate_path}/#{new_resource.log_format}" do
+            source 'lib_logrotate_varnishlog.erb'
+            path "#{new_resource.logrotate_path}/#{new_resource.log_format}"
+            cookbook 'varnish'
+            owner 'root'
+            group 'root'
+            mode '0644'
+            variables(config: new_resource)
+            action :create
+            only_if { ::File.exist?(new_resource.logrotate_path) }
+          end
+        end
         service new_resource.log_format do
           supports restart: true, reload: true
           action %w(enable start)
