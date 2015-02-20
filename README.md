@@ -7,6 +7,9 @@ Installs and configures varnish.
 
 Requirements
 ------------
+### chef-client
+* Requires chef-client 12 and above.
+
 ### Platforms
 
 Tested on:
