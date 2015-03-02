@@ -10,6 +10,9 @@ class Chef
       attribute :name, kind_of: String, name_attribute: true
       attribute :backend_host, kind_of: String, default: 'localhost'
       attribute :backend_port, kind_of: Fixnum, default: 8080
+      attribute :vcl_source, kind_of: String, default: 'lib_default.vcl.erb'
+      attribute :vcl_cookbook, kind_of: String, default: 'varnish'
+      attribute :vcl_parameters, kind_of: Hash, default: {}
     end
   end
 
@@ -34,14 +37,15 @@ class Chef
         end
 
         tmp = template '/etc/varnish/default.vcl' do
-          source 'lib_default.vcl.erb'
-          cookbook 'varnish'
+          source new_resource.vcl_source
+          cookbook new_resource.vcl_cookbook
           owner 'root'
           group 'root'
           mode '0644'
           variables(
             config: new_resource,
-            varnish_version: varnish_version
+            varnish_version: varnish_version,
+            parameters: new_resource.vcl_parameters
           )
           action :nothing
           notifies :reload, 'service[varnish]', :delayed

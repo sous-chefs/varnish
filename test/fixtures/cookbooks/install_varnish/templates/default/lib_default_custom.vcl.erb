@@ -1,0 +1,14 @@
+<%- if @varnish_version == '4' %>
+vcl 4.0;
+<%- end %>
+backend default {
+        .host = "<%= @config.backend_host %>";
+        .port = "<%= @config.backend_port %>";
+        .probe = {
+          .url = "<%= @parameters[:url] %>";
+          .timeout = 34ms;
+          .interval = 1s;
+          .window = 10;
+          .threshold = 8;
+        }
+}
