@@ -16,7 +16,9 @@ describe 'install_varnish::distro_install' do
   end
 
   it 'enables the varnish service' do
-    expect(chef_run).to enable_service('varnish')
+    resource = chef_run.package('varnish')
+    expect(resource).to notify('service[varnish]').to('enable').delayed
+    expect(resource).to notify('service[varnish]').to('restart').delayed
   end
 
   it 'enables the varnishlog service' do

@@ -53,11 +53,15 @@ class Chef
       end
 
       def install_varnish
-        package new_resource.package_name
+        package new_resource.package_name do
+          action 'install'
+          notifies 'enable', "service[#{new_resource.package_name}]", 'delayed'
+          notifies 'restart', "service[#{new_resource.package_name}]", 'delayed'
+        end
 
         service 'varnish' do
           supports restart: true, reload: true
-          action %w(enable restart)
+          action 'nothing'
         end
       end
     end
