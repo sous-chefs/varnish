@@ -180,6 +180,11 @@ end
 |------|------|---------------|
 | `backend_host` | string | `'localhost'`
 | `backend_port` | integer | `8080` |
+| `vcl_source`   | string | `'lib_default.vcl.erb'` |
+| `vcl_cookbook` | string | `'varnish'` |
+| `vcl_parameters` | hash | `{}` |
+
+You can specify an alternative template (e.g. in a wrapper cookbook) and send a hash of any parameters you need to that template.
 
 #### Example
 Set a backend to `example.com:80` :
@@ -190,7 +195,6 @@ varnish_default_vcl 'default' do
   backend_port 80
 end
 ```
-
 
 #### Actions
 - `:configure` - Creates a default.vcl file.
