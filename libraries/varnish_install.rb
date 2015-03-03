@@ -57,7 +57,7 @@ class Chef
 
         service 'varnish' do
           supports restart: true, reload: true
-          action %w(enable restart)
+          action %w(enable)
         end
       end
     end
