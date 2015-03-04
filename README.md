@@ -134,7 +134,11 @@ You can also send a hash to `parameters` which will add additional parameters to
 |------|------|---------------|
 | `backend_host` | string | `'localhost'`
 | `backend_port` | integer | `8080` |
+| `vcl_source`   | string | `'lib_default.vcl.erb'` |
+| `vcl_cookbook` | string | `'varnish'` |
+| `vcl_parameters` | hash | `{}` |
 
+You can specify an alternative template (e.g. in a wrapper cookbook) and send a hash of any parameters you need to that template.
 
 #### Actions
 - `:configure` - Creates a default.vcl file.
