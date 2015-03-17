@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Configure a default Varnish VCL
     class VarnishDefaultVcl < Chef::Resource::LWRPBase
-      resource_name :varnish_default_vcl
+      self.resource_name = :varnish_default_vcl
 
       actions :configure
       default_action :configure

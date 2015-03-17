@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Install Varnish
     class VarnishInstall < Chef::Resource::LWRPBase
-      resource_name :varnish_install
+      self.resource_name = :varnish_install
       actions :install
       default_action :install
 

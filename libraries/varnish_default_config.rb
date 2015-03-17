@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Configure the Varnish service.
     class VarnishDefaultConfig < Chef::Resource::LWRPBase
-      resource_name :varnish_default_config
+      self.resource_name = :varnish_default_config
 
       actions :configure
       default_action :configure

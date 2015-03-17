@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Configure Varnish logging.
     class VarnishLog < Chef::Resource::LWRPBase
-      resource_name :varnish_log
+      self.resource_name = :varnish_log
       actions :configure
       default_action :configure
 
