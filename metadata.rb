@@ -1,9 +1,9 @@
 name 'varnish'
-maintainer 'Opscode, Inc.'
-maintainer_email 'cookbooks@opscode.com'
+maintainer 'Chef Software, Inc.'
+maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'
 description 'Installs and configures varnish'
-version '1.0.3'
+version '2.0.1'
 
 recipe 'varnish', 'Installs and configures varnish'
 recipe 'varnish::repo', 'Adds the official varnish project repository'

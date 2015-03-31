@@ -1,0 +1,26 @@
+# Configuration file for <%= @config.log_format %>
+#
+# /etc/init.d/varnishlog variable $DAEMON_OPTS will be overridden
+# by the variable which will be set from this shell script fragment.
+#
+
+# Overriding the logfile and pidfile variables
+<%= "#{@config.log_format.upcase}_ENABLED=1" %>
+LOGFILE=<%= @config.file_name %>
+PIDFILE=<%= @config.pid %>
+<%- if @config.log_format == 'varnishncsa' %>
+LOG_FORMAT="<%= @config.ncsa_format_string %>"
+<%- end %>
+
+# Default varnish instance name is the local nodename.  Can be overridden with
+# the -n switch, to have more instances on a single server.
+INSTANCE=<%= @config.instance_name || node['hostname'] %>
+# Override the Daemon options
+DAEMON_OPTS="-a -w $LOGFILE -D -P $PIDFILE \
+             <%- if node['platform_family'] == 'debian' %>
+              -n $INSTANCE \
+             <%- end %>
+	     <%- if @config.log_format == 'varnishncsa' && @varnish_version.to_i > 2 %>
+	     -F '${LOG_FORMAT}' \
+	     <%- end %>
+          "
