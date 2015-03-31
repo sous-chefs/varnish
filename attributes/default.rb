@@ -1,9 +1,3 @@
-if platform_family?('debian')
-  default['varnish']['default'] = '/etc/default/varnish'
-else
-  default['varnish']['default'] = '/etc/sysconfig/varnish'
-end
-
 default['varnish']['version'] = '4.0'
 
 default['varnish']['dir'] = '/etc/varnish'
@@ -38,3 +32,12 @@ default['varnish']['use_default_repo'] = true
 
 default['varnish']['backend_host'] = 'localhost'
 default['varnish']['backend_port'] = '8080'
+
+if platform_family?('debian')
+  default['varnish']['default'] = '/etc/default/varnish'
+elsif platform?("redhat", "centos") && node.platform_version.to_f >= 7.0
+  default['varnish']['default'] = File.join(node['varnish']['dir'], 'varnish.params')
+  default['varnish']['conf_source'] = 'varnish.params'
+else
+  default['varnish']['default'] = '/etc/sysconfig/varnish'
+end
