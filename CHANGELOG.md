@@ -2,6 +2,11 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v1.2.0
+-------------------
+
+- Make resource_name compatible with older Chef. Switch from passing an argument into resource_name to using the assignment operator '='. This will make resource_name compatible with older versions of Chef.
+
 v1.1.0 (2015-02-16)
 -------------------
 - Created libraries, to eventually replace recipe functionality, currently can be used along side recipes
