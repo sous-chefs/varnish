@@ -4,10 +4,10 @@ require_relative 'spec_helper'
 
 %w(varnish varnishlog varnishncsa).each do |varnish_service|
   describe service(varnish_service) do
-    it "enabled" do
+    it 'enabled' do
       expect(subject).to be_enabled
     end
-    it "running" do
+    it 'running' do
       expect(subject).to be_running
     end
   end
@@ -18,14 +18,14 @@ def curl_localhost
 end
 
 describe command(curl_localhost) do
-  it "exits zero" do
+  it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
 end
 
 ['6081', '6082'].each do |port|
   describe port(port) do
-    it "listens on the correct port" do
+    it 'listens on the correct port' do
       expect(subject).to be_listening
     end
   end
@@ -39,12 +39,12 @@ describe 'Storage bin file exists' do
 end
 
 describe file('/etc/logrotate.d/varnishlog') do
-  it "varnishlog exists" do
+  it 'varnishlog exists' do
     expect(subject).to be_file
   end
 end
 describe file('/etc/logrotate.d/varnishncsa') do
-  it "varnishnsca isn't a file" do
+  it 'varnishnsca is not a file' do
     expect(subject).not_to be_file
   end
 end
@@ -54,10 +54,10 @@ def thread_pool_max
 end
 
 describe command(thread_pool_max) do
-  it "exits zero" do
+  it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
-  it "returns '500' as the content" do
+  it 'returns \'500\' as the content' do
     expect(subject.stdout).to match(/ 500 /)
   end
 end
