@@ -1,3 +1,7 @@
+general:
+  artifacts:
+    - ".kitchen/logs"
+
 machine:
   ruby:
     version: 2.1.5
