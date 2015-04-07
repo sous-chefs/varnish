@@ -4,8 +4,12 @@ require_relative 'spec_helper'
 
 %w(varnish varnishlog varnishncsa).each do |varnish_service|
   describe service(varnish_service) do
-    it { should be_enabled }
-    it { should be_running }
+    it 'enabled' do
+      expect(subject).to be_enabled
+    end
+    it 'running' do
+      expect(subject).to be_running
+    end
   end
 end
 
@@ -14,12 +18,16 @@ def curl_localhost
 end
 
 describe command(curl_localhost) do
-  its(:exit_status) { should eq 0 }
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
 end
 
 ['6081', '6082'].each do |port|
   describe port(port) do
-    it { should be_listening }
+    it 'listens on the correct port' do
+      expect(subject).to be_listening
+    end
   end
 end
 
@@ -28,19 +36,29 @@ def varnish_version
 end
 
 describe command(varnish_version) do
-  its(:exit_status) { should eq 0 }
-  its(:stdout) { should match(/varnish-4/) }
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
+  it 'returns \'500\' as the content' do
+    expect(subject.stdout).to match(/varnish-4/)
+  end
 end
 
 describe file('/etc/varnish/default.vcl') do
-  its(:content) { should match(/vcl 4.0/) }
+  it 'file content' do
+    expect(subject.content).to match(/vcl 4.0/)
+  end
 end
 
 describe file('/etc/logrotate.d/varnishlog') do
-  it { should_not be_file }
+  it 'varnishlog exists' do
+    expect(subject).not_to be_file
+  end
 end
 describe file('/etc/logrotate.d/varnishncsa') do
-  it { should be_file }
+  it 'varnishnsca is not a file' do
+    expect(subject).to be_file
+  end
 end
 
 def thread_pool_max
@@ -48,6 +66,10 @@ def thread_pool_max
 end
 
 describe command(thread_pool_max) do
-  its(:exit_status) { should eq 0 }
-  its(:stdout) { should match(/500/) }
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
+  it 'returns \'500\' as the content' do
+    expect(subject.stdout).to match(/ 500 /)
+  end
 end
