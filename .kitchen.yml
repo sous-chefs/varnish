@@ -48,13 +48,13 @@ suites:
   includes:
     - ubuntu-14.04
     - centos-7.0
-    - centos-6.5
+    - centos-6.6
   run_list:
     - recipe[install_varnish::distro_install]
 - name: vendor_libraries
   includes:
     - ubuntu-14.04
     - centos-7.0
-    - centos-6.5
+    - centos-6.6
   run_list:
     - recipe[install_varnish::vendor_install]
