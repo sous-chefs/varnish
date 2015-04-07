@@ -52,12 +52,12 @@ end
 
 describe file('/etc/logrotate.d/varnishlog') do
   it 'varnishlog exists' do
-    expect(subject).to be_file
+    expect(subject).not_to be_file
   end
 end
 describe file('/etc/logrotate.d/varnishncsa') do
   it 'varnishnsca is not a file' do
-    expect(subject).not_to be_file
+    expect(subject).to be_file
   end
 end
 
