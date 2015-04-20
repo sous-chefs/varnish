@@ -39,7 +39,6 @@ class Chef
             components ["varnish-#{new_resource.vendor_version}"]
             key "http://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
             deb_src true
-            notifies 'nothing', 'execute[apt-get update]', 'immediately'
           end
         when 'rhel', 'fedora'
           yum_repository 'varnish' do
