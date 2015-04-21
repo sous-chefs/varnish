@@ -2,6 +2,10 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v 2.1.1
+----
+- Fixes #56. The apt resource may not be included, so no need to run a notification on it.
+
 v1.2.0
 -------------------
 
