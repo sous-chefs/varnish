@@ -39,7 +39,7 @@ class Chef
             varnish_version: varnish_version
           )
           action :create
-          notifies :restart, 'service[varnish]', :delayed
+          notifies :reload, 'service[varnish]', :delayed
         end
       end
     end
