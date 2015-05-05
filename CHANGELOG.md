@@ -2,8 +2,16 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
-v 2.1.1
-----
+v2.2.0
+-------------------
+- Fix default storage bug. Specify a default file storage location, as one is required with file backend, fixes #72. Adjust template for default configuration of varnish so that it won't do the file backend without a path, since that's illegal syntax.
+
+- Cause varnish reload to happen after restart. Delayed notifications are queued up in order. In this case, it makes sense for the reload to happen after the restart.
+
+- Switch from service restart to service reload. The varnish_default_vcl has been updated to perform a service reload instead of a service restart. This will prevent the cache from being cleared when a reload of the vcl file is enough.
+
+v2.1.1
+-------------------
 - Fixes #56. The apt resource may not be included, so no need to run a notification on it.
 
 v1.2.0
