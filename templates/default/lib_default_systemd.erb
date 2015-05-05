@@ -21,8 +21,8 @@ VARNISH_SECRET_FILE=<%= @config.path_to_secret %>
 
 # Backend storage specification, see Storage Types in the varnishd(5)
 # man page for details.
-<%- if @config.storage == 'file' %>
-VARNISH_STORAGE=<%= [@config.storage, @config.file_storage_path, @config.file_storage_size].compact.join(",") %>
+<%- if @config.storage == 'file' && @config.file_storage_path %>
+VARNISH_STORAGE=<%= [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",") %>
 <%- else %>
 VARNISH_STORAGE=<%= [@config.storage, @config.malloc_size].compact.join(",") %>
 <% end %>

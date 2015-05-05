@@ -112,7 +112,7 @@ files that come with your distro package will be used instead.
 | `group` | string | `'varnish'` |
 | `ttl` | integer | `120` |
 | `storage` | `'malloc'` or `'file'` | `'file'` |
-| `file_storage_path` | string | `nil` |
+| `file_storage_path` | string | `'/var/lib/varnish/%s_storage.bin'` where %s is replaced with the resource name|
 | `file_storage_size` | string | `'1G'` |
 | `malloc_size` | string | `nil` |
 | `path_to_secret` | string | `'/etc/varnish/secret'` |
