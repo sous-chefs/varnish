@@ -1,6 +1,8 @@
 # Cookbook Name:: varnish
 # Recipe:: repo
-# Author:: Patrick Connolly <patrick@myplanetdigital.com>
+#
+# Copyright 2014. Patrick Connolly <patrick@myplanetdigital.com>
+# Copyright 2015. Rackspace, US Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
