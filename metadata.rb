@@ -1,6 +1,6 @@
 name 'varnish'
-maintainer 'Chef Software, Inc.'
-maintainer_email 'cookbooks@chef.io'
+maintainer 'Rackspace'
+maintainer_email 'rackspace-cookbooks@rackspace.com'
 license 'Apache 2.0'
 description 'Installs and configures varnish'
 version '2.2.0'

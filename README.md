@@ -248,7 +248,9 @@ License & Authors
 - Contributor:: Antonio Fernández Vara <antoniofernandezvara@gmail.com>
 
 ```text
-Copyright:: 2008-2009, Joe Williams
+Copyright 2008-2009, Joe Williams <joe@joetify.com>
+Copyright 2014. Patrick Connolly <patrick@myplanetdigital.com>
+Copyright 2015. Rackspace, US Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

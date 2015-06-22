@@ -2,22 +2,21 @@ source 'https://rubygems.org'
 
 group :lint do
   gem 'foodcritic', '~> 3.0'
+  gem 'foodcritic-rackspace-rules'
   gem 'rubocop', '~> 0.24'
+  gem 'rspec'
 end
 
 group :unit do
-  # ChefSpec dependencies
-  #
-  # All gems loaded through the `chef_gem` resource should be included here
-  # because ChefSpec never really converges these resources and thus the gems are
-  # never installed during a Chef run. This makes all subsequent `requires` fail.
-  #
   gem 'berkshelf', '~> 3'
-  gem 'chefspec'
+  gem 'chefspec', '~> 4'
+  gem 'chef-sugar'
 end
 
 group :kitchen_common do
   gem 'test-kitchen'
+  gem 'kitchen-rackspace'
+  gem 'kitchen-docker'
 end
 
 group :kitchen_vagrant do
@@ -25,13 +24,13 @@ group :kitchen_vagrant do
   gem 'vagrant-wrapper'
 end
 
-group :kitchen_rackspace do
-  gem 'kitchen-rackspace'
-end
-
 group :development do
   gem 'growl'
   gem 'rb-fsevent'
+  gem 'guard'
+  gem 'guard-kitchen'
+  gem 'guard-foodcritic'
+  gem 'guard-rubocop'
   gem 'fauxhai'
   gem 'pry-nav'
 end
