@@ -55,7 +55,7 @@ class Chef
 
       def configure_varnish_service
         template '/etc/default/varnish' do
-          if node['platform_family'] == 'debian'
+          if node['init_package'] == 'init'
             path '/etc/default/varnish'
             source 'lib_default.erb'
           elsif node['init_package'] == 'systemd'

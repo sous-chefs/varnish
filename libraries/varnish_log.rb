@@ -82,7 +82,7 @@ class Chef
 
       def configure_varnish_log
         template "/etc/default/#{new_resource.log_format}" do
-          if node['platform_family'] == 'debian'
+          if node['init_package'] == 'init'
             path "/etc/default/#{new_resource.log_format}"
             source 'lib_varnishlog.erb'
           elsif node['init_package'] == 'systemd'
