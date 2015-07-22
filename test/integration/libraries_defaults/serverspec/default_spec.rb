@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 
-%w(varnish varnishlog varnishncsa).each do |varnish_service|
+%w(varnish varnishlog).each do |varnish_service|
   describe service(varnish_service) do
     it 'enabled' do
       expect(subject).to be_enabled
@@ -31,38 +31,21 @@ end
   end
 end
 
-def varnish_version
-  'varnishd -V 2>&1'
-end
-
-describe command(varnish_version) do
-  it 'exits zero' do
-    expect(subject.exit_status).to eq 0
-  end
-  it 'returns \'500\' as the content' do
-    expect(subject.stdout).to match(/varnish-4/)
-  end
-end
-
-describe file('/etc/varnish/default.vcl') do
-  it 'file content' do
-    expect(subject.content).to match(/vcl 4.0/)
+describe 'Storage bin file exists' do
+  it 'Should find the storage file' do
+    binfile = Dir.glob('/var/lib/varnish/**/*').find { |e| /_storage.bin/ =~ e }
+    expect(binfile).to be_truthy
   end
 end
 
 describe file('/etc/logrotate.d/varnishlog') do
   it 'varnishlog exists' do
-    expect(subject).not_to be_file
-  end
-end
-describe file('/etc/logrotate.d/varnishncsa') do
-  it 'varnishnsca is not a file' do
     expect(subject).to be_file
   end
 end
 
 def thread_pool_max
-  'varnishadm -S /etc/varnish/secret -T localhost:6082 param.show thread_pool_max |grep Value'
+  'varnishadm -S /etc/varnish/secret -T localhost:6082 param.show thread_pool_max'
 end
 
 describe command(thread_pool_max) do

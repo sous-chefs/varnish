@@ -1,9 +1,9 @@
 name 'varnish'
-maintainer 'Chef Software, Inc.'
-maintainer_email 'cookbooks@chef.io'
+maintainer 'Rackspace'
+maintainer_email 'rackspace-cookbooks@rackspace.com'
 license 'Apache 2.0'
 description 'Installs and configures varnish'
-version '2.0.1'
+version '2.2.0'
 
 recipe 'varnish', 'Installs and configures varnish'
 recipe 'varnish::repo', 'Adds the official varnish project repository'
@@ -14,5 +14,6 @@ end
 
 depends 'apt', '~> 2.4'
 depends 'build-essential'
+depends 'chef-sugar'
 depends 'yum', '~> 3.0'
 depends 'yum-epel'

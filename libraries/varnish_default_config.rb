@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Configure the Varnish service.
     class VarnishDefaultConfig < Chef::Resource::LWRPBase
-      resource_name :varnish_default_config
+      self.resource_name = :varnish_default_config
 
       actions :configure
       default_action :configure
@@ -28,7 +28,7 @@ class Chef
       attribute :storage, kind_of: String, default: 'file',
                           equal_to: ['file', 'malloc']
       attribute :file_storage_path, kind_of: String,
-                                    default: nil
+                                    default: '/var/lib/varnish/%s_storage.bin'
       attribute :file_storage_size, kind_of: String, default: '1G'
       attribute :malloc_size, kind_of: String, default: nil
       attribute :parameters, kind_of: Hash,

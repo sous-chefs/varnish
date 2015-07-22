@@ -2,7 +2,7 @@ class Chef
   class Resource
     # Configure a default Varnish VCL
     class VarnishDefaultVcl < Chef::Resource::LWRPBase
-      resource_name :varnish_default_vcl
+      self.resource_name = :varnish_default_vcl
 
       actions :configure
       default_action :configure
@@ -43,7 +43,7 @@ class Chef
             parameters: new_resource.vcl_parameters
           )
           action :create
-          notifies :restart, 'service[varnish]', :delayed
+          notifies :reload, 'service[varnish]', :delayed
         end
       end
     end

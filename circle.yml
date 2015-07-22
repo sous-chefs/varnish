@@ -15,9 +15,9 @@ dependencies:
 
 test:
   override:
-    - bundle exec rake style
-    - bundle exec rake spec
-    - bundle exec rake integration:cloud:verify:
+    - bundle exec rake style:
+        timeout: 120
+    - bundle exec rake spec:
+        timeout: 120
+    - bundle exec rake integration:cloud:
         timeout: 600
-  post:
-    - bundle exec rake integration:cloud:destroy

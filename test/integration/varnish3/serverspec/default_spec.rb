@@ -3,9 +3,15 @@
 require_relative 'spec_helper'
 
 describe service('varnish') do
-  it { should be_enabled }
-  it { should be_running }
+  it 'enabled' do
+    expect(subject).to be_enabled
+  end
+  it 'running' do
+    expect(subject).to be_running
+  end
 end
 describe port(6081) do
-  it { should be_listening }
+  it 'listens on the correct port' do
+    expect(subject).to be_listening
+  end
 end
