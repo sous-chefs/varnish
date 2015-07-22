@@ -86,7 +86,7 @@ class Chef
             path "/etc/default/#{new_resource.log_format}"
             source 'lib_varnishlog.erb'
           elsif node['init_package'] == 'systemd'
-            path "/etc/systemd/system/#{new_resource.log_format}.params"
+            path "/etc/systemd/system/#{new_resource.log_format}.service"
             source 'lib_varnishlog_systemd.erb'
           else
             path "/etc/sysconfig/#{new_resource.log_format}"

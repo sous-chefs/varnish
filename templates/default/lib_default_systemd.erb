@@ -1,43 +1,27 @@
-# Varnish environment configuration description. This was derived from
-# the old style sysconfig/defaults settings
+[Unit]
+Description=Varnish HTTP accelerator
+<%- 
+  if @config.storage == 'file' && @config.file_storage_path
+    storage = [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",")
+  else
+    storage = [@config.storage, @config.malloc_size].compact.join(",")
+end %>
+<%- 
+  parameters = ''
+  unless (@config.parameters).nil?
+      @config.parameters.each do |param, value|
+        parameters << "-p #{param.to_s}=#{value} "
+    end
+  end
+%>
 
-# Set this to 1 to make systemd reload try to switch vcl without restart.
-RELOAD_VCL=1
-# Main configuration file. You probably want to change it.
-VARNISH_VCL_CONF=<%= @config.path_to_vcl %>
+[Service]
+Type=forking
+LimitNOFILE=131072
+LimitMEMLOCK=82000
+ExecStartPre=/usr/sbin/varnishd -C -f <%= @config.path_to_vcl %>
+ExecStart=/usr/sbin/varnishd -a <%= @config.listen_address %>:<%= @config.listen_port %> -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> -f <%= @config.path_to_vcl %> -S <%= @config.path_to_secret %> -s <%= storage %> <%= parameters %> 
+ExecReload=/usr/share/varnish/reload-vcl
 
-# Default address and port to bind to. Blank address means all IPv4
-# and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted
-# quad, or an IPv6 address in brackets.
-VARNISH_LISTEN_ADDRESS=<%= @config.listen_address %>
-VARNISH_LISTEN_PORT=<%= @config.listen_port %>
-
-# Admin interface listen address and port
-VARNISH_ADMIN_LISTEN_ADDRESS=<%= @config.admin_listen_address %>
-VARNISH_ADMIN_LISTEN_PORT=<%= @config.admin_listen_port %>
-
-# Shared secret file for admin interface
-VARNISH_SECRET_FILE=<%= @config.path_to_secret %>
-
-# Backend storage specification, see Storage Types in the varnishd(5)
-# man page for details.
-<%- if @config.storage == 'file' && @config.file_storage_path %>
-VARNISH_STORAGE=<%= [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",") %>
-<%- else %>
-VARNISH_STORAGE=<%= [@config.storage, @config.malloc_size].compact.join(",") %>
-<% end %>
-
-# Default TTL used when the backend does not specify one
-VARNISH_TTL=<%= @config.ttl %>
-
-# User and group for the varnishd worker processes
-VARNISH_USER=<%= @config.user %>
-VARNISH_GROUP=<%= @config.group %>
-
-# Other options, see the man page varnishd(1)
-#DAEMON_OPTS="-p thread_pool_min=5 -p thread_pool_max=500 -p thread_pool_timeout=300"
-<%- unless (@config.parameters).nil? %>
-DAEMON_OPTS="<%- @config.parameters.each do |param, value| %> \
-             -p <%= param.to_s + "=" + value %> \
-                <%- end %>
-<%- end %>
+[Install]
+WantedBy=multi-user.target

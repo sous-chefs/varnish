@@ -59,7 +59,7 @@ class Chef
             path '/etc/default/varnish'
             source 'lib_default.erb'
           elsif node['init_package'] == 'systemd'
-            path '/etc/varnish/varnish.params'
+            path '/etc/systemd/system/varnish.service'
             source 'lib_default_systemd.erb'
           else
             path '/etc/sysconfig/varnish'
