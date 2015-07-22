@@ -61,6 +61,7 @@ class Chef
           elsif node['init_package'] == 'systemd'
             path '/etc/systemd/system/varnish.service'
             source 'lib_default_systemd.erb'
+            notifies :run, 'execute[systemctl-daemon-reload]', :immediately
           else
             path '/etc/sysconfig/varnish'
             source 'lib_default.erb'

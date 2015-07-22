@@ -88,6 +88,7 @@ class Chef
           elsif node['init_package'] == 'systemd'
             path "/etc/systemd/system/#{new_resource.log_format}.service"
             source 'lib_varnishlog_systemd.erb'
+            notifies :run, 'execute[systemctl-daemon-reload]', :immediately
           else
             path "/etc/sysconfig/#{new_resource.log_format}"
             source 'lib_varnishlog.erb'
