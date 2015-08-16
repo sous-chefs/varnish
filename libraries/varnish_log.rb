@@ -26,25 +26,29 @@ class Chef
   module ProviderExtensions
     def restart_service
       tries ||= 5
-      begin
-        if @new_resource.service_name =~ /varnish(log|ncsa)/
+      if @new_resource.service_name =~ /varnish(log|ncsa)/
+        begin
           sleep 5
+          super
+        rescue
+          retry unless (tries -= 1).zero?
         end
+      else
         super
-      rescue
-        retry unless (tries -= 1).zero?
       end
     end
 
     def start_service
       tries ||= 5
-      begin
-        if @new_resource.service_name =~ /varnish(log|ncsa)/
+      if @new_resource.service_name =~ /varnish(log|ncsa)/
+        begin
           sleep 5
+          super
+        rescue
+          retry unless (tries -= 1).zero?
         end
+      else
         super
-      rescue
-        retry unless (tries -= 1).zero?
       end
     end
   end
