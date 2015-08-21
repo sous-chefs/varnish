@@ -14,6 +14,7 @@ provisioner:
 platforms:
 - name: ubuntu-14.04
 - name: ubuntu-12.04
+- name: debian-8.0
 <% if ENV['CI'] %>
 - name: centos-7
 <% else %>
@@ -32,6 +33,7 @@ suites:
   excludes:
     - centos-7.0
     - centos-7
+    - debian-8.0
   run_list:
   - recipe[varnish]
   attributes:
@@ -48,6 +50,7 @@ suites:
 - name: distro_libraries
   includes:
     - ubuntu-14.04
+    - debian-8.0
     - centos-7.0
     - centos-6.6
   run_list:
@@ -55,6 +58,7 @@ suites:
 - name: vendor_libraries
   includes:
     - ubuntu-14.04
+    - debian-8.0
     - centos-7.0
     - centos-6.6
   run_list:
@@ -63,6 +67,7 @@ suites:
 - name: libraries_defaults
   includes:
     - ubuntu-14.04
+    - debian-8.0
     - centos-7.0
     - centos-6.6
   run_list:
