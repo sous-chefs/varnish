@@ -17,8 +17,8 @@ Description=Varnish HTTP accelerator
 
 [Service]
 Type=forking
-LimitNOFILE=131072
-LimitMEMLOCK=82000
+LimitNOFILE=<%= @config.max_open_files %>
+LimitMEMLOCK=<%= @config.max_locked_memory %>
 ExecStartPre=/usr/sbin/varnishd -C -f <%= @config.path_to_vcl %>
 ExecStart=/usr/sbin/varnishd -a <%= @config.listen_address %>:<%= @config.listen_port %> -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> -f <%= @config.path_to_vcl %> -S <%= @config.path_to_secret %> -s <%= storage %> <%= parameters %>
 ExecReload=/usr/share/varnish/reload-vcl
