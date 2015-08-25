@@ -2,6 +2,12 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v2.2.1
+-------------------
+- Fix a bug in the monkey patched service resource, so that the changes needed for Varnish don't affect other services. #83.
+- Update docs, Rakefile, standards. #79.
+- Add additional examples to the documentation. #74.
+
 v2.2.0
 -------------------
 - Fix default storage bug. Specify a default file storage location, as one is required with file backend, fixes #72. Adjust template for default configuration of varnish so that it won't do the file backend without a path, since that's illegal syntax.
