@@ -57,20 +57,8 @@ class Chef
 
       def configure_varnish_service
         template '/etc/default/varnish' do
-          if node['init_package'] == 'init' && node['platform_family'] == 'debian'
-            # Ubuntu < 15.04, Debian < 8
-            path '/etc/default/varnish'
-            source 'lib_default.erb'
-          elsif node['init_package'] == 'systemd'
-            # Ubuntu >= 15.04, Debian >= 8, CentOS >= 7
-            path '/etc/systemd/system/varnish.service'
-            source 'lib_default_systemd.erb'
-            notifies :run, 'execute[systemctl-daemon-reload]', :immediately
-          else
-            # CentOS < 7
-            path '/etc/sysconfig/varnish'
-            source 'lib_default.erb'
-          end
+          path varnish_platform_defaults[:path]
+          source varnish_platform_defaults[:source]
           cookbook 'varnish'
           owner 'root'
           group 'root'
@@ -81,6 +69,7 @@ class Chef
           )
           action :create
           notifies :restart, 'service[varnish]', :delayed
+          notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
         end
       end
     end
