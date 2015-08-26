@@ -43,6 +43,8 @@ class Chef
   class Provider
     # Configure the Varnish service.
     class VarnishDefaultConfig < Chef::Provider::LWRPBase
+      include VarnishCookbook::Helpers
+
       def whyrun_supported?
         true
       end
@@ -74,7 +76,8 @@ class Chef
           group 'root'
           mode '0644'
           variables(
-            config: new_resource
+            config: new_resource,
+            exec_reload_command: varnish_exec_reload_command
           )
           action :create
           notifies :restart, 'service[varnish]', :delayed

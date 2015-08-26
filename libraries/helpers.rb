@@ -14,5 +14,13 @@ module VarnishCookbook
         Chef::Log.warn "Unable to run varnishd to get version.\nMessage: #{ex.message}"
       end
     end
+
+    def varnish_exec_reload_command
+      if platform_family?('debian')
+        return '/usr/share/varnish/reload-vcl'
+      else
+        return '/usr/sbin/varnish_reload_vcl'
+      end
+    end
   end
 end
