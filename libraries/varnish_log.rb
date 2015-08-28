@@ -20,57 +20,6 @@ class Chef
     end
   end
 
-  # varnish and varnish(log|ncsa) services sometimes enter a race
-  # condition. This wrapper causes Chef to pause before restarting
-  # these services, and it will rescue up to 5 times.
-  module ProviderExtensions
-    def restart_service
-      tries ||= 5
-      if @new_resource.service_name =~ /varnish(log|ncsa)/
-        begin
-          sleep 5
-          super
-        rescue
-          retry unless (tries -= 1).zero?
-        end
-      else
-        super
-      end
-    end
-
-    def start_service
-      tries ||= 5
-      if @new_resource.service_name =~ /varnish(log|ncsa)/
-        begin
-          sleep 5
-          super
-        rescue
-          retry unless (tries -= 1).zero?
-        end
-      else
-        super
-      end
-    end
-  end
-
-  class Provider
-    class Service
-      # Add functionality to restart and start services.
-      class Init
-        prepend ProviderExtensions
-      end
-    end
-  end
-
-  class Provider
-    class Service
-      # Add functionality to restart and start services.
-      class Systemd
-        prepend ProviderExtensions
-      end
-    end
-  end
-
   class Provider
     # Configure Varnish logging.
     class VarnishLog < Chef::Provider::LWRPBase
@@ -121,9 +70,17 @@ class Chef
             only_if { ::File.exist?(new_resource.logrotate_path) }
           end
         end
+        ruby_block "#{new_resource.log_format} service pre-start pause" do
+          block do
+            sleep(5)
+          end
+          action :run
+        end
         service new_resource.log_format do
           supports restart: true, reload: true
           action %w(enable start)
+          retries 5
+          retry_delay 5
         end
       end
     end
