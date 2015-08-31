@@ -43,6 +43,8 @@ class Chef
   class Provider
     # Configure the Varnish service.
     class VarnishDefaultConfig < Chef::Provider::LWRPBase
+      include VarnishCookbook::Helpers
+
       def whyrun_supported?
         true
       end
@@ -55,25 +57,19 @@ class Chef
 
       def configure_varnish_service
         template '/etc/default/varnish' do
-          if node['platform_family'] == 'debian'
-            path '/etc/default/varnish'
-            source 'lib_default.erb'
-          elsif node['init_package'] == 'systemd'
-            path '/etc/varnish/varnish.params'
-            source 'lib_default_systemd.erb'
-          else
-            path '/etc/sysconfig/varnish'
-            source 'lib_default.erb'
-          end
+          path varnish_platform_defaults[:path]
+          source varnish_platform_defaults[:source]
           cookbook 'varnish'
           owner 'root'
           group 'root'
           mode '0644'
           variables(
-            config: new_resource
+            config: new_resource,
+            exec_reload_command: varnish_exec_reload_command
           )
           action :create
           notifies :restart, 'service[varnish]', :delayed
+          notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
         end
       end
     end
