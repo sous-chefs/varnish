@@ -15,7 +15,7 @@ LineLength:
 # Increase allowed lines in a method.  Short methods are good, but 10 lines
 #   is a bit too low.
 MethodLength:
-  Max: 40
+  Max: 50
 
 # Favor explicit over implicit code: don't complain of "redundant returns"
 RedundantReturn:
