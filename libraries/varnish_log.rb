@@ -69,17 +69,12 @@ class Chef
             only_if { ::File.exist?(new_resource.logrotate_path) }
           end
         end
-        ruby_block "#{new_resource.log_format} service pre-start pause" do
-          block do
-            sleep(5)
-          end
-          action :run
-        end
         service new_resource.log_format do
           supports restart: true, reload: true
           action %w(enable start)
           retries 5
           retry_delay 5
+          only_if { sleep(15) }
         end
       end
     end
