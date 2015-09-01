@@ -11,61 +11,29 @@ describe 'install_varnish::distro_install' do
     end.converge(described_recipe)
   end
 
-  it 'Installs the varnish package' do
+  it 'Installs the varnish package and enables the services' do
     expect(chef_run).to install_package('varnish')
-  end
-
-  it 'enables the varnish service' do
+    expect(chef_run).to install_varnish('default')
     resource = chef_run.package('varnish')
+
     expect(resource).to notify('service[varnish]').to('enable').delayed
     expect(resource).to notify('service[varnish]').to('restart').delayed
-  end
-
-  it 'enables the varnishlog service' do
-    expect(chef_run).to enable_service('varnishlog')
-  end
-
-  it 'installs varnish' do
-    expect(chef_run).to install_varnish('default')
-  end
-
-  it 'configures varnish service' do
     expect(chef_run).to configure_varnish_service('default')
+
+    expect(chef_run).to enable_service('varnishlog')
+    expect(chef_run).to enable_service('varnishncsa')
   end
 
-  it 'configures default VCL' do
+  it 'configures default VCL and varnish configs' do
     expect(chef_run).to configure_default_vcl('default')
-  end
-
-  it 'creates the default varnish config' do
     expect(chef_run).to create_template('/etc/default/varnish')
-  end
-
-  it 'creates the default VCL' do
     expect(chef_run).to create_template('/etc/varnish/default.vcl')
   end
 
-  it 'sets up varnishncsa logging' do
+  it 'configures logging and creates templates' do
     expect(chef_run).to configure_varnish_log('default')
-  end
-
-  it 'sets up varnishncsa logging' do
     expect(chef_run).to configure_varnish_log('default_ncsa')
-  end
-
-  it 'creates the log template' do
     expect(chef_run).to create_template('/etc/default/varnishlog')
-  end
-
-  it 'creates the ncsa template' do
     expect(chef_run).to create_template('/etc/default/varnishncsa')
-  end
-
-  it 'enables the varnishlog service' do
-    expect(chef_run).to enable_service('varnishlog')
-  end
-
-  it 'enables the varnishncsa service' do
-    expect(chef_run).to enable_service('varnishncsa')
   end
 end
