@@ -13,59 +13,33 @@ describe 'install_varnish::vendor_install' do
 
   it 'installs varnish' do
     expect(chef_run).to install_varnish('default')
-  end
-
-  it 'Installs the varnish package' do
     expect(chef_run).to install_package('varnish')
   end
 
-  it 'enables the varnish service' do
+  it 'enables the varnish service, enables and configures the varnishlog service' do
     resource = chef_run.package('varnish')
     expect(resource).to notify('service[varnish]').to('enable').delayed
     expect(resource).to notify('service[varnish]').to('restart').delayed
-  end
 
-  it 'enables the varnishlog service' do
     expect(chef_run).to enable_service('varnishlog')
-  end
-
-  it 'configures varnish service' do
     expect(chef_run).to configure_varnish_service('default')
   end
 
-  it 'configures default VCL' do
-    expect(chef_run).to configure_default_vcl('default')
-  end
-
-  it 'creates the default varnish config' do
+  it 'creates the default varnish config and VCLs' do
     expect(chef_run).to create_template('/etc/default/varnish')
-  end
-
-  it 'creates the default VCL' do
+    expect(chef_run).to configure_default_vcl('default')
     expect(chef_run).to create_template('/etc/varnish/default.vcl')
   end
 
   it 'sets up varnishncsa logging' do
     expect(chef_run).to configure_varnish_log('default')
-  end
-
-  it 'sets up varnishncsa logging' do
     expect(chef_run).to configure_varnish_log('default_ncsa')
   end
 
-  it 'creates the log template' do
+  it 'creates the log & ncsa template, enables the varnishlog and varnishncsa service' do
     expect(chef_run).to create_template('/etc/default/varnishlog')
-  end
-
-  it 'creates the ncsa template' do
     expect(chef_run).to create_template('/etc/default/varnishncsa')
-  end
-
-  it 'enables the varnishlog service' do
     expect(chef_run).to enable_service('varnishlog')
-  end
-
-  it 'enables the varnishncsa service' do
     expect(chef_run).to enable_service('varnishncsa')
   end
 end
