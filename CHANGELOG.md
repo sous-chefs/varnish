@@ -2,6 +2,11 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v2.2.2
+------
+
+- #86 - Removed monkey patching of service providers
+
 v2.2.1
 -------------------
 - Fix a bug in the monkey patched service resource, so that the changes needed for Varnish don't affect other services. #83.
