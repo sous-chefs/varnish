@@ -180,6 +180,11 @@ end
 |------|------|---------------|
 | `backend_host` | string | `'localhost'`
 | `backend_port` | integer | `8080` |
+| `vcl_source`   | string | `'lib_default.vcl.erb'` |
+| `vcl_cookbook` | string | `'varnish'` |
+| `vcl_parameters` | hash | `{}` |
+ 
+You can specify an alternative template (e.g. in a wrapper cookbook) and send a hash of any parameters you need to that template.
 
 #### Example
 Set a backend to `example.com:80` :
