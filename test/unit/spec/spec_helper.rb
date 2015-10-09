@@ -24,7 +24,7 @@ def stub_resources
   allow(Mixlib::ShellOut).to receive(:new).with('varnishd -V 2>&1').and_return(shellout)
   allow(shellout).to receive(:run_command).and_return(shellout)
   allow(shellout).to receive(:error!).and_return(true)
-  allow(shellout).to receive(:stdout).and_return(true)
+  allow(shellout).to receive(:stdout).and_return('varnish-4.0')
   allow(shellout).to receive(:environment).and_return('/root')
   allow(shellout.environment).to receive(:[]=).and_return('/root')
   allow(shellout.stdout).to receive(:match).and_return(true)

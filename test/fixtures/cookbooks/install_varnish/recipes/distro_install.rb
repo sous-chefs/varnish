@@ -12,7 +12,7 @@ directory 'logrotate' do
   user 'root'
   group 'root'
   mode '0755'
-  action 'create'
+  action :create
 end
 
 varnish_default_config 'default' do

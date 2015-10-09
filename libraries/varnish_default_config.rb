@@ -56,7 +56,12 @@ class Chef
       end
 
       def configure_varnish_service
-        template '/etc/default/varnish' do
+        svc = service 'varnish' do
+          supports restart: true, reload: true
+          action :nothing
+        end
+
+        tmp = template '/etc/default/varnish' do
           path varnish_platform_defaults[:path]
           source varnish_platform_defaults[:source]
           cookbook 'varnish'
@@ -67,10 +72,17 @@ class Chef
             config: new_resource,
             exec_reload_command: varnish_exec_reload_command
           )
-          action :create
+          action :nothing
           notifies :restart, 'service[varnish]', :delayed
           notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
         end
+        tmp.run_action(:create)
+
+        if tmp.updated_by_last_action?
+          svc.run_action(:restart)
+        end
+
+        new_resource.updated_by_last_action(true) if tmp.updated_by_last_action?
       end
     end
   end

@@ -34,35 +34,46 @@ class Chef
       def add_vendor_repo
         case node['platform_family']
         when 'debian'
-          apt_repository 'varnish-cache' do
+          repo = apt_repository 'varnish-cache' do
             uri "http://repo.varnish-cache.org/#{node['platform']}"
             distribution node['lsb']['codename']
             components ["varnish-#{new_resource.vendor_version}"]
             key "http://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
             deb_src true
           end
+          repo.run_action(:add)
+          new_resource.updated_by_last_action(true) if repo.updated_by_last_action?
         when 'rhel', 'fedora'
-          yum_repository 'varnish' do
+          repo = yum_repository 'varnish' do
             description "Varnish #{new_resource.vendor_version} repo (#{node['platform_version']} - $basearch)"
             url "http://repo.varnish-cache.org/redhat/varnish-#{new_resource.vendor_version}/el#{node['platform_version'].to_i}/"
             gpgcheck false
             gpgkey 'http://repo.varnish-cache.org/debian/GPG-key.txt'
-            action 'create'
           end
+          repo.run_action(:create)
+          new_resource.updated_by_last_action(true) if repo.updated_by_last_action?
         end
       end
 
       def install_varnish
-        package new_resource.package_name do
-          action 'install'
+        svc = service 'varnish' do
+          supports restart: true, reload: true
+          action :nothing
+        end
+
+        pack = package new_resource.package_name do
+          action :nothing
           notifies 'enable', "service[#{new_resource.package_name}]", 'delayed'
           notifies 'restart', "service[#{new_resource.package_name}]", 'delayed'
         end
 
-        service 'varnish' do
-          supports restart: true, reload: true
-          action 'nothing'
+        pack.run_action(:install)
+        if pack.updated_by_last_action?
+          svc.run_action(:enable)
+          svc.run_action(:restart)
         end
+
+        new_resource.updated_by_last_action(true) if svc.updated_by_last_action? || pack.updated_by_last_action?
       end
 
       def define_systemd_daemon_reload
