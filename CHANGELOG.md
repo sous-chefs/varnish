@@ -2,6 +2,10 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v2.3.0
+------
+- Fix chef 12.5 compatibility. This required a bunch of workarounds we should fix later.
+
 v2.2.2
 ------
 
