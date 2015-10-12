@@ -3,7 +3,7 @@ driver:
   name: vagrant
 
 driver_config:
-  require_chef_omnibus: true
+  require_chef_omnibus: 12.5.1 # 11.18.12
 
 provisioner:
   name: chef_zero
@@ -22,7 +22,7 @@ platforms:
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
-- name: centos-6.6
+- name: centos-6.7
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
@@ -49,14 +49,15 @@ suites:
   includes:
     - ubuntu-14.04
     - centos-7.0
-    - centos-6.6
+    - centos-6.7
   run_list:
     - recipe[install_varnish::distro_install]
+    
 - name: vendor_libraries
   includes:
     - ubuntu-14.04
     - centos-7.0
-    - centos-6.6
+    - centos-6.7
   run_list:
     - recipe[install_varnish::vendor_install]
 
@@ -64,6 +65,6 @@ suites:
   includes:
     - ubuntu-14.04
     - centos-7.0
-    - centos-6.6
+    - centos-6.7
   run_list:
     - recipe[install_varnish::default_settings]

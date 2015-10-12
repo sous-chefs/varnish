@@ -28,7 +28,12 @@ class Chef
       end
 
       def configure_varnish_vcl
-        template '/etc/varnish/default.vcl' do
+        service 'varnish' do
+          supports restart: true, reload: true
+          action :nothing
+        end
+
+        tmp = template '/etc/varnish/default.vcl' do
           source 'lib_default.vcl.erb'
           cookbook 'varnish'
           owner 'root'
@@ -38,9 +43,12 @@ class Chef
             config: new_resource,
             varnish_version: varnish_version
           )
-          action :create
+          action :nothing
           notifies :reload, 'service[varnish]', :delayed
         end
+        tmp.run_action(:create)
+
+        new_resource.updated_by_last_action(true) if tmp.updated_by_last_action?
       end
     end
   end
