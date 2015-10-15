@@ -12,7 +12,5 @@ varnish_default_config 'default'
 varnish_default_vcl 'default' do
   vcl_source 'lib_default_custom.vcl.erb'
   vcl_cookbook 'install_varnish'
-  vcl_parameters (
-    { url: '/test_url' }
-  )
+  vcl_parameters(url: '/test_url')
 end
