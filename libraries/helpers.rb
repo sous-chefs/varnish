@@ -44,5 +44,12 @@ module VarnishCookbook
         return { path: '/etc/sysconfig/varnish', source: 'lib_default.erb' }
       end
     end
+
+    def define_systemd_daemon_reload
+      execute 'systemctl-daemon-reload' do
+        command '/bin/systemctl --system daemon-reload'
+        action :nothing
+      end
+    end
   end
 end

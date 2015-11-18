@@ -28,7 +28,6 @@ class Chef
         end
 
         install_varnish
-        define_systemd_daemon_reload if node['init_package'] == 'systemd'
       end
 
       def add_vendor_repo
@@ -74,13 +73,6 @@ class Chef
         end
 
         new_resource.updated_by_last_action(true) if svc.updated_by_last_action? || pack.updated_by_last_action?
-      end
-
-      def define_systemd_daemon_reload
-        execute 'systemctl-daemon-reload' do
-          command '/bin/systemctl --system daemon-reload'
-          action :nothing
-        end
       end
     end
   end
