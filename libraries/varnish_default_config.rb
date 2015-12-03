@@ -17,7 +17,7 @@ class Chef
       attribute :instance_name, kind_of: String, default: nil
 
       # Daemon options
-      attribute :listen_address, kind_of: Fixnum, default: nil
+      attribute :listen_address, kind_of: String, default: nil
       attribute :listen_port, kind_of: Fixnum, default: 6081
       attribute :path_to_vcl, kind_of: String, default: '/etc/varnish/default.vcl'
       attribute :admin_listen_address, kind_of: String, default: '127.0.0.1'
