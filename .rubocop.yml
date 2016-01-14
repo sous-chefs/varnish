@@ -30,6 +30,10 @@ IfUnlessModifier:
 CyclomaticComplexity:
   Max: 10
 
+# Not that bad at 10 either.
+Metrics/PerceivedComplexity:
+  Max: 10
+
 # Disable Single Space before first arg
 SingleSpaceBeforeFirstArg:
   Enabled: false
