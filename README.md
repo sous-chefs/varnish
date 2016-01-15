@@ -50,6 +50,7 @@ Attributes
 * `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/$INSTANCE/varnish_storage.bin')
 * `node['varnish']['storage_size']` -  Specifies the size of the backing file or max memory allocation.  The size is assumed to be in bytes, unless followed by one of the following suffixes: K,k,M,m,G,g,T,g,% (1G)
 * `node['varnish']['log_daemon']` -  Specifies if the system `varnishlog` daemon dumping all the varnish logs into `/var/log/varnish/varnish.log` should be enabled. (true)
+* `node['varnish']['ncsa_daemon']` -  Specifies if the system `varnishncsa` daemon dumping apache style logs into `/var/log/varnish/varnishncsa.log` should be enabled. (true)
 * `node['varnish']['parameters']` = Set the parameter specified by param to the specified value. See Run-Time Parameters for a list of parameters. This option can be used multiple times to specifymultiple parameters.
 
 If you don't specify your own vcl_conf file, then these attributes are used in the cookbook `default.vcl` template:
