@@ -31,7 +31,7 @@ DAEMON_OPTS="-a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['li
              <%- end %>
               -s <%= node['varnish']['storage'] %>,<%= (node['varnish']['storage']=='file')?"#{node['varnish']['storage_file']},":'' %><%= node['varnish']['storage_size'] %> \
               <%- if !(node['varnish']['parameters']).nil? %>
-                <%- node['varnish']['parameters'].each do |param, value| %>
+                <%- node['varnish']['parameters'].sort.each do |param, value| %>
                   -p <%= param + "=" + value %> \
                 <%- end %>
               <%- end %>

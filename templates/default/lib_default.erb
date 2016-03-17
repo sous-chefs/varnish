@@ -40,7 +40,7 @@ DAEMON_OPTS="-a <%= @config.listen_address %>:<%= @config.listen_port %> \
              <%- end %>
               -s $STORAGE \
               <%- unless (@config.parameters).nil? %>
-                <%- @config.parameters.each do |param, value| %>
+                <%- @config.parameters.sort.each do |param, value| %>
                   -p <%= param.to_s + "=" + value %> \
                 <%- end %>
               <%- end %>
