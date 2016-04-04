@@ -31,7 +31,7 @@ CyclomaticComplexity:
   Max: 10
 
 # Disable Single Space before first arg
-SingleSpaceBeforeFirstArg:
+SpaceBeforeFirstArg.:
   Enabled: false
 
 # Don't force a word array unless 5 elements
@@ -44,6 +44,10 @@ UnusedBlockArgument:
 
 CyclomaticComplexity:
   Max: 20
+
+Style/GuardClause:
+  Exclude:
+    - 'libraries/helpers.rb'
 
 AllCops:
   Include:

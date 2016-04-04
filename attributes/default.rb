@@ -1,8 +1,8 @@
-if platform_family?('debian')
-  default['varnish']['default'] = '/etc/default/varnish'
-else
-  default['varnish']['default'] = '/etc/sysconfig/varnish'
-end
+default['varnish']['default'] = if platform_family?('debian')
+                                  '/etc/default/varnish'
+                                else
+                                  '/etc/sysconfig/varnish'
+                                end
 
 default['varnish']['version'] = '4.0'
 

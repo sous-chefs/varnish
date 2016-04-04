@@ -10,12 +10,12 @@ module VarnishCookbook
         cmd.run_command
         cmd_stdout = cmd.stdout.to_s
 
-        fail "Output of #{cmd_str} was nil; can't determine varnish version" unless cmd_stdout
+        raise "Output of #{cmd_str} was nil; can't determine varnish version" unless cmd_stdout
         Chef::Log.debug "#{cmd_str} ran and detected varnish version: #{cmd_stdout}"
 
         matches = cmd_stdout.match(/varnish-([0-9])\./)
         version_found = matches && matches.captures && matches.captures[0]
-        fail "Cannot parse varnish version from #{cmd_stdout}" unless version_found
+        raise "Cannot parse varnish version from #{cmd_stdout}" unless version_found
 
         return version_found
       rescue => ex
