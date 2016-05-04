@@ -31,7 +31,7 @@ CyclomaticComplexity:
   Max: 10
 
 # Disable Single Space before first arg
-SpaceBeforeFirstArg.:
+SpaceBeforeFirstArg:
   Enabled: false
 
 # Don't force a word array unless 5 elements
