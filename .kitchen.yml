@@ -26,12 +26,14 @@ platforms:
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
+- name: debian-8.0
 
 suites:
 - name: varnish3
   excludes:
     - centos-7.0
     - centos-7
+    - debian-8.0
   run_list:
   - recipe[varnish]
   attributes:
@@ -50,14 +52,16 @@ suites:
     - ubuntu-14.04
     - centos-7.0
     - centos-6.7
+    - debian-8.0
   run_list:
     - recipe[install_varnish::distro_install]
-    
+
 - name: vendor_libraries
   includes:
     - ubuntu-14.04
     - centos-7.0
     - centos-6.7
+    - debian-8.0
   run_list:
     - recipe[install_varnish::vendor_install]
 
@@ -66,5 +70,6 @@ suites:
     - ubuntu-14.04
     - centos-7.0
     - centos-6.7
+    - debian-8.0
   run_list:
     - recipe[install_varnish::default_settings]

@@ -36,8 +36,11 @@ module VarnishCookbook
       if node['init_package'] == 'init' && platform_family?('debian')
         # Ubuntu < 15.04, Debian < 8
         return { path: '/etc/default/varnish', source: 'lib_default.erb' }
+      elsif node['init_package'] == 'systemd' && node['platform'] == 'debian' && Chef::VersionConstraint.new('>= 8.0').include?(node['platform_version'])
+        # Debian >= 8
+        return { path: '/lib/systemd/system/varnish.service', source: 'lib_default_systemd.erb' }
       elsif node['init_package'] == 'systemd'
-        # Ubuntu >= 15.04, Debian >= 8, CentOS >= 7
+        # Ubuntu >= 15.04, CentOS >= 7
         return { path: '/etc/systemd/system/varnish.service', source: 'lib_default_systemd.erb' }
       else
         # CentOS < 7
