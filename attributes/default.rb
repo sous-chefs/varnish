@@ -34,6 +34,7 @@ default['varnish']['parameters']['esi_syntax'] = '0'
 default['varnish']['storage'] = 'file'
 default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE_varnish_storage.bin'
 default['varnish']['storage_size'] = '1G'
+default['varnish']['file_storage_size'] = node['varnish']['storage_size']
 default['varnish']['log_daemon'] = true
 default['varnish']['use_default_repo'] = true
 
