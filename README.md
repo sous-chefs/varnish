@@ -34,8 +34,8 @@ Attributes
 * `node['varnish']['instance']` - Default varnish instance name (node['fqdn'])
 * `node['varnish']['listen_address']` -  Default address to bind to. Blank address (the default) means all IPv4 and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted quad, or an IPv6 address in brackets
 * `node['varnish']['listen_port']` - Default port to listen on (6081)
-* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl.erb)
-* `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl)
+* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl)
+* `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl.erb)
 * `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (varnish)
 * `node['varnish']['vcl_generated']` - Generate the varnish configuration using the supplied template. (true)
 * `node['varnish']['conf_source']` - Name of the default system configuration file. (default.erb)
