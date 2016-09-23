@@ -45,7 +45,7 @@ module VarnishCookbook
       end
     end
 
-    def define_systemd_daemon_reload
+    def systemd_daemon_reload
       execute 'systemctl-daemon-reload' do
         command '/bin/systemctl --system daemon-reload'
         action :nothing

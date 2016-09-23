@@ -52,7 +52,6 @@ class Chef
       use_inline_resources
 
       def action_configure
-        define_systemd_daemon_reload if node['init_package'] == 'systemd'
         configure_varnish_service
       end
 
@@ -74,12 +73,11 @@ class Chef
             exec_reload_command: varnish_exec_reload_command
           )
           action :nothing
-          notifies :restart, 'service[varnish]', :delayed
-          notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
         end
         tmp.run_action(:create)
 
         if tmp.updated_by_last_action?
+          systemd_daemon_reload.run_action(:run) if node['init_package'] == 'systemd'
           svc.run_action(:restart)
         end
 
