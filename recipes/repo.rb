@@ -24,7 +24,7 @@ when 'debian'
     uri "http://repo.varnish-cache.org/#{node['platform']}"
     distribution node['lsb']['codename']
     components ["varnish-#{node['varnish']['version']}"]
-    key "http://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
+    key "https://repo.varnish-cache.org/#{node['platform']}/GPG-key.txt"
     deb_src true
     notifies 'nothing', 'execute[apt-get update]', 'immediately'
   end
@@ -33,7 +33,7 @@ when 'rhel', 'fedora'
     description "Varnish #{node['varnish']['version']} repo (#{node['platform_version']} - $basearch)"
     url "http://repo.varnish-cache.org/redhat/varnish-#{node['varnish']['version']}/el#{node['platform_version'].to_i}/"
     gpgcheck false
-    gpgkey 'http://repo.varnish-cache.org/debian/GPG-key.txt'
+    gpgkey 'https://repo.varnish-cache.org/debian/GPG-key.txt'
     action :create
   end
 end
