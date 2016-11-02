@@ -16,6 +16,8 @@ class Chef
   class Provider
     # Install Varnish
     class VarnishInstall < Chef::Provider::LWRPBase
+      include VarnishCookbook::Helpers
+
       use_inline_resources
 
       def whyrun_supported?
@@ -79,6 +81,12 @@ class Chef
           gid 113
           members 'varnishlog'
           only_if { node['platform'] == 'ubuntu' }
+        end
+
+        # The reload-vcl script doesn't support the -j option and breaks reload on ubuntu, need to open a ticket on this.
+        cookbook_file '/usr/share/varnish/reload-vcl' do
+          source 'varnish-vcl'
+          only_if { platform_family?('debian') && varnish_version.join('.').to_f >= 4.1 }
         end
 
         new_resource.updated_by_last_action(true) if svc.updated_by_last_action? || pack.updated_by_last_action?
