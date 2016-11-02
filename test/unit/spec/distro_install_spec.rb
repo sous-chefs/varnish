@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'install_varnish::distro_install' do
-  before { stub_resources }
+  before { stub_resources('4.0') }
   let(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: %w(varnish_install
                                            varnish_default_config
