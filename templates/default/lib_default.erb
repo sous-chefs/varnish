@@ -25,7 +25,7 @@ INSTANCE=<%= @config.instance_name || node['hostname'] %>
 <%- if @config.storage == 'file' && @config.file_storage_path %>
 STORAGE=<%= [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",") %>
 <%- else @config.storage %>
-STORAGE=<%= [@config.storage, @malloc_size].compact.join(",") %>
+STORAGE=<%= [@config.storage, @config.malloc_size].compact.join(",") %>
 <% end %>
 
 # Pass the Daemon options
