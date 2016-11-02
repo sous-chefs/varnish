@@ -21,10 +21,15 @@ INSTANCE=<%= node['varnish']['instance'] %>
 
 # Pass the Daemon options
 
-DAEMON_OPTS="-a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['listen_port'] %> \
+DAEMON_OPTS=" \
+              <%- if node['varnish']['version'] =~ /^4.1/ %>
+                -j unix,user=<%= node['varnish']['user'] %><%= ",ccgroup=#{node['varnish']['ccgroup']}" if node['varnish']['ccgroup'] %> \
+              <%- else %>
+                -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
+              <%- end %>
+              -a <%= node['varnish']['listen_address'] %>:<%= node['varnish']['listen_port'] %> \
               -f <%= node['varnish']['dir'] %>/<%= node['varnish']['vcl_conf'] %> \
               -T <%= node['varnish']['admin_listen_address'] %>:<%= node['varnish']['admin_listen_port'] %> \
-              -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
               -t <%= node['varnish']['ttl'] %> \
              <%- if node['platform_family'] == 'debian' %>
               -n $INSTANCE \

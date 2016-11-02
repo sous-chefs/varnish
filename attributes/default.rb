@@ -24,6 +24,7 @@ default['varnish']['admin_listen_address'] = '127.0.0.1'
 default['varnish']['admin_listen_port'] = '6082'
 default['varnish']['user'] = 'varnish'
 default['varnish']['group'] = 'varnish'
+default['varnish']['ccgroup'] = nil
 default['varnish']['ttl'] = '120'
 default['varnish']['parameters']['thread_pools'] = '4'
 default['varnish']['parameters']['thread_pool_min'] = '5'

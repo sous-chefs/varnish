@@ -25,15 +25,20 @@ INSTANCE=<%= @config.instance_name || node['hostname'] %>
 <%- if @config.storage == 'file' && @config.file_storage_path %>
 STORAGE=<%= [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",") %>
 <%- else @config.storage %>
-STORAGE=<%= [@config.storage, @config.malloc_size].compact.join(",") %>
+STORAGE=<%= [@config.storage, @malloc_size].compact.join(",") %>
 <% end %>
 
 # Pass the Daemon options
 
-DAEMON_OPTS="-a <%= @config.listen_address %>:<%= @config.listen_port %> \
+DAEMON_OPTS=" \
+              <%- if @varnish_version >= 4.1 %>
+                  -j unix,user=<%= @config.user %><%= ",ccgroup=#{@config.ccgroup}" if @config.ccgroup %> \
+              <%- else %>
+                  -u <%= @config.user %> -g <%= @config.group %> \
+              <%- end %>
+              -a <%= @config.listen_address %>:<%= @config.listen_port %> \
               -f <%= @config.path_to_vcl %> \
               -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> \
-              -u <%= @config.user %> -g <%= @config.group %> \
               -t <%= @config.ttl %> \
              <%- if node['platform_family'] == 'debian' %>
               -n $INSTANCE \

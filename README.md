@@ -21,6 +21,12 @@ Tested on:
 * Centos 6.5
 * Centos 7.0
 
+With varnish versions:
+
+* 3
+* 4
+* 4.1
+
 Attributes
 ----------
 * `node['varnish']['dir']` - location of the varnish configuration
@@ -44,7 +50,8 @@ Attributes
 * `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
 * `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
 * `node['varnish']['user']` - Specifies the name of an unprivileged user to which the child process should switch before it starts  accepting  connections (varnish)
-* `node['varnish']['group']` - Specifies  the name of an unprivileged group to which the child process should switch before it starts accepting connections (varnish)
+* `node['varnish']['group']` - Only used on varnish versions before 4.1. Specifies  the name of an unprivileged group to which the child process should switch before it starts accepting connections (varnish)
+* `node['varnish']['ccgroup']` - Only used on varnish version 4.1. A group to add to varnish requiring access to a c-compiler, refer to the varnishd man page for more info. (not set by default)
 * `node['varnish']['ttl']` - Specifies  a hard minimum time to live for cached documents. (120)
 * `node['varnish']['storage']` - The storage type used ('file')
 * `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/$INSTANCE/varnish_storage.bin')
@@ -129,7 +136,8 @@ files that come with your distro package will be used instead.
 | `admin_listen_address` | string | `'127.0.0.1'` |
 | `admin_plisten_port` | integer | `6082` |
 | `user` | string | `'varnish'` |
-| `group` | string | `'varnish'` |
+| `group` | string | `'varnish'` | Only used on varnish versions before 4.1
+| `ccgroup` | string | `nil` | Only used on varnish 4.1
 | `ttl` | integer | `120` |
 | `storage` | `'malloc'` or `'file'` | `'file'` |
 | `file_storage_path` | string | `'/var/lib/varnish/%s_storage.bin'` where %s is replaced with the resource name|

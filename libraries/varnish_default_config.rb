@@ -24,6 +24,7 @@ class Chef
       attribute :admin_listen_port, kind_of: Fixnum, default: 6082
       attribute :user, kind_of: String, default: 'varnish'
       attribute :group, kind_of: String, default: 'varnish'
+      attribute :ccgroup, kind_of: String
       attribute :ttl, kind_of: Fixnum, default: 120
       attribute :storage, kind_of: String, default: 'file',
                           equal_to: ['file', 'malloc']
@@ -71,6 +72,7 @@ class Chef
           mode '0644'
           variables(
             config: new_resource,
+            varnish_version: varnish_version.join('.').to_i,
             exec_reload_command: varnish_exec_reload_command
           )
           action :nothing
