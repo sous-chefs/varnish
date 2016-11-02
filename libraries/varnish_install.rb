@@ -72,6 +72,15 @@ class Chef
           svc.run_action(:restart)
         end
 
+        # The latest vendor package does not create the varnishlog group but expects it to exist if varnishlog is
+        # enabled on ubuntu so let's make sure it exists here.
+        group 'varnishlog' do
+          system true
+          gid 113
+          members 'varnishlog'
+          only_if { node['platform'] == 'ubuntu' }
+        end
+
         new_resource.updated_by_last_action(true) if svc.updated_by_last_action? || pack.updated_by_last_action?
       end
     end
