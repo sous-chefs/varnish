@@ -1,6 +1,7 @@
 require_relative 'spec_helper'
 
 describe 'debian::varnish::default' do
+  before { stub_resources('4.0') }
   let(:chef_run) do
     runner = ChefSpec::SoloRunner.new(
       platform: 'debian', version: '7.4'
