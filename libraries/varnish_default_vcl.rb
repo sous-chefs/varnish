@@ -44,7 +44,7 @@ class Chef
           mode '0644'
           variables(
             config: new_resource,
-            varnish_version: varnish_version.join('.').to_i,
+            varnish_version: varnish_version.join('.').to_f,
             parameters: new_resource.vcl_parameters
           )
           action :nothing

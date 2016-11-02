@@ -72,7 +72,7 @@ class Chef
           mode '0644'
           variables(
             config: new_resource,
-            varnish_version: varnish_version.join('.').to_i,
+            varnish_version: varnish_version.join('.').to_f,
             exec_reload_command: varnish_exec_reload_command
           )
           action :nothing
