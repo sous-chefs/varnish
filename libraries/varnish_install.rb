@@ -61,6 +61,7 @@ class Chef
         reload_vcl = cookbook_file '/usr/share/varnish/reload-vcl' do
           action :nothing
           source 'reload-vcl'
+          cookbook 'varnish'
           only_if { platform_family?('debian') && varnish_version.join('.').to_f >= 4.1 }
         end
 
