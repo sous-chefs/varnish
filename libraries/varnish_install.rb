@@ -87,7 +87,6 @@ class Chef
         # enabled on debian systems
         group 'varnishlog' do
           system true
-          gid 113
           members 'varnishlog'
           only_if { node['platform_family'] == 'debian' }
         end.run_action(:create)
