@@ -3,6 +3,9 @@
 # reload-varnish: Script to reload varnishd from VCL defined in
 # /etc/default/varnish.
 #
+# This is free software, distributed under the standard 2 clause BSD license,
+# see the copyright file in the Varnish documentation directory
+#
 # Stig Sandbeck Mathisen <ssm@debian.org>
 
 # Settings
