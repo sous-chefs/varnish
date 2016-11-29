@@ -12,20 +12,20 @@ class Chef
       # Service config options
       attribute :start_on_boot, kind_of: [TrueClass, FalseClass],
                                 default: true
-      attribute :max_open_files, kind_of: Fixnum, default: 131_072
-      attribute :max_locked_memory, kind_of: Fixnum, default: 82_000
+      attribute :max_open_files, kind_of: Integer, default: 131_072
+      attribute :max_locked_memory, kind_of: Integer, default: 82_000
       attribute :instance_name, kind_of: String, default: nil
 
       # Daemon options
       attribute :listen_address, kind_of: String, default: nil
-      attribute :listen_port, kind_of: Fixnum, default: 6081
+      attribute :listen_port, kind_of: Integer, default: 6081
       attribute :path_to_vcl, kind_of: String, default: '/etc/varnish/default.vcl'
       attribute :admin_listen_address, kind_of: String, default: '127.0.0.1'
-      attribute :admin_listen_port, kind_of: Fixnum, default: 6082
+      attribute :admin_listen_port, kind_of: Integer, default: 6082
       attribute :user, kind_of: String, default: 'varnish'
       attribute :group, kind_of: String, default: 'varnish'
       attribute :ccgroup, kind_of: String
-      attribute :ttl, kind_of: Fixnum, default: 120
+      attribute :ttl, kind_of: Integer, default: 120
       attribute :storage, kind_of: String, default: 'file',
                           equal_to: ['file', 'malloc']
       attribute :file_storage_path, kind_of: String,

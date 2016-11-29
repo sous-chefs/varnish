@@ -17,7 +17,6 @@ module VarnishCookbook
         version_found = matches && matches.captures
         raise "Cannot parse varnish version from #{cmd_stdout}" unless version_found
 
-
         return matches.captures
       rescue => ex
         Chef::Log.warn 'Unable to run varnishd to get version.'
