@@ -30,7 +30,7 @@ class Chef
       end
 
       def action_configure
-        define_systemd_daemon_reload if node['init_package'] == 'systemd'
+        systemd_daemon_reload.run_action(:run) if node['init_package'] == 'systemd'
         configure_varnish_log
       end
 
