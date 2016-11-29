@@ -61,7 +61,7 @@ namespace :integration do
 end
 
 desc 'Run all tests on CI Platform'
-task ci: ['style', 'spec', 'integration:cloud']
+task ci: ['style', 'spec']
 
 # Default
 task default: ['style', 'spec', 'integration:vagrant']
