@@ -28,13 +28,9 @@ package 'varnish' do
   version node['varnish']['version'] # Default's to nil which would be the latest
 end
 
-template node['varnish']['default'] do
-  source node['varnish']['conf_source']
-  cookbook node['varnish']['conf_cookbook']
-  owner 'root'
-  group 'root'
-  mode '0644'
-  notifies 'restart', 'service[varnish]', :delayed
+varnish_default_config 'default' do
+  conf_source node['varnish']['conf_source']
+  conf_cookbook node['varnish']['conf_cookbook']
 end
 
 template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do

@@ -2,7 +2,7 @@ provides :varnish_repo, platform_family: ['rhel', 'fedora']
 
 default_action :create
 
-properties :major_version, kind_of: String, is: %w(3.0 4.0 4.1), default: lazy { node['varnish']['major_version'] }
+properties :major_version, kind_of: String, equal_to: %w(3.0 4.0 4.1), default: lazy { node['varnish']['major_version'] }
 properties :fetch_gpg_key, kind_of: [TrueClass, FalseClass], default: true
 
 action :create do

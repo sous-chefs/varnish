@@ -1,0 +1,68 @@
+provides :varnish_default_config
+
+default_action :configure
+
+property :name, kind_of: String, name_attribute: true
+
+property :conf_source, kind_of: String, default: lazy { node['varnish']['default_src'] }
+property :conf_cookbook, kind_of: String, default: 'varnish'
+property :conf_path, kind_of: String, default: lazy { node['varnish']['default'] }
+
+# Service config options
+property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
+property :max_open_files, kind_of: Integer, default: 131_072
+property :max_locked_memory, kind_of: Integer, default: 82_000
+property :instance_name, kind_of: String, default: node['fqdn']
+property :varnish_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy { node['varnish']['major_version'] }
+
+# Daemon options
+property :listen_address, kind_of: String, default: '0.0.0.0'
+property :listen_port, kind_of: Integer, default: 6081
+property :path_to_vcl, kind_of: String, default: '/etc/varnish/default.vcl'
+property :admin_listen_address, kind_of: String, default: '127.0.0.1'
+property :admin_listen_port, kind_of: Integer, default: 6082
+property :user, kind_of: String, default: 'varnish'
+property :group, kind_of: String, default: 'varnish'
+property :ccgroup, kind_of: [String, nil]
+property :ttl, kind_of: Integer, default: 120
+property :storage, kind_of: String, default: 'file', equal_to: %w(file malloc)
+property :file_storage_path, kind_of: String, default: '/var/lib/varnish/%s_storage.bin'
+property :file_storage_size, kind_of: String, default: '1GB'
+property :malloc_percent, kind_of: [String, nil], default: '33'
+property :malloc_size, kind_of: [String, nil]
+property :parameters, kind_of: Hash,
+         default: { 'thread_pools' => '4',
+                    'thread_pool_min' => '5',
+                    'thread_pool_max' => '500',
+                    'thread_pool_timeout' => '300' }
+property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
+property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }
+
+action :configure do
+  define_systemd_daemon_reload if node['init_package'] == 'systemd'
+
+  service 'varnish' do
+    supports restart: true, reload: true
+    action :nothing
+  end
+
+  template '/etc/default/varnish' do
+    path varnish_platform_defaults[:path]
+    source new_resource.conf_source
+    cookbook new_resource.conf_cookbook
+    owner 'root'
+    group 'root'
+    mode '0644'
+    variables(
+        malloc_size: malloc_size || percent_of_total_mem(new_resource.malloc_percent),
+        config_repo: new_resource,
+        exec_reload_command: new_resource.reload_cmd
+    )
+    notifies :restart, 'service[varnish]', :delayed
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
+  end
+end
+
+action_class do
+  extend VarnishCookbook::Helpers
+end
