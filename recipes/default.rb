@@ -18,9 +18,15 @@
 # limitations under the License.
 #
 
-include_recipe 'varnish::repo' if node['varnish']['use_default_repo']
+#include_recipe 'varnish::repo' if node['varnish']['use_default_repo']
 
-package 'varnish'
+varnish_repo 'install' do
+  only_if node['varnish']['use_default_repo']
+end
+
+package 'varnish' do
+  version node['varnish']['version'] # Default's to nil which would be the latest
+end
 
 template node['varnish']['default'] do
   source node['varnish']['conf_source']
