@@ -1,4 +1,4 @@
-<%- if @varnish_version == '4' %>
+<%- if @varnish_version >= 4.0 %>
 vcl 4.0;
 <%- end %>
 backend default {

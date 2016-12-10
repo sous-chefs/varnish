@@ -28,7 +28,7 @@ property :ttl, kind_of: Integer, default: 120
 property :storage, kind_of: String, default: 'file', equal_to: %w(file malloc)
 property :file_storage_path, kind_of: String, default: '/var/lib/varnish/%s_storage.bin'
 property :file_storage_size, kind_of: String, default: '1GB'
-property :malloc_percent, kind_of: [String, nil], default: '33'
+property :malloc_percent, kind_of: [Integer, nil], default: 33
 property :malloc_size, kind_of: [String, nil]
 property :parameters, kind_of: Hash,
          default: { 'thread_pools' => '4',
@@ -39,28 +39,29 @@ property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
 property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }
 
 action :configure do
+  extend VarnishCookbook::Helpers
+
   service 'varnish' do
+
     supports restart: true, reload: true
     action :nothing
   end
 
+  malloc_default = percent_of_total_mem(new_resource.malloc_percent)
+
   template '/etc/default/varnish' do
-    path varnish_platform_defaults[:path]
+    path new_resource.conf_path
     source new_resource.conf_source
     cookbook new_resource.conf_cookbook
     owner 'root'
     group 'root'
     mode '0644'
     variables(
-        malloc_size: malloc_size || percent_of_total_mem(new_resource.malloc_percent),
+        malloc_size: malloc_size || malloc_default,
         config_repo: new_resource,
         exec_reload_command: new_resource.reload_cmd
     )
     notifies :restart, 'service[varnish]', :delayed
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
   end
-end
-
-action_class do
-  extend VarnishCookbook::Helpers
 end

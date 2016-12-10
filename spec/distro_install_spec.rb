@@ -1,9 +1,12 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe 'install_varnish::distro_install' do
-  before { stub_resources('4.0') }
   let(:chef_run) do
-    ChefSpec::SoloRunner.new do |node|
+    ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
+                                           varnish_default_config
+                                           vcl_template
+                                           vcl_file
+                                           varnish_log)) do |node|
       node_resources(node)
     end.converge(described_recipe)
   end

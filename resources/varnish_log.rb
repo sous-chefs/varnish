@@ -1,15 +1,14 @@
 provides :varnish_log
 
-default_action :configure
-
-properties :name, kind_of: String, name_attribute: true
-properties :file_name, kind_of: String, default: '/var/log/varnish/varnishlog.log'
-properties :logrotate, kind_of: [TrueClass, FalseClass], default: true
-properties :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
-properties :pid, kind_of: String, default: '/var/run/varnishlog.pid'
-properties :log_format, kind_of: String, default: 'varnishlog', equal_to: ['varnishlog', 'varnishncsa']
-properties :ncsa_format_string, kind_of: String, default: '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
-properties :instance_name, kind_of: String, default: nil
+property :name, kind_of: String, name_attribute: true
+property :file_name, kind_of: String, default: '/var/log/varnish/varnishlog.log'
+property :logrotate, kind_of: [TrueClass, FalseClass], default: true
+property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
+property :pid, kind_of: String, default: '/var/run/varnishlog.pid'
+property :log_format, kind_of: String, default: 'varnishlog', equal_to: ['varnishlog', 'varnishncsa']
+property :ncsa_format_string, kind_of: String, default: '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
+property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy { node['varnish']['major_version'] }
+property :instance_name, kind_of: String, default: nil
 
 action :configure do
   service new_resource.log_format do
@@ -33,7 +32,7 @@ action :configure do
     mode '0644'
     variables(
       config: new_resource,
-      varnish_major_version: varnish_version[0]
+      varnish_major_version: new_resource.major_version
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed
@@ -54,8 +53,5 @@ action :configure do
   service new_resource.log_format do
     supports restart: true, reload: true
     action %w(enable start)
-    retries 5
-    retry_delay 5
-    only_if { sleep(15) }
   end
 end

@@ -1,13 +1,15 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
-describe 'install_varnish::custom_vcl_install' do
+describe 'install_varnish::vendor_install' do
   before { stub_resources('4.0') }
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(step_into: %w(varnish_install
+    ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
                                            varnish_default_config
-                                           varnish_default_vcl
+                                           vcltemplate
+                                           vclfile
                                            varnish_log)) do |node|
       node_resources(node)
+      node.override['varnish']['major_version'] = '4.0'
     end.converge(described_recipe)
   end
 
@@ -17,13 +19,5 @@ describe 'install_varnish::custom_vcl_install' do
 
   it 'creates the varnish default config with the user and group settings set' do
     expect(chef_run).to render_file('/etc/default/varnish').with_content(/-u varnish -g varnish/)
-  end
-
-  it 'creates the default VCL' do
-    expect(chef_run).to create_template('/etc/varnish/default.vcl')
-  end
-
-  it 'create the default VCL with custom template and parameter' do
-    expect(chef_run).to render_file('/etc/varnish/default.vcl').with_content('probe').with_content('/test_url')
   end
 end

@@ -1,8 +1,8 @@
-provides :varnish_vcl
+provides :vcl_template
 
 default_action :configure
 
-property :file_name, kind_of: String, name_attribute: true
+property :vcl_name, kind_of: String, name_attribute: true
 property :source, kind_of: String, required: true
 property :cookbook, kind_of: String
 property :owner, kind_of: String, default: 'root'
@@ -17,7 +17,7 @@ action :configure do
     action :nothing
   end
 
-  template ::File.join(new_resource.varnish_dir, new_resource.file_name) do
+  template ::File.join(new_resource.varnish_dir, new_resource.vcl_name + '.vcl') do
     source new_resource.source
     cookbook new_resource.cookbook if new_resource.cookbook
     owner new_resource.owner

@@ -1,15 +1,18 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
-describe 'install_varnish::distro_install' do
-  before { stub_resources('4.0') }
+describe 'install_varnish::vendor_install' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new do |node|
+    ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
+                                           varnish_default_config
+                                           vcl_template
+                                           vcl_file
+                                           varnish_log)) do |node|
       node_resources(node)
     end.converge(described_recipe)
   end
 
-  it 'does not configure the varnish vendor repo' do
-    expect(chef_run).to_not configure_varnish_repo('vendor')
+  it 'configures the varnish vendor repo' do
+    expect(chef_run).to configure_varnish_repo('vendor')
   end
 
   it 'installs varnish' do
@@ -40,4 +43,5 @@ describe 'install_varnish::distro_install' do
     expect(chef_run).to enable_service('varnishlog')
     expect(chef_run).to enable_service('varnishncsa')
   end
+
 end
