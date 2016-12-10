@@ -18,8 +18,6 @@
 # limitations under the License.
 #
 
-#include_recipe 'varnish::repo' if node['varnish']['use_default_repo']
-
 varnish_repo 'install' do
   only_if node['varnish']['use_default_repo']
 end
@@ -33,17 +31,14 @@ varnish_default_config 'default' do
   conf_cookbook node['varnish']['conf_cookbook']
 end
 
-template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
+vcl_template node['varnish']['vcl_conf'] do
   source node['varnish']['vcl_source']
   cookbook node['varnish']['vcl_cookbook']
-  owner 'root'
-  group 'root'
-  mode '0644'
-  notifies :reload, 'service[varnish]', :delayed
+  varnish_dir node['varnish']['dir']
   only_if { node['varnish']['vcl_generated'] == true }
 end
 
-# The reload-vcl script doesn't support the -j option and breaks reload on ubuntu, need to open a ticket on this.
+# The reload-vcl script doesn't support the -j option and breaks reload on ubuntu, this is fixed upstream
 cookbook_file '/usr/share/varnish/reload-vcl' do
   extend VarnishCookbook::Helpers
   source 'reload-vcl'
@@ -52,7 +47,7 @@ end
 
 service 'varnish' do
   supports restart: true, reload: true
-  action %w(enable)
+  action :enable
 end
 
 service 'varnishlog' do
