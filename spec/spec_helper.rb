@@ -9,6 +9,3 @@ end
 def node_resources(node)
   node.set['memory']['total'] = '100000Kb'
 end
-
-def stub_resources(version)
-end

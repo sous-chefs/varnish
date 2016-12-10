@@ -19,7 +19,7 @@
 #
 
 varnish_repo 'install' do
-  only_if node['varnish']['use_default_repo']
+  only_if { node['varnish']['use_default_repo'] }
 end
 
 package 'varnish' do
@@ -42,15 +42,12 @@ end
 cookbook_file '/usr/share/varnish/reload-vcl' do
   extend VarnishCookbook::Helpers
   source 'reload-vcl'
-  only_if { platform_family?('debian') && varnish_version.join('.').to_f >= 4.1 }
+  only_if { platform_family?('debian') && node['varnish']['major_version'] >= 4.1 }
 end
 
 service 'varnish' do
   supports restart: true, reload: true
-  action :enable
+  action [:enable, :start]
 end
 
-service 'varnishlog' do
-  supports restart: true, reload: true
-  action node['varnish']['log_daemon'] ? %w(enable start) : %w(disable stop)
-end
+varnish_log 'default'

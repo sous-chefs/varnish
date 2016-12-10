@@ -1,6 +1,3 @@
-
-varnish_repo 'vendor'
-
 package 'varnish'
 
 service 'varnish' do
@@ -17,17 +14,6 @@ directory 'logrotate' do
 end
 
 varnish_default_config 'default'
-
-vcl_template 'default' do
-  source 'default.vcl.erb'
-  variables({ config: {
-      backend_host: 'rackspace.com',
-      backend_port: '80'
-  }})
-end
-
-# varnishlog
-varnish_log 'default'
 
 # varnishncsa
 varnish_log 'default_ncsa' do

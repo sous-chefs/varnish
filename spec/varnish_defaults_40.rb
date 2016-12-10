@@ -1,13 +1,8 @@
 require 'spec_helper'
 
 describe 'install_varnish::vendor_install' do
-  before { stub_resources('4.0') }
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
-                                           varnish_default_config
-                                           vcltemplate
-                                           vclfile
-                                           varnish_log)) do |node|
+    ChefSpec::SoloRunner.new(step_into: [:varnish_default_config]) do |node|
       node_resources(node)
       node.override['varnish']['major_version'] = '4.0'
     end.converge(described_recipe)
