@@ -6,11 +6,11 @@ module VarnishCookbook
       "#{(node['memory']['total'][0..-3].to_i * (percent / 100)).to_i}K"
     end
 
-    def systemd_daemon_reload
-      execute 'systemctl-daemon-reload' do
-        command '/bin/systemctl --system daemon-reload'
-        action :nothing
-      end
-    end
+    #def systemd_daemon_reload
+    #  execute 'systemctl-daemon-reload' do
+    #    command '/bin/systemctl --system daemon-reload'
+    #    action :nothing
+    #  end
+    #end
   end
 end

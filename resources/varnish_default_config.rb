@@ -39,8 +39,6 @@ property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
 property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }
 
 action :configure do
-  define_systemd_daemon_reload if node['init_package'] == 'systemd'
-
   service 'varnish' do
     supports restart: true, reload: true
     action :nothing
