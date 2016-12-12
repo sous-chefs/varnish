@@ -27,7 +27,7 @@ end
 
 describe 'Storage bin file exists' do
   it 'Should find the storage file' do
-    binfile = Dir.glob('/var/lib/varnish/**/*').find { |e| /varnish_storage.bin/ =~ e }
+    binfile = Dir.glob('/var/lib/varnish/**/*').find { |e| /default_storage.bin/ =~ e }
     expect(binfile).to be_truthy
   end
 end

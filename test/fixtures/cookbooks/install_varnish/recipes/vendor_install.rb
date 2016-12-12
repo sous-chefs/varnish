@@ -43,11 +43,13 @@ varnish_default_config 'default'
 
 vcl_template 'default' do
   source 'default.vcl.erb'
-  variables({ config: {
+  variables(
+    config: {
       major_version: node['varnish']['major_version'],
       backend_host: '127.0.0.10',
       backend_port: '8080'
-  }})
+    }
+  )
 end
 
 # varnishlog
