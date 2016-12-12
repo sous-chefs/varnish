@@ -38,8 +38,9 @@ describe file('/etc/logrotate.d/varnishlog') do
   end
 end
 
+auth_params = '-S /etc/varnish/secret -T 127.0.0.1:6082'
 # Not all distro versions have the backend.list command
-describe command("varnishadm vcl.show $(varnishadm vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $3}')") do
+describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params} vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $3}')") do
   it 'exits succusfully' do
     expect(subject.exit_status).to eq 0
   end
@@ -49,7 +50,7 @@ describe command("varnishadm vcl.show $(varnishadm vcl.list|sed '/^\s*$/d'|tail 
   end
 end
 
-describe command('varnishadm -S /etc/varnish/secret -T 127.0.0.1:6082 param.show thread_pool_max') do
+describe command("varnishadm #{auth_params} param.show thread_pool_max") do
   it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
