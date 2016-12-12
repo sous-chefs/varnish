@@ -31,7 +31,7 @@ STORAGE=<%= [@config.storage, @malloc_size].compact.join(",") %>
 # Pass the Daemon options
 
 DAEMON_OPTS=" \
-              <%- if @config.varnish_version >= 4.1 %>
+              <%- if @major_version >= 4.1 %>
                   -j unix,user=<%= @config.user %><%= ",ccgroup=#{@config.ccgroup}" if @config.ccgroup %> \
               <%- else %>
                   -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
