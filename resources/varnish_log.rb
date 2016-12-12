@@ -17,10 +17,6 @@ action :configure do
     action :nothing
   end
 
-  group 'varnishlog' do
-    system true
-  end
-
   cookbook_file '/etc/init.d/varnishlog' do
     source "varnishlog_initd_#{node['platform_family']}"
     cookbook 'varnish'

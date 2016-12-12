@@ -19,6 +19,7 @@
 #
 
 include_recipe 'apt'
+include_recipe 'varnish::default'
 
 varnish_repo 'configure' do
   major_version node['varnish']['major_version']

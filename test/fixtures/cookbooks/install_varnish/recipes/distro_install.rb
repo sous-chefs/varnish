@@ -1,5 +1,5 @@
-
 include_recipe 'apt'
+include_recipe 'varnish::default'
 
 package 'varnish'
 
