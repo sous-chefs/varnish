@@ -10,20 +10,49 @@ property :group, kind_of: String, default: 'root'
 property :mode, kind_of: String, default: '0644'
 property :variables, kind_of: Hash, default: {}
 property :varnish_dir, kind_of: String, default: '/etc/varnish'
+property :vcl_path, kind_of: String, default: lazy { ::File.join(varnish_dir, vcl_name) + '.vcl' }
 
 action :configure do
+
   service 'varnish' do
     supports restart: true, reload: true
     action :nothing
   end
 
-  template ::File.join(new_resource.varnish_dir, new_resource.vcl_name + '.vcl') do
+  begin
+    installed_version = major_version
+  rescue => e
+    installed_version = nil
+    Chef::Log.warn 'varnish version will not be available in vcl_template variables.'
+  end
+
+  _var_hash = new_resource.variables
+  _merged_var_hash = Chef::Mixin::DeepMerge.deep_merge(
+      {
+          varnish: {
+              installed_version: VarnishCookbook::Helpers.installed_major_version
+          }
+      }, _var_hash
+  )
+
+  template new_resource.vcl_path do
     source new_resource.source
     cookbook new_resource.cookbook if new_resource.cookbook
     owner new_resource.owner
     group new_resource.group
     mode new_resource.mode
-    variables new_resource.variables
+    variables _merged_var_hash
+    notifies :reload, 'service[varnish]', :delayed
+  end
+end
+
+action :unconfigure do
+  service 'varnish' do
+    supports restart: true, reload: true
+    action :nothing
+  end
+
+  file new_resource.vcl_path do
     notifies :reload, 'service[varnish]', :delayed
   end
 end

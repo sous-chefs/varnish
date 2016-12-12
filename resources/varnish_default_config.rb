@@ -4,7 +4,7 @@ default_action :configure
 
 property :name, kind_of: String, name_attribute: true
 
-property :conf_source, kind_of: String, default: lazy { node['varnish']['default_src'] }
+property :conf_source, kind_of: String, default: lazy { node['varnish']['conf_source'] }
 property :conf_cookbook, kind_of: String, default: 'varnish'
 property :conf_path, kind_of: String, default: lazy { node['varnish']['default'] }
 
@@ -13,7 +13,7 @@ property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
 property :max_open_files, kind_of: Integer, default: 131_072
 property :max_locked_memory, kind_of: Integer, default: 82_000
 property :instance_name, kind_of: String, default: node['fqdn']
-property :varnish_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy { node['varnish']['major_version'] }
+property :major_version, kind_of: Float, equal_to: [2.1, 3.0, 4.0, 4.1]
 
 # Daemon options
 property :listen_address, kind_of: String, default: '0.0.0.0'
@@ -40,16 +40,17 @@ property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_c
 
 action :configure do
   extend VarnishCookbook::Helpers
+  systemd_daemon_reload if node['init_package'] == 'systemd'
+
+  version = new_resource.major_version || VarnishCookbook::Helpers.installed_major_version
+  malloc_default = VarnishCookbook::Helpers.percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
   service 'varnish' do
-
     supports restart: true, reload: true
     action :nothing
   end
 
-  malloc_default = percent_of_total_mem(new_resource.malloc_percent)
-
-  template '/etc/default/varnish' do
+  template new_resource.conf_path do
     path new_resource.conf_path
     source new_resource.conf_source
     cookbook new_resource.conf_cookbook
@@ -57,9 +58,9 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
+        major_version: version,
         malloc_size: malloc_size || malloc_default,
-        config_repo: new_resource,
-        exec_reload_command: new_resource.reload_cmd
+        config: new_resource,
     )
     notifies :restart, 'service[varnish]', :delayed
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'

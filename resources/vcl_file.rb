@@ -10,6 +10,7 @@ property :group, kind_of: String, default: 'root'
 property :mode, kind_of: String, default: '0644'
 property :variables, kind_of: Hash, default: {}
 property :varnish_dir, kind_of: String, default: '/etc/varnish'
+property :vcl_path, kind_of: String, default: lazy { ::File.join(varnish_dir, vcl_name) + '.vcl' }
 
 action :configure do
   service 'varnish' do
@@ -17,12 +18,23 @@ action :configure do
     action :nothing
   end
 
-  cookbook_file ::File.join(new_resource.varnish_dir, new_resource.vcl_name + '.vcl') do
+  cookbook_file new_resource.vcl_path do
     source new_resource.source
     cookbook new_resource.cookbook if new_resource.cookbook
     owner new_resource.owner
     group new_resource.group
     mode new_resource.mode
+    notifies :reload, 'service[varnish]', :delayed
+  end
+end
+
+action :unconfigure do
+  service 'varnish' do
+    supports restart: true, reload: true
+    action :nothing
+  end
+
+  file new_resource.vcl_path do
     notifies :reload, 'service[varnish]', :delayed
   end
 end
