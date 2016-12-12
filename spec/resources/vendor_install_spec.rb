@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'install_varnish::distro_install' do
+describe 'install_varnish::vendor_install' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
                                            varnish_default_config
@@ -11,8 +11,12 @@ describe 'install_varnish::distro_install' do
     end.converge(described_recipe)
   end
 
+  before do
+    stub_resources
+  end
+
   it 'does not configure the varnish vendor repo' do
-    expect(chef_run).to_not configure_varnish_repo('vendor')
+    expect(chef_run).to configure_varnish_repo('configure')
   end
 
   it 'installs varnish' do
