@@ -6,7 +6,7 @@ property :name, kind_of: String, name_attribute: true
 
 property :conf_source, kind_of: String, default: lazy { node['varnish']['conf_source'] }
 property :conf_cookbook, kind_of: String, default: 'varnish'
-property :conf_path, kind_of: String, default: lazy { node['varnish']['default'] }
+property :conf_path, kind_of: String, default: lazy { node['varnish']['conf_path'] }
 
 # Service config options
 property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
@@ -30,11 +30,13 @@ property :file_storage_path, kind_of: String, default: '/var/lib/varnish/%s_stor
 property :file_storage_size, kind_of: String, default: '1GB'
 property :malloc_percent, kind_of: [Integer, nil], default: 33
 property :malloc_size, kind_of: [String, nil]
-property :parameters, kind_of: Hash,
-         default: { 'thread_pools' => '4',
-                    'thread_pool_min' => '5',
-                    'thread_pool_max' => '500',
-                    'thread_pool_timeout' => '300' }
+property :parameters, kind_of: Hash, default:
+    {
+      'thread_pools' => '4',
+      'thread_pool_min' => '5',
+      'thread_pool_max' => '500',
+      'thread_pool_timeout' => '300'
+    }
 property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
 property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }
 
@@ -58,9 +60,9 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-        major_version: version,
-        malloc_size: malloc_size || malloc_default,
-        config: new_resource,
+      major_version: version,
+      malloc_size: malloc_size || malloc_default,
+      config: new_resource
     )
     notifies :restart, 'service[varnish]', :delayed
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'

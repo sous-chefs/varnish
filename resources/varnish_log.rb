@@ -46,8 +46,8 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-        config: new_resource,
-        major_version: version
+      config: new_resource,
+      major_version: version
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed

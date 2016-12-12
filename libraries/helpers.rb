@@ -22,7 +22,6 @@ module VarnishCookbook
         Chef::Log.warn 'Unable to run varnishd to get version.'
         raise ex
       end
-
     end
 
     def self.percent_of_total_mem(total_mem, percent)
