@@ -27,7 +27,7 @@ end
 
 describe 'Storage bin file exists' do
   it 'Should find the storage file' do
-    binfile = Dir.glob('/var/lib/varnish/**/*').find { |e| /varnish_storage.bin/ =~ e }
+    binfile = Dir.glob('/var/lib/varnish/**/*').find { |e| /default_storage.bin/ =~ e }
     expect(binfile).to be_truthy
   end
 end
@@ -38,12 +38,14 @@ describe file('/etc/logrotate.d/varnishlog') do
   end
 end
 
-describe command('sudo varnishadm backend.list') do
+# Not all distro versions have the backend.list command
+describe command("varnishadm vcl.show $(varnishadm vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $3}')") do
   it 'exits succusfully' do
     expect(subject.exit_status).to eq 0
   end
   its 'backend is 127.0.0.10:8080' do
-    expect(subject.stdout).to match(/default\(127\.0\.0\.10,[^,]*,8080\)/)
+    expect(subject.stdout).to match(/127.0.0.10/)
+    expect(subject.stdout).to match(/8080/)
   end
 end
 

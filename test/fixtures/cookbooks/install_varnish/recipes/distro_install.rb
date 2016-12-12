@@ -1,4 +1,6 @@
 
+include_recipe 'apt'
+
 package 'varnish'
 
 service 'varnish' do
@@ -19,8 +21,8 @@ varnish_default_config 'default'
 vcl_template 'default' do
   source 'default.vcl.erb'
   variables({ config: {
-      backend_host: 'rackspace.com',
-      backend_port: '80'
+      backend_host: '127.0.0.10',
+      backend_port: '8080'
   }})
 end
 
