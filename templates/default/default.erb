@@ -34,7 +34,7 @@ DAEMON_OPTS=" \
               <%- if @major_version >= 4.1 %>
                   -j unix,user=<%= @config.user %><%= ",ccgroup=#{@config.ccgroup}" if @config.ccgroup %> \
               <%- else %>
-                  -u <%= node['varnish']['user'] %> -g <%= node['varnish']['group'] %> \
+                  -u <%= @config.user %> -g <%= @config.group %> \
               <%- end %>
               -a <%= @config.listen_address %>:<%= @config.listen_port %> \
               -f <%= @config.path_to_vcl %> \
