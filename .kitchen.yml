@@ -10,6 +10,8 @@ provisioner:
   attributes:
     apt:
       compile_time_update: true
+    varnish:
+      backend_host: '127.0.0.10'
 
 platforms:
 - name: ubuntu-14.04
@@ -25,27 +27,26 @@ platforms:
 
 suites:
 - name: varnish3
+  excludes:
+    - centos-7.2
   run_list:
-  - recipe[varnish]
+    - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
-      major_version: '3.0'
+      major_version: 3.0
 - name: varnish4
   run_list:
-  - recipe[varnish]
+    - recipe[install_varnish::distro_install]
   attributes:
     varnish:
-      major_version: '4.0'
+      major_version: 4.0
 - name: varnish41
   run_list:
-  - recipe[varnish]
+    - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
-      major_version: '4.1'
+      major_version: 4.1
 
 - name: distro_install
   run_list:
     - recipe[install_varnish::distro_install]
-- name: varnishncsa
-  run_list:
-    - recipe[install_varnish::varnishncsa]

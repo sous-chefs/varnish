@@ -18,36 +18,9 @@
 # limitations under the License.
 #
 
-varnish_repo 'install' do
-  only_if { node['varnish']['use_default_repo'] }
-end
-
-package 'varnish' do
-  version node['varnish']['version'] # Default's to nil which would be the latest
-end
-
-varnish_default_config 'default' do
-  conf_source node['varnish']['conf_source']
-  conf_cookbook node['varnish']['conf_cookbook']
-end
-
-vcl_template node['varnish']['vcl_conf'] do
-  source node['varnish']['vcl_source']
-  cookbook node['varnish']['vcl_cookbook']
-  varnish_dir node['varnish']['dir']
-  only_if { node['varnish']['vcl_generated'] == true }
-end
-
 # The reload-vcl script doesn't support the -j option and breaks reload on ubuntu, this is fixed upstream
 cookbook_file '/usr/share/varnish/reload-vcl' do
   extend VarnishCookbook::Helpers
   source 'reload-vcl'
-  only_if { platform_family?('debian') && node['varnish']['major_version'] >= 4.1 }
+  only_if { platform_family?('debian') && major_version >= 4.1 }
 end
-
-service 'varnish' do
-  supports restart: true, reload: true
-  action [:enable, :start]
-end
-
-varnish_log 'default'
