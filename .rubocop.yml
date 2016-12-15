@@ -49,6 +49,9 @@ UnusedBlockArgument:
 CyclomaticComplexity:
   Max: 20
 
+Metrics/BlockLength:
+  Max: 45
+
 Style/GuardClause:
   Exclude:
     - 'libraries/helpers.rb'

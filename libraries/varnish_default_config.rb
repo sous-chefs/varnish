@@ -12,19 +12,20 @@ class Chef
       # Service config options
       attribute :start_on_boot, kind_of: [TrueClass, FalseClass],
                                 default: true
-      attribute :max_open_files, kind_of: Fixnum, default: 131_072
-      attribute :max_locked_memory, kind_of: Fixnum, default: 82_000
+      attribute :max_open_files, kind_of: Integer, default: 131_072
+      attribute :max_locked_memory, kind_of: Integer, default: 82_000
       attribute :instance_name, kind_of: String, default: nil
 
       # Daemon options
       attribute :listen_address, kind_of: String, default: nil
-      attribute :listen_port, kind_of: Fixnum, default: 6081
+      attribute :listen_port, kind_of: Integer, default: 6081
       attribute :path_to_vcl, kind_of: String, default: '/etc/varnish/default.vcl'
       attribute :admin_listen_address, kind_of: String, default: '127.0.0.1'
-      attribute :admin_listen_port, kind_of: Fixnum, default: 6082
+      attribute :admin_listen_port, kind_of: Integer, default: 6082
       attribute :user, kind_of: String, default: 'varnish'
       attribute :group, kind_of: String, default: 'varnish'
-      attribute :ttl, kind_of: Fixnum, default: 120
+      attribute :ccgroup, kind_of: String
+      attribute :ttl, kind_of: Integer, default: 120
       attribute :storage, kind_of: String, default: 'file',
                           equal_to: ['file', 'malloc']
       attribute :file_storage_path, kind_of: String,
@@ -52,7 +53,6 @@ class Chef
       use_inline_resources
 
       def action_configure
-        define_systemd_daemon_reload if node['init_package'] == 'systemd'
         configure_varnish_service
       end
 
@@ -71,15 +71,15 @@ class Chef
           mode '0644'
           variables(
             config: new_resource,
+            varnish_version: varnish_version.join('.').to_f,
             exec_reload_command: varnish_exec_reload_command
           )
           action :nothing
-          notifies :restart, 'service[varnish]', :delayed
-          notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
         end
         tmp.run_action(:create)
 
         if tmp.updated_by_last_action?
+          systemd_daemon_reload.run_action(:run) if node['init_package'] == 'systemd'
           svc.run_action(:restart)
         end
 

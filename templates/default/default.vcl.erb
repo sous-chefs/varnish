@@ -1,4 +1,4 @@
-<%- if node['varnish']['version'] == '4.0' || node['varnish']['version'] == '4.1' %>
+<%- if node['varnish']['version'] =~ /^4/ %>
 vcl 4.0;
 <%- end %>
 backend default {

@@ -2,6 +2,13 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v2.4.0
+-----
+- Add additional attributes to allow use of template source from a wrapper cookbook
+- Move define_systemd_daemon_reload to helpers (#97)
+- Fix Chef::Exceptions::ChecksumMismatch error
+- Set Ruby vers to 2.2.3 to satisfy ruby_dep requirements (#104)
+
 v2.3.0
 ------
 - Fix chef 12.5 compatibility. This required a bunch of workarounds we should fix later.

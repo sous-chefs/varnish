@@ -30,7 +30,7 @@ class Chef
       end
 
       def action_configure
-        define_systemd_daemon_reload if node['init_package'] == 'systemd'
+        systemd_daemon_reload.run_action(:run) if node['init_package'] == 'systemd'
         configure_varnish_log
       end
 
@@ -53,7 +53,7 @@ class Chef
           mode '0644'
           variables(
             config: new_resource,
-            varnish_version: varnish_version
+            varnish_major_version: varnish_version[0]
           )
           action :create
           notifies :restart, "service[#{new_resource.log_format}]", :delayed

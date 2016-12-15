@@ -46,6 +46,13 @@ suites:
     varnish:
       version: '4.0'
       log_daemon: false
+- name: varnish41
+  run_list:
+  - recipe[varnish]
+  attributes:
+    varnish:
+      version: '4.1'
+      log_daemon: false
 
 - name: distro_libraries
   includes:
@@ -64,6 +71,14 @@ suites:
     - debian-8.0
   run_list:
     - recipe[install_varnish::vendor_install]
+
+- name: vendor_41_libraries
+  includes:
+    - ubuntu-14.04
+    - centos-7.0
+    - centos-6.7
+  run_list:
+    - recipe[install_varnish::vendor_41_install]
 
 - name: libraries_defaults
   includes:

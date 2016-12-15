@@ -20,7 +20,7 @@ DAEMON_OPTS="-a -w $LOGFILE -D -P $PIDFILE \
              <%- if node['platform_family'] == 'debian' %>
               -n $INSTANCE \
              <%- end %>
-	     <%- if @config.log_format == 'varnishncsa' && @varnish_version.to_i > 2 %>
+	     <%- if @config.log_format == 'varnishncsa' && @varnish_major_version.to_i > 2 %>
 	     -F '${LOG_FORMAT}' \
 	     <%- end %>
           "

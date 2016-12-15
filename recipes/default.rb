@@ -27,7 +27,7 @@ template node['varnish']['default'] do
   cookbook node['varnish']['conf_cookbook']
   owner 'root'
   group 'root'
-  mode 0644
+  mode '0644'
   notifies 'restart', 'service[varnish]', :delayed
 end
 
@@ -36,9 +36,16 @@ template "#{node['varnish']['dir']}/#{node['varnish']['vcl_conf']}" do
   cookbook node['varnish']['vcl_cookbook']
   owner 'root'
   group 'root'
-  mode 0644
+  mode '0644'
   notifies :reload, 'service[varnish]', :delayed
   only_if { node['varnish']['vcl_generated'] == true }
+end
+
+# The reload-vcl script doesn't support the -j option and breaks reload on ubuntu, need to open a ticket on this.
+cookbook_file '/usr/share/varnish/reload-vcl' do
+  extend VarnishCookbook::Helpers
+  source 'reload-vcl'
+  only_if { platform_family?('debian') && varnish_version.join('.').to_f >= 4.1 }
 end
 
 service 'varnish' do
