@@ -57,3 +57,10 @@ service 'varnishlog' do
   supports restart: true, reload: true
   action node['varnish']['log_daemon'] ? %w(enable start) : %w(disable stop)
 end
+
+if node['init_package'] == 'systemd'
+  execute 'reload systemd' do
+    command 'systemctl daemon-reload'
+    action :run
+  end
+end

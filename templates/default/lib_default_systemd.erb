@@ -19,7 +19,7 @@ Description=Varnish HTTP accelerator
 Type=forking
 LimitNOFILE=<%= @config.max_open_files %>
 LimitMEMLOCK=<%= @config.max_locked_memory %>
-ExecStartPre=/usr/sbin/varnishd -C -f <%= @config.path_to_vcl %>
+ExecStartPre=/usr/sbin/varnishd -C -f <%= @config.path_to_vcl %> <%- if ['4.0','4.1'].include?(node['varnish']['version']) %>-p vcc_allow_inline_c=<%= node['varnish']['parameters']['vcc_allow_inline_c'] %> <% else %> -p esi_syntax=<%= node['varnish']['parameters']['esi_syntax'] %> <% end %>
 ExecStart=/usr/sbin/varnishd -a <%= @config.listen_address %>:<%= @config.listen_port %> -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> -f <%= @config.path_to_vcl %> -S <%= @config.path_to_secret %> -s <%= storage %> <%= parameters %>
 ExecReload=<%= @exec_reload_command %>
 
