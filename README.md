@@ -121,7 +121,7 @@ varnish_install 'default' do
 end
 ```
 
-### varnish_default_config
+### varnish_config
 Configures the Varnish service. If you do not include this, the config
 files that come with your distro package will be used instead.
 
@@ -161,7 +161,7 @@ You can also send a hash to `parameters` which will add additional parameters to
 Configure some parameters on the Varnish service :
 
 ```
-varnish_default_config 'default' do
+varnish_config 'default' do
   start_on_boot true
   max_open_files 131_072
   max_locked_memory 82_000

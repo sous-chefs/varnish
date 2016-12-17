@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'install_varnish::distro_install' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: %w(varnish_repo
-                                           varnish_default_config
+                                           varnish_config
                                            vcl_template
                                            vcl_file
                                            varnish_log)) do |node|

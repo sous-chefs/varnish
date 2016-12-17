@@ -1,4 +1,4 @@
-provides :varnish_default_config
+provides :varnish_config
 
 default_action :configure
 

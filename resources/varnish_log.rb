@@ -2,16 +2,20 @@ provides :varnish_log
 
 property :name, kind_of: String, name_attribute: true
 property :file_name, kind_of: String, default: '/var/log/varnish/varnishlog.log'
-property :logrotate, kind_of: [TrueClass, FalseClass], default: true
-property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
 property :pid, kind_of: String, default: '/var/run/varnishlog.pid'
-property :log_format, kind_of: String, default: 'varnishlog', equal_to: ['varnishlog', 'varnishncsa']
-property :ncsa_format_string, kind_of: String, default: '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
+property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
+property :logrotate, kind_of: [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
+property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
 property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1]
+property :ncsa_format_string, kind_of: String
 property :instance_name, kind_of: String, default: nil
 
 action :configure do
-  version = new_resource.major_version || VarnishCookbook::Helpers.installed_major_version
+  varnish_major_version = new_resource.major_version || VarnishCookbook::Helpers.installed_major_version
+
+  if new_resource.log_format == 'varnishncsa' && varnish_major_version > 2.0
+    ncsa_format = new_resource.ncsa_format_string || '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
+  end
 
   service new_resource.log_format do
     action :nothing
@@ -23,7 +27,7 @@ action :configure do
     owner 'root'
     group 'root'
     mode '0755'
-    only_if { node['init_package'] == 'init' }
+    only_if { node['init_package'] == 'init' && new_resource.log_format == 'varnishlog' }
   end
 
   template "/etc/default/#{new_resource.log_format}" do
@@ -43,7 +47,7 @@ action :configure do
     mode '0644'
     variables(
       config: new_resource,
-      major_version: version
+      ncsa_format: ncsa_format
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed

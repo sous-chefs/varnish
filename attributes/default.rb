@@ -1,3 +1,7 @@
+##
+## Resource settings
+##
+
 if platform_family?('debian')
   default['varnish']['conf_path'] = '/etc/default/varnish'
   default['varnish']['reload_cmd'] = '/usr/share/varnish/reload-vcl'
@@ -15,3 +19,53 @@ elsif node['init_package'] == 'systemd'
 else
   default['varnish']['conf_source'] = 'default.erb'
 end
+
+
+##
+## varnish::configure recipe settings
+##
+## This recipe uses namespaced attributes to configure resources.
+##
+## Resource                   | Attribute Namespace
+## ---------------------------|------------------------
+## varnish_repo   'configure' | node['varnish']['configure']['repo']
+## package        'varnish'   | node['varnish']['configure']['package']
+## service        'varnish'   | node['varnish']['configure']['service']
+## varnish_config 'default'   | node['varnish']['configure']['config']
+## vcl_template   'default'   | node['varnish']['configure']['vcl_template']
+## varnish_log    'default'   | node['varnish']['configure']['log']
+## varnish_log    'ncsa'      | node['varnish']['configure']['ncsa']
+##
+
+# Disable vendor repo:
+#default['varnish']['configure']['repo']['action'] = :nothing
+
+# Install specific varnish version:
+#default['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
+
+# Disable logs:
+#node['varnish']['configure']['log']['action'] = :nothing
+
+
+default['varnish']['configure']['default_recipe'] = true
+
+default['varnish']['configure']['repo'] = {}
+
+default['varnish']['configure']['package'] = {}
+
+default['varnish']['configure']['service']['action'] = [:start, :enable]
+
+default['varnish']['configure']['config'] = {}
+
+default['varnish']['configure']['vcl_template']['source']    = 'default.vcl.erb'
+default['varnish']['configure']['vcl_template']['variables'] = {
+    config: {
+        major_version: node['varnish']['major_version'],
+        backend_host: '127.0.0.1',
+        backend_port: '8080'
+    }
+}
+
+default['varnish']['configure']['log'] = {}
+
+default['varnish']['configure']['ncsa']['action'] = :nothing

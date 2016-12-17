@@ -20,6 +20,7 @@
 
 # The reload-vcl script doesn't support the -j option in 4.1 and breaks reload on ubuntu.
 # This is fixed upstream but could cause issues if you are using the distro package.
+
 directory '/usr/share/varnish' do
   recursive true
 end
