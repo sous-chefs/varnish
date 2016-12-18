@@ -5,7 +5,7 @@
 #
 
 # Overriding the logfile and pidfile variables
-<%= "#{@config.log_format}_ENABLED=1" %>
+<%= "#{@config.log_format.upcase}_ENABLED=1" %>
 
 LOGFILE=<%= @config.file_name %>
 PIDFILE=<%= @config.pid %>

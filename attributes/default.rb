@@ -38,29 +38,28 @@ end
 ##
 
 # Disable vendor repo:
-#default['varnish']['configure']['repo']['action'] = :nothing
+#override['varnish']['configure']['repo']['action'] = :nothing
 
 # Install specific varnish version:
-#default['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
+#override['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
 
 # Disable logs:
-#node['varnish']['configure']['log']['action'] = :nothing
+#override['varnish']['configure']['log']['action'] = :nothing
 
 
 default['varnish']['configure']['default_recipe'] = true
 
-default['varnish']['configure']['repo'] = {}
+default['varnish']['configure']['repo']['action'] = :configure
 
-default['varnish']['configure']['package'] = {}
+default['varnish']['configure']['package']['action'] = :install
 
 default['varnish']['configure']['service']['action'] = [:start, :enable]
 
-default['varnish']['configure']['config'] = {}
+default['varnish']['configure']['config']['action'] = :configure
 
 default['varnish']['configure']['vcl_template']['source']    = 'default.vcl.erb'
 default['varnish']['configure']['vcl_template']['variables'] = {
     config: {
-        major_version: node['varnish']['major_version'],
         backend_host: '127.0.0.1',
         backend_port: '8080'
     }

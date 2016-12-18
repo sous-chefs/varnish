@@ -2,6 +2,15 @@
 
 require_relative 'spec_helper'
 
+describe command('varnishd -V') do
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
+  it 'returns varnish version-3.0' do
+    expect(subject.stderr).to match(/varnish-3\.0/)
+  end
+end
+
 %w(varnish varnishlog).each do |varnish_service|
   describe service(varnish_service) do
     it 'enabled' do
@@ -43,7 +52,7 @@ describe command('sudo varnishadm backend.list') do
     expect(subject.exit_status).to eq 0
   end
   its 'backend is 127.0.0.10:8080' do
-    expect(subject.stdout).to match(/default\(127\.0\.0\.10,[^,]*,8080\)/)
+    expect(subject.stdout).to match(/default\(127\.0\.0\.1,[^,]*,8080\)/)
   end
 end
 

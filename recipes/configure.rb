@@ -19,7 +19,7 @@
 #
 
 include_recipe 'apt'
-include_recipe 'varnish::default' if node['varnish']['default_recipe']
+include_recipe 'varnish::default' if node['varnish']['configure']['default_recipe']
 
 varnish_repo 'configure' do
   node['varnish']['configure']['repo'].each do |key, value|

@@ -45,7 +45,7 @@ describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params}
     expect(subject.exit_status).to eq 0
   end
   its 'backend is 127.0.0.10:8080' do
-    expect(subject.stdout).to match(/127.0.0.10/)
+    expect(subject.stdout).to match(/127.0.0.1/)
     expect(subject.stdout).to match(/8080/)
   end
 end
