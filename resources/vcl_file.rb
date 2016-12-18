@@ -3,7 +3,7 @@ provides :vcl_file
 default_action :configure
 
 property :vcl_name, kind_of: String, name_attribute: true
-property :source, kind_of: String, required: true
+property :source, kind_of: String, default: lazy { ::File.basename(vcl_name) }
 property :cookbook, kind_of: String
 property :owner, kind_of: String, default: 'root'
 property :group, kind_of: String, default: 'root'
