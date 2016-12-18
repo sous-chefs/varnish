@@ -20,7 +20,6 @@ else
   default['varnish']['conf_source'] = 'default.erb'
 end
 
-
 ##
 ## varnish::configure recipe settings
 ##
@@ -38,14 +37,13 @@ end
 ##
 
 # Disable vendor repo:
-#override['varnish']['configure']['repo']['action'] = :nothing
+# override['varnish']['configure']['repo']['action'] = :nothing
 
 # Install specific varnish version:
-#override['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
+# override['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
 
 # Disable logs:
-#override['varnish']['configure']['log']['action'] = :nothing
-
+# override['varnish']['configure']['log']['action'] = :nothing
 
 default['varnish']['configure']['default_recipe'] = true
 
@@ -59,10 +57,10 @@ default['varnish']['configure']['config']['action'] = :configure
 
 default['varnish']['configure']['vcl_template']['source']    = 'default.vcl.erb'
 default['varnish']['configure']['vcl_template']['variables'] = {
-    config: {
-        backend_host: '127.0.0.1',
-        backend_port: '8080'
-    }
+  config: {
+    backend_host: '127.0.0.1',
+    backend_port: '8080'
+  }
 }
 
 default['varnish']['configure']['log'] = {}

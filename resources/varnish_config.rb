@@ -13,7 +13,9 @@ property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
 property :max_open_files, kind_of: Integer, default: 131_072
 property :max_locked_memory, kind_of: Integer, default: 82_000
 property :instance_name, kind_of: String, default: node['fqdn']
-property :major_version, kind_of: Float, equal_to: [2.1, 3.0, 4.0, 4.1]
+property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
+  VarnishCookbook::Helpers.installed_major_version
+}
 
 # Daemon options
 property :listen_address, kind_of: String, default: '0.0.0.0'
@@ -44,8 +46,7 @@ action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload if node['init_package'] == 'systemd'
 
-  version = new_resource.major_version || VarnishCookbook::Helpers.installed_major_version
-  malloc_default = VarnishCookbook::Helpers.percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
+  malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
   service 'varnish' do
     supports restart: true, reload: true
@@ -60,7 +61,7 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-      major_version: version,
+      major_version: new_resource.major_version,
       malloc_size: malloc_size || malloc_default,
       config: new_resource
     )

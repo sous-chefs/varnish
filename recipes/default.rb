@@ -30,8 +30,17 @@ cookbook_file '/usr/share/varnish/reload-vcl' do
   only_if { platform_family?('debian') }
 end
 
+# varnishlog init script was removed from upstream packaging
+cookbook_file '/etc/init.d/varnishlog' do
+  source "varnishlog_initd_#{node['platform_family']}"
+  cookbook 'varnish'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  only_if { node['init_package'] == 'init' }
+end
+
 # The varnishlog group was removed from some of the more recent varnish packages.
 group 'varnishlog' do
   system true
 end
-
