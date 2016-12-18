@@ -27,7 +27,7 @@ GRAPH
     compat_resource (>= 12.14.7)
   seven_zip (2.0.2)
     windows (>= 1.2.2)
-  varnish (2.5.0)
+  varnish (3.0.0)
     apt (>= 2.4.0)
     build-essential (>= 0.0.0)
     chef-sugar (>= 0.0.0)

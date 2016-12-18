@@ -46,7 +46,7 @@ varnish_config 'default' do
   end
 end
 
-vcl_template 'default' do
+vcl_template 'default.vcl' do
   node['varnish']['configure']['vcl_template'].each do |key, value|
     send(key, value) unless value.nil?
   end

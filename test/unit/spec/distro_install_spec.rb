@@ -27,7 +27,7 @@ describe 'install_varnish::distro_install' do
   end
 
   it 'creates the default varnish config and VCLs' do
-    expect(chef_run).to configure_vcl_template('default')
+    expect(chef_run).to configure_vcl_template('default.vcl')
     expect(chef_run).to create_template('/etc/default/varnish')
     expect(chef_run).to create_template('/etc/varnish/default.vcl')
   end
