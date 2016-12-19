@@ -8,7 +8,6 @@ property :cookbook, kind_of: String
 property :owner, kind_of: String, default: 'root'
 property :group, kind_of: String, default: 'root'
 property :mode, kind_of: String, default: '0644'
-property :variables, kind_of: Hash, default: {}
 property :varnish_dir, kind_of: String, default: '/etc/varnish'
 property :vcl_path, kind_of: String, default: lazy { ::File.join(varnish_dir, vcl_name) }
 
