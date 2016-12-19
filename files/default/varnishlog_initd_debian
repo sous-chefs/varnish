@@ -10,6 +10,9 @@
 # Description:       This script provides logging for varnish
 ### END INIT INFO
 
+# This is free software, distributed under the standard 2 clause BSD license,
+# see the copyright file in the Varnish documentation directory
+
 # Source function library
 . /lib/lsb/init-functions
 
