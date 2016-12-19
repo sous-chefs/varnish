@@ -21,7 +21,7 @@ MEMLOCK=<%= @config.max_locked_memory %>
 
 # Default varnish instance name is the local nodename.  Can be overridden with
 # the -n switch, to have more instances on a single server.
-INSTANCE=<%= @config.instance_name || node['hostname'] %>
+INSTANCE=<%= @config.instance_name %>
 <%- if @config.storage == 'file' && @config.file_storage_path %>
 STORAGE=<%= [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",") %>
 <%- else @config.storage %>

@@ -15,7 +15,7 @@ LOG_FORMAT="<%= @config.ncsa_format_string %>"
 
 # Default varnish instance name is the local nodename.  Can be overridden with
 # the -n switch, to have more instances on a single server.
-INSTANCE=<%= @config.instance_name || node['hostname'] %>
+INSTANCE=<%= @config.instance_name %>
 # Override the Daemon options
 DAEMON_OPTS="-a -w $LOGFILE -D -P $PIDFILE \
              <%- if node['platform_family'] == 'debian' %>
