@@ -2,13 +2,13 @@
 
 varnish Cookbook
 ================
-Installs and configures varnish.
+Configures varnish.
 
 
 Requirements
 ------------
 ### chef-client
-* Requires chef-client 12 and above.
+* Requires chef-client 12.5 and above.
 
 ### Platforms
 
@@ -16,10 +16,8 @@ Tested on:
 
 * Ubuntu 12.04
 * Ubuntu 14.04
-* Debian 6.0
-* Centos 5.9
-* Centos 6.5
-* Centos 7.0
+* Centos 6.8
+* Centos 7.2
 
 With varnish versions:
 
@@ -27,110 +25,115 @@ With varnish versions:
 * 4
 * 4.1
 
-Attributes
-----------
-* `node['varnish']['dir']` - location of the varnish configuration
-  directory
-* `node['varnish']['default']` - location of the `default` file that
-  controls the varnish init script on Debian/Ubuntu systems.
-* `node['varnish']['version']` - If retrieving from official Varnish project repository, may choose 3.0 or 4.0.
-* `node['varnish']['start']` - Should we start varnishd at boot?  Set to "no" to disable (yes)
-* `node['varnish']['nfiles']` -  Open files (131072)
-* `node['varnish']['memlock']` -  Maxiumum locked memory size for shared memory log (82000)
-* `node['varnish']['instance']` - Default varnish instance name (node['fqdn'])
-* `node['varnish']['listen_address']` -  Default address to bind to. Blank address (the default) means all IPv4 and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted quad, or an IPv6 address in brackets
-* `node['varnish']['listen_port']` - Default port to listen on (6081)
-* `node['varnish']['vcl_conf']` - Name to use for main configuration file. (default.vcl)
-* `node['varnish']['vcl_source']` - Name for default configuration file template. (default.vcl.erb)
-* `node['varnish']['vcl_cookbook']` - Cookbook in which to look for the default.vcl.erb (or 'vcl_source' filename) template. This is used to specify custom template without modifying community cookbook files. (varnish)
-* `node['varnish']['vcl_generated']` - Generate the varnish configuration using the supplied template. (true)
-* `node['varnish']['conf_source']` - Name of the default system configuration file. (default.erb)
-* `node['varnish']['conf_cookbook']` - Cookbook in which the default system configuration file is located. (varnish)
-* `node['varnish']['secret_file']` - Path to a file containing a secret used for authorizing access to the management port. (/etc/varnish/secret)
-* `node['varnish']['admin_listen_address']` - Telnet admin interface listen address (127.0.0.1)
-* `node['varnish']['admin_listen_port']` - Telnet admin interface listen port (6082)
-* `node['varnish']['user']` - Specifies the name of an unprivileged user to which the child process should switch before it starts  accepting  connections (varnish)
-* `node['varnish']['group']` - Only used on varnish versions before 4.1. Specifies  the name of an unprivileged group to which the child process should switch before it starts accepting connections (varnish)
-* `node['varnish']['ccgroup']` - Only used on varnish version 4.1. A group to add to varnish requiring access to a c-compiler, refer to the varnishd man page for more info. (not set by default)
-* `node['varnish']['ttl']` - Specifies  a hard minimum time to live for cached documents. (120)
-* `node['varnish']['storage']` - The storage type used ('file')
-* `node['varnish']['storage_file']` -  Specifies either the path to the backing file or the path to a directory in which varnishd will create the backing file. Only used if using file storage. ('/var/lib/varnish/$INSTANCE/varnish_storage.bin')
-* `node['varnish']['storage_size']` -  Specifies the size of the backing file or max memory allocation.  The size is assumed to be in bytes, unless followed by one of the following suffixes: K,k,M,m,G,g,T,g,% (1G)
-* `node['varnish']['log_daemon']` -  Specifies if the system `varnishlog` daemon dumping all the varnish logs into `/var/log/varnish/varnish.log` should be enabled. (true)
-* `node['varnish']['parameters']` = Set the parameter specified by param to the specified value. See Run-Time Parameters for a list of parameters. This option can be used multiple times to specifymultiple parameters.
-
-If you don't specify your own vcl_conf file, then these attributes are used in the cookbook `default.vcl` template:
-
-* `node['varnish']['backend_host']` = Host to serve/cache content from (localhost)
-* `node['varnish']['backend_port']` = Port on backend host to access (8080)
-
+Global Attributes
+-----------------
+These attributes used as defaults for both resources and the `varnish::configure` cookbook but can be also overridden with other attributes and resource properties described later.
+* `node['varnish']['conf_path']` - location of the `default` file that controls the varnish init script on Debian/Ubuntu systems.
+* `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
+* `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
+* `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
+* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, and default's to 4.1.
 
 Recipes
 -------
 ### default
-Installs the varnish package, manages the default varnish configuration file, and the init script defaults file.
+This configures the minimum setup needed for all the resources to work and should be included first.
 
-### repo
-If placed before the default recipe in the run list, the official Varnish project apt repository will offer access to more version and platform support.
+### configure
+Installs the varnish package, manages the varnish configuration file, and the init script defaults file.
 
 Usage
 -----
-On systems that need a high performance caching server, use `recipe[varnish]`. Additional configuration can be done by modifying the `default.vcl.erb` and `default.erb` templates.
+You can either use include the varnish::configure recipe and configure the setup using the recipe attributes described below or include varnish::default and use the resources directly.
 
-If running on a Redhat derivative then you may need to include yum-epel as it provides the jemalloc dependency that varnish needs
+If running on a Redhat derivative then you may need to include yum-epel as it provides the jemalloc dependency that varnish needs.
+
+Configure Recipe Attributes
+---------------------------
+
+### Common Settings
+
+The configure recipe uses the resources below to get varnish and varnishlog installed and running from the vendor repo. The recipe will work without any additional configuration however there is a few common attributes that you may want to set.
+
+* `node['varnish']['configure']['repo']['action']` - Affects the vendor repo resource. Can be set to `:nothing` to skip and use the systems package otherwise the default is to `:configure` it.
+* `node['varnish']['configure']['package']['version']` - Specific varnish version to pass to the package resource. Default is to install the latest available version for the current `node['varnish']['major_version']`.
+* `node['varnish']['configure']['log']['action']` - Affects the varnish_log resource. Can be set to `:nothing` to skip and not set up logging otherwise the default is to `:configure` it.
+* `node['varnish']['configure']['config']['listen_port']` = Port number to listen on for requests to varnish. Defaults to 6081.
+* `node['varnish']['configure']['vcl_template']['source']` - Name for default vcl template. Defaults to default.vcl.erb.
+* `node['varnish']['configure']['vcl_template']['cookbook']` - Name of the cookbook for the default vcl template. Uses this varnish cookbook by default.
+
+Any resource property in the `varnish::configure` recipe can be configured. The keys under the namespace's listed below will map to the property name. Refer to the resource documentation for details on all the properties.
+
+|Resource | Attribute Namespace
+---------------------------|------------------------
+| `varnish_repo   'configure'` | `node['varnish']['configure']['repo']`
+| `package        'varnish'` | `node['varnish']['configure']['package']`
+| `service        'varnish'` | `node['varnish']['configure']['service']`
+| `varnish_config 'default'` | `node['varnish']['configure']['config']`
+| `vcl_template   'default'` | `node['varnish']['configure']['vcl_template']`
+| `varnish_log    'default'` | `node['varnish']['configure']['log']`
+| `varnish_log    'ncsa'` | `node['varnish']['configure']['ncsa']`
+
+### Recipe Example's
+Use the systems varnish package and skip enabling the varnishlog daemon :
+
+```
+node.override['varnish']['configure']['repo']['action'] = :nothing
+node.override['varnish']['configure']['log']['action'] = :nothing
+
+include_recipe 'varnish::configure'
+```
+
+
+Use `custom.vcl.erb` template in `my_cookbook` and configure varnish to listen on port 80:
+
+```
+node.override['varnish']['configure']['config']['listen_port'] = 80
+node.override['varnish']['configure']['vcl_template']['source'] = 'custom.vcl.erb'
+node.override['varnish']['configure']['vcl_template']['cookbook'] = 'my_cookbook'
+
+include_recipe 'varnish::configure'
+```
 
 Resources
------
-See the distro_install and vendor_install recipes for examples of these resources in action.
+---------
+See the example resource recipe section to see how to use these in your recipe.
 
-### varnish_install
-Installs Varnish with the default configuration supplied by the package.
+### varnish_repo
+Configure's the varnish vendor repo.
 
-The `:install` action handles package installation. By default, it
-will install Varnish from your distro repositories. If you set the
-`vendor_repo` parameter to `true`, then it will install Varnish
-from the varnish-cache repositories.
+Will configure the varnish repo specified by `node['varnish']['major_version']` which can be overridden with the major_version property.
 
 #### Parameters
 | Name | Type | Default Value |
 -------|------|---------------|
-| `package_name` | string | `'varnish'` |
-| `vendor_repo` | `true` or `false` | `false` |
-| `vendor_version` | string | `'4.0'` |
+| `major_version` | `3.0`, `4.0`, or `4.1` | `node['varnish']['major_version']` (4.1 by default) |
+| `fetch_gpg_key` | `true` or `false` | `true` for debian distro's otherwise `false` (rpm packages are not signed) |
 
 #### Actions
-- `:install` - Installs and enables the Varnish service.
+- `:configure` - Configures the varnish vendor repo.
 
 #### Examples
-Install from the OS distribution :
+Configures the varnish 3.0 vendor repo :
 
 ```
-varnish_install 'default' do
-  package_name 'varnish'
-  vendor_repo false
-end
-```
-
-Install version 4 from the vendor :
-
-```
-varnish_install 'default' do
-  package_name 'varnish'
-  vendor_repo true
-  vendor_version '4.0'
+varnish_repo 'varnish' do
+  major_version 3.0
 end
 ```
 
 ### varnish_config
-Configures the Varnish service. If you do not include this, the config
+Configures the Varnish service through the defaults or systemd init file. If you do not include this, the config
 files that come with your distro package will be used instead.
 
 | Name | Type | Default Value |
 |------|------|---------------|
-|`start_on_boot` | `true` or `false` | `true` |
-|`max_open_files` | integer | `131_072` |
+| `conf` | `string` | `node['varnish']['conf_source']` | Defaults to `default.erb` or `default_systemd.erb` depending on init system
+| `start_on_boot` | `true` or `false` | `true` | Currently only used for initd
+| `max_open_files` | integer | `131_072` |
 | `max_locked_memory` | integer | `82_000` |
-| `instance_name` | string | `nil` |
+| `major_version` | `3.0`, `4.0`, or `4.1` | `node['varnish']['major_version']` | major_version attribute defaults to 4.1
+| `instance_name` | string | `node['hostname']` | Currently not used on non-debian initd systems
 | `listen_address` | string | `nil` |
 | `listen_port` | integer | `6081` |
 | `admin_listen_address` | string | `'127.0.0.1'` |
@@ -138,12 +141,14 @@ files that come with your distro package will be used instead.
 | `user` | string | `'varnish'` |
 | `group` | string | `'varnish'` | Only used on varnish versions before 4.1
 | `ccgroup` | string | `nil` | Only used on varnish 4.1
-| `ttl` | integer | `120` |
+| `ttl` | integer | `120` | Currently only used on initd systems
 | `storage` | `'malloc'` or `'file'` | `'file'` |
 | `file_storage_path` | string | `'/var/lib/varnish/%s_storage.bin'` where %s is replaced with the resource name|
 | `file_storage_size` | string | `'1G'` |
-| `malloc_size` | string | `nil` |
+| `malloc_percent` | Integer | `33` | Percent of total memory to allocate to malloc
+| `malloc_size` | string | `nil` | Size to allocate to malloc, a string like '500M'. Overrides malloc_percent.
 | `path_to_secret` | string | `'/etc/varnish/secret'` |
+| `reload_cmd` | string | `node['varnish']['reload_cmd']` | Default to depends on system and is only needed for systemd currently.
 
 You can also send a hash to `parameters` which will add additional parameters to the varnish daemon via the `-p` option. The default hash is:
 
@@ -162,55 +167,68 @@ Configure some parameters on the Varnish service :
 
 ```
 varnish_config 'default' do
-  start_on_boot true
-  max_open_files 131_072
-  max_locked_memory 82_000
-  listen_address nil
-  listen_port 6081
-  path_to_vcl '/etc/varnish/default.vcl'
-  admin_listen_address '127.0.0.1'
-  admin_listen_port 6082
-  user 'varnish'
-  group 'varnish'
-  ttl 120
+  listen_address '0.0.0.0'
+  listen_port 80
   storage 'malloc'
-  malloc_size "#{(node['memory']['total'][0..-3].to_i * 0.75).to_i}K"
-  parameters(thread_pools: '4',
-             thread_pool_min: '5',
-             thread_pool_max: '500',
-             thread_pool_timeout: '300')
-  path_to_secret '/etc/varnish/secret'
+  malloc_percent 33
 end
 ```
 
-### varnish_default_vcl
+### vcl_template
 | Name | Type | Default Value |
 |------|------|---------------|
-| `backend_host` | string | `'localhost'`
-| `backend_port` | integer | `8080` |
-| `vcl_source`   | string | `'lib_default.vcl.erb'` |
-| `vcl_cookbook` | string | `'varnish'` |
-| `vcl_parameters` | hash | `{}` |
-
-You can specify an alternative template (e.g. in a wrapper cookbook) and send a hash of any parameters you need to that template.
+| `vcl_name` | string | resource name | This will be the file name in the varnish vcl directory if not overridden by `vcl_path`
+| `source` | string | `"#{::File.basename(vcl_name)}.erb"` | Same behavior as the template resource. Default is the file name in vcl_name with '.erb' appended to it.
+| `cookbook`   | string | nil | By default it uses the cookbook the resource is in.
+| `owner` | string | `'root'` |
+| `group` | string | `'root'` |
+| `mode` | string or integer | `'0644'` | Follows the same behavior as the template resource
+| `variables` | hash | `{}` | Same behavior as the template resource but if the installed varnish major version (3.0, 4.0, or 4.1) can be found it is merged in at @varnish[:installed_version]
+| `varnish_dir` | string | `'/etc/varnish'` | The directory to use for vcl files
+| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified. 
 
 #### Example
-Set a backend to `example.com:80` :
+Create vcl file at '/etc/varnish/backends.vcl' using the template at 'templates/default/backends.vcl.erb' and pass it some variables:
 
 ```
-varnish_default_vcl 'default' do
-  backend_host 'example.com'
-  backend_port 80
+vcl_template 'backends.vcl' do
+  variables(
+      backends_ids: Array(1..16),
+      env: 'live',
+  )
 end
 ```
 
 #### Actions
-- `:configure` - Creates a default.vcl file.
+- `:configure` - Creates a vcl file from a template and refreshes varnish.
+- `:unconfigure` - Removes the vcl file and refreshes varnish.
+
+
+### vcl_file
+| Name | Type | Default Value |
+|------|------|---------------|
+| `vcl_name` | string | resource name | This will be the file name in the varnish vcl directory if not overridden by `vcl_path`
+| `source` | string | `::File.basename(vcl_name)"` | Same behavior as the cookbook_file resource. Default is the file name in vcl_name.
+| `cookbook`   | string | nil | By default it uses the cookbook the resource is in.
+| `owner` | string | `'root'` |
+| `group` | string | `'root'` |
+| `mode` | string or integer | `'0644'` | Follows the same behavior as the cookbook_file resource
+| `varnish_dir` | string | `'/etc/varnish'` | The directory to use for vcl files
+| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified. 
+
+#### Example
+Create vcl file at '/etc/varnish/default.vcl' using the file at 'files/default/default.vcl':
+
+```
+vcl_file 'default.vcl'
+```
+
+#### Actions
+- `:configure` - Creates a vcl file from the cookbook and refreshes varnish.
+- `:unconfigure` - Removes the vcl file and refreshes varnish.
 
 ### varnish_log
-Configures varnishlog or varnishncsa service. You can define both
-logfiles by calling `varnish_log` more than once.  You can install logrotate
-config files if you wish as well.
+Configures varnishlog or varnishncsa service. You can define both logfiles by calling `varnish_log` more than once.  You can install logrotate config files if you wish as well.
 
 | Name | Type | Default Value |
 |------|------|---------------|
@@ -219,34 +237,68 @@ config files if you wish as well.
 | `log_format` | `'varnishlog'` or `'varnishncsa'` | `'varnishlog'` |
 | `ncsa_format_string` | string | `'%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'`
 | `instance_name` | string | `nil` |
-| `logrotate` | `true` or `false` | true |
-| `logrotate_path` | `string` | `'/etc/logrotate.d'` |
+| `logrotate` | `true` or `false` | true for vanishlog, false for varnishncsa |
+| `major_version` | `3.0`, `4.0`, or `4.1` | currently installed major version | If varnish isn't installed yet then you will have to set this explicitly
+| `logrotate_path` | `string` | `'/etc/logrotate.d'` if varnishncsa is used otherwise `nil` |
 
 #### Actions
 - `:configure` - configures the `varnishlog` or `varnishncsa` service.
 
 #### Examples
-Configure varnish logs with log rotation :
+Configure varnishlog service :
 
 ```
-varnish_log 'default' do
-  file_name '/var/log/varnish/varnishlog.log'
-  pid '/var/run/varnishlog.pid'
-  log_format 'varnishlog'
-  logrotate true
-  logrotate_path '/etc/logrotate.d'
-end
+varnish_log 'default'
 ```
 
-Configure ncsa logs with a specific output format and without log rotation :
+Configure varnishncsa service :
 
 ```
 varnish_log 'default_ncsa' do
-  file_name '/var/log/varnish/varnishncsa.log'
-  pid '/var/run/varnishncsa.pid'
   log_format 'varnishncsa'
-  ncsa_format_string '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
-  logrotate false
+end
+```
+
+### Resource Recipe Example
+Install and configure varnish 4.1 using vcl config default.vcl in the current cookbook as well as a backend.vcl template.
+
+```
+include_recipe 'apt'
+include_recipe 'varnish::default'
+
+varnish_repo 'configure' do
+  major_version 4.1
+end
+
+package 'varnish'
+
+service 'varnish' do
+  action [:enable, :start]
+end
+
+varnish_config 'default' do
+  listen_address '0.0.0.0'
+  listen_port 80
+  storage 'malloc'
+  malloc_percent 33
+end
+
+vcl_template 'backends.vcl' do
+  source 'backends.vcl.erb'
+  variables(
+      backends_ids: Array(1..16),
+      env: 'live',
+  )
+end
+
+vcl_file 'default.vcl'
+
+# varnishlog
+varnish_log 'default'
+
+# varnishncsa
+varnish_log 'default_ncsa' do
+  log_format 'varnishncsa'
 end
 ```
 
@@ -258,6 +310,7 @@ License & Authors
 - Author:: Matt Barlow <matt.barlow@rackspace.com>
 - Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
 - Contributor:: Antonio Fernández Vara <antoniofernandezvara@gmail.com>
+- Contributor:: Ryan Gerstenkorn <ryan_gerstenkorn@fastmail.fm>
 
 ```text
 Copyright 2008-2009, Joe Williams <joe@joetify.com>
