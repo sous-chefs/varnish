@@ -20,6 +20,8 @@ else
   default['varnish']['conf_source'] = 'default.erb'
 end
 
+default['varnish']['conf_cookbook'] = 'varnish'
+
 default['varnish']['major_version'] = 4.1
 
 ##
