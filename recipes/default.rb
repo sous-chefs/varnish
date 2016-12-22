@@ -17,30 +17,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-# The reload-vcl script doesn't support the -j option in 4.1 and breaks reload on ubuntu.
-# This is fixed upstream but could cause issues if you are using the distro package.
-
-directory '/usr/share/varnish' do
-  recursive true
-end
-cookbook_file '/usr/share/varnish/reload-vcl' do
-  extend VarnishCookbook::Helpers
-  source 'reload-vcl'
-  only_if { platform_family?('debian') }
-end
-
-# varnishlog init script was removed from upstream packaging
-cookbook_file '/etc/init.d/varnishlog' do
-  source "varnishlog_initd_#{node['platform_family']}"
-  cookbook 'varnish'
-  owner 'root'
-  group 'root'
-  mode '0755'
-  only_if { node['init_package'] == 'init' }
-end
-
-# The varnishlog group was removed from some of the more recent varnish packages.
-group 'varnishlog' do
-  system true
-end

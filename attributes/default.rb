@@ -49,8 +49,6 @@ default['varnish']['major_version'] = 4.1
 # Disable logs:
 # override['varnish']['configure']['log']['action'] = :nothing
 
-default['varnish']['configure']['default_recipe'] = true
-
 default['varnish']['configure']['repo']['action'] = :configure
 
 default['varnish']['configure']['package']['action'] = :install

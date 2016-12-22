@@ -21,21 +21,24 @@ property :ncsa_format_string, kind_of: [String, nil], default: lazy {
 }
 
 action :configure do
-  service new_resource.log_format do
-    action :nothing
+  # The varnishlog group was removed from some of the more recent varnish packages.
+  group 'varnishlog' do
+    system true
+  end
+
+  cookbook_file '/etc/init.d/varnishlog' do
+    source "varnishlog_initd_#{node['platform_family']}"
+    cookbook 'varnish'
+    owner 'root'
+    group 'root'
+    mode '0755'
+    only_if { node['init_package'] == 'init' }
+    only_if { new_resource.log_format == 'varnishlog' }
   end
 
   template "/etc/default/#{new_resource.log_format}" do
-    if node['init_package'] == 'init'
-      path "/etc/default/#{new_resource.log_format}"
-      source 'varnishlog.erb'
-    elsif node['init_package'] == 'systemd'
-      path "/etc/systemd/system/#{new_resource.log_format}.service"
-      source 'varnishlog_systemd.erb'
-    else
-      path "/etc/sysconfig/#{new_resource.log_format}"
-      source 'varnishlog.erb'
-    end
+    path template_path(new_resource.log_format)
+    source template_source
     cookbook 'varnish'
     owner 'root'
     group 'root'
@@ -62,5 +65,25 @@ action :configure do
   service new_resource.log_format do
     supports restart: true, reload: true
     action %w(enable start)
+  end
+end
+
+def template_path(log_format)
+  if node['init_package'] == 'init'
+    "/etc/default/#{log_format}"
+  elsif node['init_package'] == 'systemd'
+    "/etc/systemd/system/#{log_format}.service"
+  else
+    "/etc/sysconfig/#{log_format}"
+  end
+end
+
+def template_source
+  if node['init_package'] == 'init'
+    'varnishlog.erb'
+  elsif node['init_package'] == 'systemd'
+    'varnishlog_systemd.erb'
+  else
+    'varnishlog.erb'
   end
 end

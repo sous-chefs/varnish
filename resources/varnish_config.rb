@@ -46,6 +46,14 @@ action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload if node['init_package'] == 'systemd'
 
+  # The reload-vcl script doesn't support the -j option in 4.1 and breaks reload on ubuntu.
+  # This is fixed upstream but could cause issues if you are using the distro package.
+  cookbook_file '/usr/share/varnish/reload-vcl' do
+    extend VarnishCookbook::Helpers
+    source 'reload-vcl'
+    only_if { platform_family?('debian') }
+  end
+
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
   service 'varnish' do

@@ -37,7 +37,7 @@ These attributes used as defaults for both resources and the `varnish::configure
 Recipes
 -------
 ### default
-This configures the minimum setup needed for all the resources to work and should be included first.
+This is not used currently but reserved for minimal configuration needed for all the resources/recipes to work correctly.
 
 ### configure
 Installs the varnish package, manages the varnish configuration file, and the init script defaults file.
