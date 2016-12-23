@@ -1,40 +1,70 @@
-default['varnish']['default'] = if platform_family?('debian')
-                                  '/etc/default/varnish'
-                                else
-                                  '/etc/sysconfig/varnish'
-                                end
+##
+## Resource settings
+##
 
-default['varnish']['version'] = '4.0'
+if platform_family?('debian')
+  default['varnish']['conf_path'] = '/etc/default/varnish'
+  default['varnish']['reload_cmd'] = '/usr/share/varnish/reload-vcl'
+else
+  default['varnish']['conf_path'] = '/etc/sysconfig/varnish'
+  default['varnish']['reload_cmd'] = '/usr/sbin/varnish_reload_vcl'
+end
 
-default['varnish']['dir'] = '/etc/varnish'
-default['varnish']['start'] = 'yes'
-default['varnish']['nfiles'] = 131_072
-default['varnish']['memlock'] = 82_000
-default['varnish']['instance'] = node['fqdn']
-default['varnish']['listen_address'] = nil
-default['varnish']['listen_port'] = 6081
-default['varnish']['vcl_conf'] = 'default.vcl'
-default['varnish']['vcl_source'] = 'default.vcl.erb'
-default['varnish']['vcl_cookbook'] = 'varnish'
-default['varnish']['vcl_generated'] = true
-default['varnish']['conf_source'] = 'default.erb'
+if node['init_package'] == 'init'
+  default['varnish']['conf_source'] = 'default.erb'
+elsif node['init_package'] == 'systemd'
+  # Ubuntu >= 15.04, Debian >= 8, CentOS >= 7
+  default['varnish']['conf_source'] = 'default_systemd.erb'
+  default['varnish']['conf_path'] = '/etc/systemd/system/varnish.service'
+else
+  default['varnish']['conf_source'] = 'default.erb'
+end
+
 default['varnish']['conf_cookbook'] = 'varnish'
-default['varnish']['secret_file'] = '/etc/varnish/secret'
-default['varnish']['admin_listen_address'] = '127.0.0.1'
-default['varnish']['admin_listen_port'] = '6082'
-default['varnish']['user'] = 'varnish'
-default['varnish']['group'] = 'varnish'
-default['varnish']['ccgroup'] = nil
-default['varnish']['ttl'] = '120'
-default['varnish']['parameters']['thread_pools'] = '4'
-default['varnish']['parameters']['thread_pool_min'] = '5'
-default['varnish']['parameters']['thread_pool_max'] = '500'
-default['varnish']['parameters']['thread_pool_timeout'] = '300'
-default['varnish']['storage'] = 'file'
-default['varnish']['storage_file'] = '/var/lib/varnish/$INSTANCE_varnish_storage.bin'
-default['varnish']['storage_size'] = '1G'
-default['varnish']['log_daemon'] = true
-default['varnish']['use_default_repo'] = true
 
-default['varnish']['backend_host'] = 'localhost'
-default['varnish']['backend_port'] = '8080'
+default['varnish']['major_version'] = 4.1
+
+##
+## varnish::configure recipe settings
+##
+## This recipe uses namespaced attributes to configure resources.
+##
+## Resource                   | Attribute Namespace
+## ---------------------------|------------------------
+## varnish_repo   'configure' | node['varnish']['configure']['repo']
+## package        'varnish'   | node['varnish']['configure']['package']
+## service        'varnish'   | node['varnish']['configure']['service']
+## varnish_config 'default'   | node['varnish']['configure']['config']
+## vcl_template   'default'   | node['varnish']['configure']['vcl_template']
+## varnish_log    'default'   | node['varnish']['configure']['log']
+## varnish_log    'ncsa'      | node['varnish']['configure']['ncsa']
+##
+
+# Disable vendor repo:
+# override['varnish']['configure']['repo']['action'] = :nothing
+
+# Install specific varnish version:
+# override['varnish']['configure']['package']['version'] = '4.1.1-1~trusty'
+
+# Disable logs:
+# override['varnish']['configure']['log']['action'] = :nothing
+
+default['varnish']['configure']['repo']['action'] = :configure
+
+default['varnish']['configure']['package']['action'] = :install
+
+default['varnish']['configure']['service']['action'] = [:start, :enable]
+
+default['varnish']['configure']['config']['action'] = :configure
+
+default['varnish']['configure']['vcl_template']['source']    = 'default.vcl.erb'
+default['varnish']['configure']['vcl_template']['variables'] = {
+  config: {
+    backend_host: '127.0.0.1',
+    backend_port: '8080'
+  }
+}
+
+default['varnish']['configure']['log'] = {}
+
+default['varnish']['configure']['ncsa']['action'] = :nothing

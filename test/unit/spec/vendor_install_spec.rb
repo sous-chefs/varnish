@@ -1,33 +1,34 @@
 require_relative 'spec_helper'
 
 describe 'install_varnish::vendor_install' do
-  before { stub_resources('4.0') }
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(step_into: %w(varnish_install
-                                           varnish_default_config
-                                           varnish_default_vcl
-                                           varnish_log)) do |node|
+    ChefSpec::SoloRunner.new(step_into: %w(varnish_repo varnish_config vcl_template vcl_file varnish_log)) do |node|
       node_resources(node)
     end.converge(described_recipe)
   end
 
+  before do
+    stub_resources
+  end
+
+  it 'does not configure the varnish vendor repo' do
+    expect(chef_run).to configure_varnish_repo('configure')
+  end
+
   it 'installs varnish' do
-    expect(chef_run).to install_varnish('default')
     expect(chef_run).to install_package('varnish')
   end
 
   it 'enables the varnish service, enables and configures the varnishlog service' do
-    resource = chef_run.package('varnish')
-    expect(resource).to notify('service[varnish]').to('enable').delayed
-    expect(resource).to notify('service[varnish]').to('restart').delayed
-
+    expect(chef_run).to enable_service('varnish')
+    expect(chef_run).to start_service('varnish')
     expect(chef_run).to enable_service('varnishlog')
-    expect(chef_run).to configure_varnish_service('default')
+    expect(chef_run).to start_service('varnishlog')
   end
 
   it 'creates the default varnish config and VCLs' do
+    expect(chef_run).to configure_vcl_template('default.vcl')
     expect(chef_run).to create_template('/etc/default/varnish')
-    expect(chef_run).to configure_default_vcl('default')
     expect(chef_run).to create_template('/etc/varnish/default.vcl')
   end
 
