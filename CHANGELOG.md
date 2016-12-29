@@ -2,6 +2,17 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.0.0
+------
+- Move recipes in default to custom resources / Move recipe and lwrp defaults config to custom resource
+- Remove unused properties
+- Don't append '.vcl' to file name
+- Fix percent_of_total_mem function
+- Include default recipe in integrations tests
+- Add configure recipe
+- Don't use default recipe to install/setup varnish
+- Don't fetch the repository key over insecure HTTP
+
 v2.4.0
 -----
 - Add additional attributes to allow use of template source from a wrapper cookbook
