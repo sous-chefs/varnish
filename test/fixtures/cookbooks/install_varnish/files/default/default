@@ -1,0 +1,10 @@
+server {
+        listen 8080 default_server;
+
+        root /var/www/public_html;
+        index index.html index.htm;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}

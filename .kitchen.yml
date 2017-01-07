@@ -49,3 +49,6 @@ suites:
 - name: distro
   run_list:
     - recipe[install_varnish::distro_install]
+- name: full_stack
+  run_list:
+    - recipe[install_varnish::full_stack]
