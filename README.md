@@ -58,9 +58,13 @@ The configure recipe uses the resources below to get varnish and varnishlog inst
 * `node['varnish']['configure']['repo']['action']` - Affects the vendor repo resource. Can be set to `:nothing` to skip and use the systems package otherwise the default is to `:configure` it.
 * `node['varnish']['configure']['package']['version']` - Specific varnish version to pass to the package resource. Default is to install the latest available version for the current `node['varnish']['major_version']`.
 * `node['varnish']['configure']['log']['action']` - Affects the varnish_log resource. Can be set to `:nothing` to skip and not set up logging otherwise the default is to `:configure` it.
-* `node['varnish']['configure']['config']['listen_port']` = Port number to listen on for requests to varnish. Defaults to 6081.
+* `node['varnish']['configure']['config']['listen_port']` - Port number to listen on for requests to varnish. Defaults to 6081.
 * `node['varnish']['configure']['vcl_template']['source']` - Name for default vcl template. Defaults to default.vcl.erb.
 * `node['varnish']['configure']['vcl_template']['cookbook']` - Name of the cookbook for the default vcl template. Uses this varnish cookbook by default.
+
+If you are using the default vcl_template then backend_port and backend_host are configurable through these parameters.
+* `node['varnish']['configure']['vcl_template']['variables']['config']['backend_port']` - The default vcl_template backend port (default: 80).
+* `node['varnish']['configure']['vcl_template']['variables']['config']['backend_host']` - The default vcl_template backend_host (default: 127.0.0.1).
 
 Any resource property in the `varnish::configure` recipe can be configured. The keys under the namespace's listed below will map to the property name. Refer to the resource documentation for details on all the properties.
 
