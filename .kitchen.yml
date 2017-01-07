@@ -46,4 +46,6 @@ suites:
   attributes:
     varnish:
       major_version: 4.1
-
+- name: distro
+  run_list:
+    - recipe[install_varnish::distro_install]
