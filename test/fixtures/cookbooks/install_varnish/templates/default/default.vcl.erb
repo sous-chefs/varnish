@@ -1,0 +1,7 @@
+<%- if (@config[:major_version] || @varnish.fetch(:installed_version)) >= 4.0 %>
+vcl 4.0;
+<%- end %>
+backend default {
+        .host = "<%= @config.fetch(:backend_host) %>";
+        .port = "<%= @config.fetch(:backend_port) %>";
+}
