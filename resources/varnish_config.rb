@@ -51,6 +51,7 @@ action :configure do
   cookbook_file '/usr/share/varnish/reload-vcl' do
     extend VarnishCookbook::Helpers
     source 'reload-vcl'
+    cookbook 'varnish'
     only_if { platform_family?('debian') }
   end
 
