@@ -1,27 +1,28 @@
-node.override['varnish']['configure']['config']['listen_port'] = 80
-node.override['varnish']['configure']['repo']['action'] = :nothing
-node.override['varnish']['configure']['ncsa']['action'] = :configure
+include_recipe 'apt'
+include_recipe 'varnish::default'
 
-package 'nginx'
+package 'varnish'
 
-# avoid depending on init system
-execute 'nginx_restart' do
-  command 'pkill nginx; nginx'
-  action :nothing
+service 'varnish' do
+  action [:enable, :start]
 end
 
-public_html = '/var/www/public_html'
-
-directory public_html do
-  recursive true
+varnish_config 'default' do
+  listen_address '0.0.0.0'
+  listen_port 80
+  storage 'malloc'
+  malloc_percent 33
 end
 
-file "#{public_html}/index.html" do
-  content 'Hello World!'
+vcl_template 'default.vcl' do
+  source 'default.vcl.erb'
+  variables(
+    config: {
+      backend_host: '127.0.0.1',
+      backend_port: '8080',
+    }
+  )
 end
 
-cookbook_file '/etc/nginx/nginx.conf' do
-  notifies_immediately :run, 'execute[nginx_restart]'
-end
+include_recipe "#{cookbook_name}::_nginx"
 
-include_recipe 'varnish::configure'
