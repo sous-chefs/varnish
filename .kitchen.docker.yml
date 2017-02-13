@@ -83,15 +83,29 @@ platforms:
       - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
 
 suites:
-- name: package
+- name: varnish3
+  excludes:
+    - centos-7.2
   run_list:
-  - recipe[test]
-- name: source
-  run_list:
-  - recipe[test]
+    - recipe[install_varnish::vendor_install]
   attributes:
-    haproxy:
-      install_method: source
-- name: app_lb
+    varnish:
+      major_version: 3.0
+- name: varnish4
   run_list:
-  - recipe[haproxy::app_lb]
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 4.0
+- name: varnish41
+  run_list:
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 4.1
+- name: distro
+  run_list:
+    - recipe[install_varnish::distro_install]
+- name: full_stack
+  run_list:
+    - recipe[install_varnish::full_stack]
