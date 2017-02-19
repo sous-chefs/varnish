@@ -19,10 +19,9 @@ vcl_template 'default.vcl' do
   variables(
     config: {
       backend_host: '127.0.0.1',
-      backend_port: '8080',
+      backend_port: '8080'
     }
   )
 end
 
 include_recipe "#{cookbook_name}::_nginx"
-

@@ -1,0 +1,51 @@
+# Varnish environment configuration description. This was derived from
+# the old style sysconfig/defaults settings
+
+# Set this to 1 to make systemd reload try to switch VCL without restart.
+RELOAD_VCL=1
+
+# Main configuration file. You probably want to change it.
+VARNISH_VCL_CONF=<%= @config.path_to_vcl %>
+
+# Default address and port to bind to. Blank address means all IPv4
+# and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted
+# quad, or an IPv6 address in brackets.
+VARNISH_LISTEN_ADDRESS=<%= @config.listen_address %>
+VARNISH_LISTEN_PORT=<%= @config.listen_port %>
+
+# Admin interface listen address and port
+VARNISH_ADMIN_LISTEN_ADDRESS=<%= @config.admin_listen_address %>
+VARNISH_ADMIN_LISTEN_PORT=<%= @config.admin_listen_port %>
+
+# Shared secret file for admin interface
+VARNISH_SECRET_FILE=<%= @config.path_to_secret %>
+
+<%-
+  if @config.storage == 'file' && @config.file_storage_path
+    storage = [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",")
+  else
+    storage = [@config.storage, @config.malloc_size].compact.join(",")
+  end
+%>
+
+# Backend storage specification, see Storage Types in the varnishd(5)
+# man page for details.
+VARNISH_STORAGE="<%= storage %>"
+
+# User and group for the varnishd worker processes
+VARNISH_USER=varnish
+VARNISH_GROUP=varnish
+
+INSTANCE=<%= @config.instance_name %>
+
+<%-
+  parameters = ''
+  unless (@config.parameters).nil?
+      @config.parameters.each do |param, value|
+        parameters << "-p #{param.to_s}=#{value} "
+    end
+  end
+%>
+# Other options, see the man page varnishd(1)
+DAEMON_OPTS="<%= parameters %>"
+
