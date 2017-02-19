@@ -53,6 +53,7 @@ action :configure do
   template '/etc/varnish/varnish.params' do
     action :create
     variables(config: new_resource)
+    cookbook 'varnish'
     only_if { node['init_package'] == 'systemd' }
   end
 
