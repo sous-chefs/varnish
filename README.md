@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/rackspace-cookbooks/varnish.svg?style=svg)](https://circleci.com/gh/rackspace-cookbooks/varnish)
+[![Circle CI](https://circleci.com/gh/sous-chefs/varnish.svg?style=svg)](https://circleci.com/gh/sous-chefs/varnish)
 
 varnish Cookbook
 ================
