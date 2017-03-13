@@ -10,8 +10,8 @@ end
 
 group :kitchen_common do
   gem 'test-kitchen'
-  gem 'kitchen-rackspace'
   gem 'kitchen-docker'
+  gem 'kitchen-dokken'
 end
 
 group :kitchen_vagrant do
@@ -20,6 +20,7 @@ group :kitchen_vagrant do
 end
 
 group :development do
+  gem 'addressable', '~> 2.4.0'
   gem 'growl'
   gem 'rb-fsevent'
   gem 'guard'
