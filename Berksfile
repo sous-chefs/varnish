@@ -1,8 +1,7 @@
-source "https://supermarket.chef.io"
+source 'https://supermarket.chef.io'
 
 group :integration do
   cookbook 'disable_ipv6', path: 'test/fixtures/cookbooks/disable_ipv6'
-  cookbook 'yum-epel'
 end
 
 metadata
