@@ -25,4 +25,3 @@ vcl_template 'default.vcl' do
 end
 
 include_recipe "#{cookbook_name}::_nginx"
-
