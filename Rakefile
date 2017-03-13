@@ -7,7 +7,7 @@ require 'kitchen'
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   desc 'Run Ruby style checks'
-  RuboCop::RakeTask.new(:ruby)
+  sh('chef exec cookstyle -D --format offenses --display-cop-names')
 
   desc 'Run Chef style checks'
   FoodCritic::Rake::LintTask.new(:chef) do |t|
