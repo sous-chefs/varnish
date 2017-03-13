@@ -1,4 +1,6 @@
 include_recipe 'apt'
+include_recipe 'yum'
+include_recipe 'yum-epel'
 include_recipe 'varnish::default'
 
 package 'varnish'
