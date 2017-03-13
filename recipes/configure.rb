@@ -19,6 +19,8 @@
 #
 
 include_recipe 'apt'
+include_recipe 'yum'
+include_recipe 'yum-epel'
 
 varnish_repo 'configure' do
   node['varnish']['configure']['repo'].each do |key, value|
