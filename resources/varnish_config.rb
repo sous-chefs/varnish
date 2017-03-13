@@ -37,7 +37,7 @@ property :parameters, kind_of: Hash, default:
       'thread_pools' => '4',
       'thread_pool_min' => '5',
       'thread_pool_max' => '500',
-      'thread_pool_timeout' => '300'
+      'thread_pool_timeout' => '300',
     }
 property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
 property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }

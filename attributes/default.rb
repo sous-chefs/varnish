@@ -61,8 +61,8 @@ default['varnish']['configure']['vcl_template']['source']    = 'default.vcl.erb'
 default['varnish']['configure']['vcl_template']['variables'] = {
   config: {
     backend_host: '127.0.0.1',
-    backend_port: '8080'
-  }
+    backend_port: '8080',
+  },
 }
 
 default['varnish']['configure']['log'] = {}

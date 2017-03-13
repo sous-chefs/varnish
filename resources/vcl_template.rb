@@ -30,8 +30,8 @@ action :configure do
   merged_var_hash = Chef::Mixin::DeepMerge.deep_merge(
     {
       varnish: {
-        installed_version: installed_version
-      }
+        installed_version: installed_version,
+      },
     }, var_hash
   )
 
