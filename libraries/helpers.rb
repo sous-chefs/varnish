@@ -1,3 +1,5 @@
+require 'mixlib/shellout'
+
 module VarnishCookbook
   # Helper methods used by the varnish cookbook
   module Helpers
@@ -26,6 +28,13 @@ module VarnishCookbook
 
     def percent_of_total_mem(total_mem, percent)
       "#{(total_mem[0..-3].to_i * (percent / 100.0)).to_i}K"
+    end
+
+    # Varnish expects `hostname` which isn't always the same as node["hostname"]
+    def hostname
+      cmd = Mixlib::ShellOut.new('hostname')
+      cmd.run_command
+      cmd.stdout.strip
     end
 
     def systemd_daemon_reload
