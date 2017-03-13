@@ -21,22 +21,17 @@ services: docker
 env:
   matrix:
     - INSTANCE=varnish3-ubuntu-1404
-    - INSTANCE=varnish3-ubuntu-1204
     - INSTANCE=varnish3-centos-6
     - INSTANCE=varnish4-ubuntu-1404
-    - INSTANCE=varnish4-ubuntu-1204
     - INSTANCE=varnish4-centos-7
     - INSTANCE=varnish4-centos-6
     - INSTANCE=varnish41-ubuntu-1404
-    - INSTANCE=varnish41-ubuntu-1204
     - INSTANCE=varnish41-centos-7
     - INSTANCE=varnish41-centos-6
     - INSTANCE=distro-ubuntu-1404
-    - INSTANCE=distro-ubuntu-1204
     - INSTANCE=distro-centos-7
     - INSTANCE=distro-centos-6
     - INSTANCE=full-stack-ubuntu-1404
-    - INSTANCE=full-stack-ubuntu-1204
     - INSTANCE=full-stack-centos-7
     - INSTANCE=full-stack-centos-6
 
