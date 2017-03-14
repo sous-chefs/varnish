@@ -1,7 +1,7 @@
-[![Circle CI](https://circleci.com/gh/sous-chefs/varnish.svg?style=svg)](https://circleci.com/gh/sous-chefs/varnish)
+# varnish Cookbook
 
-varnish Cookbook
-================
+[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)  
+
 Configures varnish.
 
 
@@ -14,10 +14,10 @@ Requirements
 
 Tested on:
 
-* Ubuntu 12.04
 * Ubuntu 14.04
+* Ubuntu 16.04
 * Centos 6.8
-* Centos 7.2
+* Centos 7.3
 
 With varnish versions:
 

@@ -1,36 +1,9 @@
+# This gemfile provides additional gems for testing and releasing this cookbook
+# It is meant to be installed on top of ChefDK which provides the majority
+# of the necessary gems for testing this cookbook
+#
+# Run 'chef exec bundle install' to install these dependencies
+
 source 'https://rubygems.org'
 
-group :lint do
-  gem 'foodcritic', '~> 3.0'
-  gem 'foodcritic-rackspace-rules'
-  gem 'rubocop', '~> 0.24'
-  gem 'rspec'
-end
-
-group :unit do
-  gem 'berkshelf', '~> 4'
-  gem 'chefspec', '~> 4'
-  gem 'chef-sugar'
-end
-
-group :kitchen_common do
-  gem 'test-kitchen'
-  gem 'kitchen-rackspace'
-  gem 'kitchen-docker'
-end
-
-group :kitchen_vagrant do
-  gem 'kitchen-vagrant'
-  gem 'vagrant-wrapper'
-end
-
-group :development do
-  gem 'growl'
-  gem 'rb-fsevent'
-  gem 'guard'
-  gem 'guard-kitchen'
-  gem 'guard-foodcritic'
-  gem 'guard-rubocop'
-  gem 'fauxhai'
-  gem 'pry-nav'
-end
+gem 'stove'
