@@ -2,6 +2,15 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.1.0
+------
+- Varnish expects the varnish instance name to be `hostname` by default however this is sometimes different then `hostname -s` which is used by `ohai's hostname`. This seemed to only be an issue on CentOS 7.2.
+- Use /etc/varnish/varnish.params for systemd init file. This is what the package uses and I think will remove some confusion about how settings are set. #103
+- Remove /usr/share/varnish/reload-vcl on debian. This was added to support the '-j' option in varnish 4.1 however it has been fixed upstream.
+- including yum-epel for centos
+- Removing old testing files(CircleCi, kitchen-rackspace, rake) and replacing with (TravisCI, kitchen-dokken, delivery).
+- adding integration testing in ci.
+
 v3.0.0
 ------
 - Move recipes in default to custom resources / Move recipe and lwrp defaults config to custom resource
