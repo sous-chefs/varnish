@@ -32,9 +32,7 @@ module VarnishCookbook
 
     # Varnish expects `hostname` which isn't always the same as node["hostname"]
     def hostname
-      cmd = Mixlib::ShellOut.new('hostname')
-      cmd.run_command
-      cmd.stdout.strip
+      shell_out!('hostname').stdout.strip
     end
 
     def systemd_daemon_reload

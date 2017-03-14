@@ -13,7 +13,7 @@ property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
 property :max_open_files, kind_of: Integer, default: 131_072
 property :max_locked_memory, kind_of: Integer, default: 82_000
 
-property :instance_name, kind_of: String, default: hostname
+property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
 property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
