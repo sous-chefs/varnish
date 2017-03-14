@@ -4,7 +4,7 @@ This file is used to list changes made in each version of the varnish cookbook.
 
 v3.1.0
 ------
-- Varnish expects the varnish instance name to be hostname by default however this is sometimes different then hostname -s which is used by ohai hostname. This seemed to only be an issue on CentOS 7.2.
+- Varnish expects the varnish instance name to be `hostname` by default however this is sometimes different then `hostname -s` which is used by `ohai's hostname`. This seemed to only be an issue on CentOS 7.2.
 - Use /etc/varnish/varnish.params for systemd init file. This is what the package uses and I think will remove some confusion about how settings are set. #103
 - Remove /usr/share/varnish/reload-vcl on debian. This was added to support the '-j' option in varnish 4.1 however it has been fixed upstream.
 - including yum-epel for centos
