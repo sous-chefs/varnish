@@ -8,7 +8,7 @@ property :pid, kind_of: String, default: '/var/run/varnishlog.pid'
 property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
 property :logrotate, kind_of: [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
-property :instance_name, kind_of: String, default: node['hostname']
+property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
 
 property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version

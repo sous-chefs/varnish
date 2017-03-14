@@ -12,7 +12,7 @@ property :conf_path, kind_of: String, default: lazy { node['varnish']['conf_path
 property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
 property :max_open_files, kind_of: Integer, default: 131_072
 property :max_locked_memory, kind_of: Integer, default: 82_000
-property :instance_name, kind_of: String, default: node['hostname']
+property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
 property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
@@ -46,16 +46,14 @@ action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload if node['init_package'] == 'systemd'
 
-  # The reload-vcl script doesn't support the -j option in 4.1 and breaks reload on ubuntu.
-  # This is fixed upstream but could cause issues if you are using the distro package.
-  cookbook_file '/usr/share/varnish/reload-vcl' do
-    extend VarnishCookbook::Helpers
-    source 'reload-vcl'
-    cookbook 'varnish'
-    only_if { platform_family?('debian') }
-  end
-
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
+
+  template '/etc/varnish/varnish.params' do
+    action :create
+    variables(config: new_resource)
+    cookbook 'varnish'
+    only_if { node['init_package'] == 'systemd' }
+  end
 
   service 'varnish' do
     supports restart: true, reload: true

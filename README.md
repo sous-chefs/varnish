@@ -137,7 +137,7 @@ files that come with your distro package will be used instead.
 | `max_open_files` | integer | `131_072` |
 | `max_locked_memory` | integer | `82_000` |
 | `major_version` | `3.0`, `4.0`, or `4.1` | `node['varnish']['major_version']` | major_version attribute defaults to 4.1
-| `instance_name` | string | `node['hostname']` | Currently not used on non-debian initd systems
+| `instance_name` | string | `` `hostname` ``]` |
 | `listen_address` | string | `nil` |
 | `listen_port` | integer | `6081` |
 | `admin_listen_address` | string | `'127.0.0.1'` |
