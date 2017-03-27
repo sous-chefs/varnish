@@ -64,3 +64,9 @@ describe command('curl localhost:6081') do
     expect(subject.exit_status).to eq 0
   end
 end
+
+describe command('grep "ncsa_format_string_test" /var/log/varnish/varnishncsa.log') do
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
+end

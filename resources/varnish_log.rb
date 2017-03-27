@@ -3,7 +3,7 @@ provides :varnish_log
 default_action :configure
 
 property :name, kind_of: String, name_attribute: true
-property :file_name, kind_of: String, default: '/var/log/varnish/varnishlog.log'
+property :file_name, kind_of: String, default: lazy { "/var/log/varnish/#{log_format}.log" }
 property :pid, kind_of: String, default: '/var/run/varnishlog.pid'
 property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
 property :logrotate, kind_of: [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
@@ -34,6 +34,12 @@ action :configure do
     mode '0755'
     only_if { node['init_package'] == 'init' }
     only_if { new_resource.log_format == 'varnishlog' }
+  end
+
+  link "/etc/sysconfig/#{new_resource.log_format}" do
+    to "/etc/default/#{new_resource.log_format}"
+    only_if { node['init_package'] == 'init' }
+    only_if { node['platform_family'] == 'rhel' }
   end
 
   template "/etc/default/#{new_resource.log_format}" do
