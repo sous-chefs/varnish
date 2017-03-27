@@ -2,6 +2,12 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.2.0
+------
+- Links /etc/sysconfig/varnishlog and varnishncsa to defaults file in /etc/default. Fixes https://github.com/sous-chefs/varnish/issues/125.
+- Rename default ncsa log file to varnishncsa. This is what is used upstream and also fixes an issue where the ncsa and varnish log output to the same file when you enable ncsa without disabling varnishlog.
+- Remove double quotes from default ncsa_format_string, this was likely meant to prevent word splitting in the init.d script but does not work and instead add's quotes to the log format.
+
 v3.1.0
 ------
 - Varnish expects the varnish instance name to be `hostname` by default however this is sometimes different then `hostname -s` which is used by `ohai's hostname`. This seemed to only be an issue on CentOS 7.2.
