@@ -40,7 +40,7 @@ end
 
 auth_params = '-S /etc/varnish/secret -T 127.0.0.1:6082'
 # Not all distro versions have the backend.list command
-describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params} vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $3}')") do
+describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params} vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $NF}')") do
   it 'exits succusfully' do
     expect(subject.exit_status).to eq 0
   end

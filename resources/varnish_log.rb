@@ -4,7 +4,7 @@ default_action :configure
 
 property :name, kind_of: String, name_attribute: true
 property :file_name, kind_of: String, default: lazy { "/var/log/varnish/#{log_format}.log" }
-property :pid, kind_of: String, default: '/var/run/varnishlog.pid'
+property :pid, kind_of: String, default: lazy { "/var/run/#{log_format}.pid" }
 property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
 property :logrotate, kind_of: [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
@@ -21,9 +21,17 @@ property :ncsa_format_string, kind_of: [String, nil], default: lazy {
 }
 
 action :configure do
+  extend VarnishCookbook::Helpers
+  systemd_daemon_reload if node['init_package'] == 'systemd'
+
   # The varnishlog group was removed from some of the more recent varnish packages.
   group 'varnishlog' do
     system true
+  end
+
+  # If the package includes a systemd init script we don't want it taking precedence over ours
+  file "/lib/systemd/system/#{new_resource.log_format}.service" do
+    action :delete
   end
 
   cookbook_file '/etc/init.d/varnishlog' do
@@ -42,7 +50,7 @@ action :configure do
     only_if { node['platform_family'] == 'rhel' }
   end
 
-  template "/etc/default/#{new_resource.log_format}" do
+  template "init_#{new_resource.log_format}" do
     path template_path(new_resource.log_format)
     source template_source
     cookbook 'varnish'
@@ -54,6 +62,7 @@ action :configure do
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
   end
 
   template "#{new_resource.logrotate_path}/#{new_resource.log_format}" do
