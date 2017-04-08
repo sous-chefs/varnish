@@ -67,7 +67,7 @@ platforms:
     intermediate_instructions:
       - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
 
-# Excludes exist because the distro version get's installed instead (need pinning to for this to work otherwise)
+# Unless other wise noted excludes exist because the distro version get's installed instead (need pinning to support this)
 suites:
 - name: varnish3
   excludes:
@@ -96,6 +96,8 @@ suites:
     varnish:
       major_version: 4.1
 - name: distro
+  excludes:
+    - centos-6.8 # Uses varnish 2 which we don't support
   run_list:
     - recipe[install_varnish::distro_install]
 - name: full_stack
