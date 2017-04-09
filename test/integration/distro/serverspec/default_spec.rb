@@ -65,7 +65,8 @@ describe command('curl localhost:6081') do
   end
 end
 
-describe command('grep "ncsa_format_string_test" /var/log/varnish/varnishncsa.log') do
+# Sleep to give the previous test time to show up in the logs
+describe command('sleep 2; grep "ncsa_format_string_test" /var/log/varnish/varnishncsa.log') do
   it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
