@@ -22,8 +22,6 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
 * CentOS 7.3
  * Tested with 4.0 and 4.1 and CentOS 7 distrubution
-* Debian 8
- * Tested with 4.0 and 4.1 and Debian 8 distribution
 
 Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 

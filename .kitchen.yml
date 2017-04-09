@@ -56,4 +56,4 @@ suites:
   run_list:
     - recipe[install_varnish::full_stack]
   excludes:
-    - centos-6 # Full stack tests use distro install so need to skip centos-6 for now.
+    - centos-6.8 # Full stack tests use distro install so need to skip centos-6 for now.

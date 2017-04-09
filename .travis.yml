@@ -28,11 +28,11 @@ env:
     - INSTANCE=varnish41-centos-7
     - INSTANCE=varnish41-centos-6
     - INSTANCE=distro-ubuntu-1404
+    - INSTANCE=distro-ubuntu-1604
     - INSTANCE=distro-centos-7
-    - INSTANCE=distro-centos-6
     - INSTANCE=full-stack-ubuntu-1404
+    - INSTANCE=full-stack-ubuntu-1604
     - INSTANCE=full-stack-centos-7
-    - INSTANCE=full-stack-centos-6
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
