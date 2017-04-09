@@ -17,14 +17,15 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 
 * Ubuntu 14.04
 * Ubuntu 16.04
-** Tested with Ubuntu 16.04 distribution (version 4.1).
+ * Tested with Ubuntu's 16.04 distribution (version 4.1).
 * CentOS 6.8
+ * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
 * CentOS 7.3
-** Tested with 4.0 and 4.1 and CentOS 7 distrubution
+ * Tested with 4.0 and 4.1 and CentOS 7 distrubution
 * Debian 8
-** Tested with 4.0 and 4.1 and Debian 8 distribution
+ * Tested with 4.0 and 4.1 and Debian 8 distribution
 
-All versions should work but require pinning which isn't included in this cookbook currently.
+Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
 Global Attributes
 -----------------

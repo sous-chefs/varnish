@@ -79,9 +79,9 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-        major_version: new_resource.major_version,
-        malloc_size: malloc_size || malloc_default,
-        config: new_resource
+      major_version: new_resource.major_version,
+      malloc_size: malloc_size || malloc_default,
+      config: new_resource
     )
     only_if { node['init_package'] == 'systemd' }
     only_if { node['platform_family'] == 'debian' }
