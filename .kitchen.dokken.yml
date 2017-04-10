@@ -1,14 +1,17 @@
 driver:
   name: dokken
   privileged: true # because Docker and SystemD/Upstart
-  chef_version: current
+  chef_version: stable
 
 transport:
   name: dokken
 
 provisioner:
-  require_chef_omnibus: 12.19.36
   name: dokken
+
+verifier:
+  root_path: '/opt/verifier'
+  sudo: false
 
 platforms:
 - name: debian-8
