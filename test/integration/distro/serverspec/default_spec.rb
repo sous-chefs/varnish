@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 
-%w(varnish varnishlog).each do |varnish_service|
+%w(varnish varnishlog varnishncsa).each do |varnish_service|
   describe service(varnish_service) do
     it 'enabled' do
       expect(subject).to be_enabled
@@ -40,7 +40,7 @@ end
 
 auth_params = '-S /etc/varnish/secret -T 127.0.0.1:6082'
 # Not all distro versions have the backend.list command
-describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params} vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $3}')") do
+describe command("varnishadm #{auth_params} vcl.show $(varnishadm #{auth_params} vcl.list|sed '/^\s*$/d'|tail -n 1|awk '{print $NF}')") do
   it 'exits succusfully' do
     expect(subject.exit_status).to eq 0
   end
@@ -60,6 +60,13 @@ describe command("varnishadm #{auth_params} param.show thread_pool_max") do
 end
 
 describe command('curl localhost:6081') do
+  it 'exits zero' do
+    expect(subject.exit_status).to eq 0
+  end
+end
+
+# Sleep to give the previous test time to show up in the logs
+describe command('sleep 2; grep "ncsa_format_string_test" /var/log/varnish/varnishncsa.log') do
   it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end

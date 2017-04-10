@@ -60,6 +60,33 @@ action :configure do
     action :nothing
   end
 
+  # The reload-vcl script doesn't support the -j option in 4.1 and breaks reload on ubuntu.
+  # This is fixed upstream but could cause issues if you are using the distro package.
+  cookbook_file '/usr/share/varnish/reload-vcl' do
+    extend VarnishCookbook::Helpers
+    source 'reload-vcl'
+    cookbook 'varnish'
+    only_if { platform_family?('debian') }
+  end
+
+  # This is needed on Ubuntu 16.04 since reload-vcl currently breaks with systemd
+  # Should be fixed with https://github.com/varnishcache/pkg-varnish-cache/pull/70
+  template '/etc/default/varnish' do
+    path '/etc/default/varnish'
+    source 'default.erb'
+    cookbook 'varnish'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    variables(
+      major_version: new_resource.major_version,
+      malloc_size: malloc_size || malloc_default,
+      config: new_resource
+    )
+    only_if { node['init_package'] == 'systemd' }
+    only_if { node['platform_family'] == 'debian' }
+  end
+
   template new_resource.conf_path do
     path new_resource.conf_path
     source new_resource.conf_source

@@ -7,6 +7,7 @@ transport:
   name: dokken
 
 provisioner:
+  require_chef_omnibus: 12.19.36
   name: dokken
 
 verifier:
@@ -67,30 +68,41 @@ platforms:
     intermediate_instructions:
       - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
 
+# Unless other wise noted excludes exist because the distro version get's installed instead (need pinning to support this)
 suites:
 - name: varnish3
   excludes:
-    - centos-7.2
+    - centos-7
+    - ubuntu-16.04
+    - debian-8
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
       major_version: 3.0
 - name: varnish4
+  excludes:
+    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
       major_version: 4.0
 - name: varnish41
+  excludes:
+    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
       major_version: 4.1
 - name: distro
+  excludes:
+    - centos-6 # Uses varnish 2 which we don't support
   run_list:
     - recipe[install_varnish::distro_install]
 - name: full_stack
   run_list:
     - recipe[install_varnish::full_stack]
+  excludes:
+    - centos-6 # Full stack tests use distro install so need to skip centos-6 for now.

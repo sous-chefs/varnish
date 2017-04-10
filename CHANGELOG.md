@@ -2,6 +2,14 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.2.0
+------
+- Links /etc/sysconfig/varnishlog and varnishncsa to defaults file in /etc/default. Fixes https://github.com/sous-chefs/varnish/issues/125.
+- Fixes default varnishncsa format string (double quotes where getting added).
+- Fixes an conflict when using both varnishlog and varnishncsa.
+- Fixes distro_install integration tests. https://github.com/sous-chefs/varnish/issues/126
+- Reverts the removal of reload-vcl since this is not fixed upstream in ubuntu's system   packages yet.
+
 v3.1.0
 ------
 - Varnish expects the varnish instance name to be `hostname` by default however this is sometimes different then `hostname -s` which is used by `ohai's hostname`. This seemed to only be an issue on CentOS 7.2.

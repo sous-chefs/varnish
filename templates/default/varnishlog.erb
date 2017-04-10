@@ -22,6 +22,6 @@ DAEMON_OPTS="-a -w $LOGFILE -D -P $PIDFILE \
               -n $INSTANCE \
              <%- end %>
 	     <%- if @config.ncsa_format_string %>
-	     -F '${LOG_FORMAT}' \
+	     -F $LOG_FORMAT \
 	     <%- end %>
           "

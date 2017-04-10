@@ -4,6 +4,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  require_chef_omnibus: 12.19.36
   attributes:
     apt:
       compile_time_update: true
@@ -22,16 +23,20 @@ platforms:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
 
+# Unless other wise noted excludes exist because the distro version get's installed instead (need pinning to support this)
 suites:
 - name: varnish3
   excludes:
-    - centos-7.2
+    - centos-7.3
+    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
       major_version: 3.0
 - name: varnish4
+  excludes:
+    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
@@ -44,8 +49,12 @@ suites:
     varnish:
       major_version: 4.1
 - name: distro
+  excludes:
+    - centos-6.8 # Uses varnish 2 which we don't support
   run_list:
     - recipe[install_varnish::distro_install]
 - name: full_stack
   run_list:
     - recipe[install_varnish::full_stack]
+  excludes:
+    - centos-6.8 # Full stack tests use distro install so need to skip centos-6 for now.

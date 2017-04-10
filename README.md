@@ -12,18 +12,18 @@ Requirements
 
 ### Platforms
 
-Tested on:
+Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, and 4.1 unless otherwise noted.
+
 
 * Ubuntu 14.04
 * Ubuntu 16.04
-* Centos 6.8
-* Centos 7.3
+  * Tested with Ubuntu's 16.04 distribution (version 4.1).
+* CentOS 6.8
+  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
+* CentOS 7.3
+  * Tested with 4.0 and 4.1 and CentOS 7 distrubution
 
-With varnish versions:
-
-* 3
-* 4
-* 4.1
+Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
 Global Attributes
 -----------------
