@@ -10,9 +10,6 @@ provisioner:
   require_chef_omnibus: 12.19.36
   name: dokken
 
-verifier:
-  name: inspec
-
 platforms:
 - name: debian-8
   driver:
