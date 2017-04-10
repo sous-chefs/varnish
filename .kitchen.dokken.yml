@@ -76,6 +76,7 @@ suites:
     - ubuntu-16.04
     - debian-8
   run_list:
+    - recipe[install_varnish::sudo]
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
@@ -84,6 +85,7 @@ suites:
   excludes:
     - ubuntu-16.04
   run_list:
+    - recipe[install_varnish::sudo]
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
@@ -92,6 +94,7 @@ suites:
   excludes:
     - ubuntu-16.04
   run_list:
+    - recipe[install_varnish::sudo]
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
@@ -100,9 +103,11 @@ suites:
   excludes:
     - centos-6 # Uses varnish 2 which we don't support
   run_list:
+    - recipe[install_varnish::sudo]
     - recipe[install_varnish::distro_install]
 - name: full_stack
   run_list:
+    - recipe[install_varnish::sudo]
     - recipe[install_varnish::full_stack]
   excludes:
     - centos-6 # Full stack tests use distro install so need to skip centos-6 for now.
