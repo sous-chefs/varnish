@@ -1,1 +1,1 @@
-package 'sudo'
+package %w(sudo curl)
