@@ -11,7 +11,7 @@ provisioner:
 
 verifier:
   root_path: '/opt/verifier'
-  test_reqs: false
+  sudo: true
 
 platforms:
 - name: debian-8
