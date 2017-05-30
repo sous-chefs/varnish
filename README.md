@@ -142,7 +142,7 @@ files that come with your distro package will be used instead.
 | `listen_address` | string | `nil` |
 | `listen_port` | integer | `6081` |
 | `admin_listen_address` | string | `'127.0.0.1'` |
-| `admin_plisten_port` | integer | `6082` |
+| `admin_listen_port` | integer | `6082` |
 | `user` | string | `'varnish'` |
 | `group` | string | `'varnish'` | Only used on varnish versions before 4.1
 | `ccgroup` | string | `nil` | Only used on varnish 4.1
