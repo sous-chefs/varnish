@@ -10,6 +10,7 @@ Configures varnish.
 ### chef-client
 
 * Requires chef-client 12.5 and above.
+* If you are using chef-client <12.9 and the `debian` platform family you will need to pin to the 5.X release of the `apt` cookbook.
 
 ### Platforms
 
