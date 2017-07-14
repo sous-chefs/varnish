@@ -80,7 +80,7 @@ action :configure do
     mode '0644'
     variables(
       major_version: new_resource.major_version,
-      malloc_size: malloc_size || malloc_default,
+      malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )
     only_if { node['init_package'] == 'systemd' }
@@ -96,7 +96,7 @@ action :configure do
     mode '0644'
     variables(
       major_version: new_resource.major_version,
-      malloc_size: malloc_size || malloc_default,
+      malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )
     notifies :restart, 'service[varnish]', :delayed
