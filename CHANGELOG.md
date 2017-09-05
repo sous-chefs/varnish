@@ -2,13 +2,18 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.3.0
+------
+- Updates to the new upstream varnish repo. https://github.com/sous-chefs/varnish/issues/140
+- Deprecates using the upstream varnish 4 repo on CentOS 7 (distro version still works). https://github.com/sous-chefs/varnish/issues/142
+
 v3.2.0
 ------
 - Links /etc/sysconfig/varnishlog and varnishncsa to defaults file in /etc/default. Fixes https://github.com/sous-chefs/varnish/issues/125.
 - Fixes default varnishncsa format string (double quotes where getting added).
 - Fixes an conflict when using both varnishlog and varnishncsa.
 - Fixes distro_install integration tests. https://github.com/sous-chefs/varnish/issues/126
-- Reverts the removal of reload-vcl since this is not fixed upstream in ubuntu's system   packages yet.
+- Reverts the removal of reload-vcl since this is not fixed upstream in ubuntu's system packages yet.
 
 v3.1.0
 ------
