@@ -23,7 +23,8 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 * CentOS 6.8
   * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
 * CentOS 7.3
-  * Tested with 4.0 and 4.1 and CentOS 7 distrubution
+  * Tested with 4.1 and the CentOS 7 distrubution version
+  * 4.0 only works with the distro version (https://github.com/sous-chefs/varnish/issues/142)
 
 Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
