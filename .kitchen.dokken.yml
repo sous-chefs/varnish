@@ -83,7 +83,7 @@ suites:
       major_version: 3.0
 - name: varnish4
   excludes:
-    - centos-7.3
+    - centos-7
     - ubuntu-16.04
   run_list:
     - recipe[install_varnish::test_reqs]
