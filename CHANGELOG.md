@@ -2,6 +2,11 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.3.1
+------
+- Remove upper bound on yum cookbook dependency. #147
+- Add repo_gpgcheck to redhat varnish repo. #145
+
 v3.3.0
 ------
 - Updates to the new upstream varnish repo. https://github.com/sous-chefs/varnish/issues/140
