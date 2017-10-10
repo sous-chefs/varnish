@@ -11,6 +11,8 @@ action :configure do
     description "Varnish #{new_resource.major_version} repo (#{node['platform_version']} - $basearch)"
     url "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/el/#{node['platform_version'].to_i}/$basearch"
     gpgcheck false
+    repo_gpgcheck true
+    gpgkey "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/gpgkey"
     action :create
   end
 end

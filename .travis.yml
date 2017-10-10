@@ -22,7 +22,6 @@ env:
     - INSTANCE=varnish3-ubuntu-1404
     - INSTANCE=varnish3-centos-6
     - INSTANCE=varnish4-ubuntu-1404
-    - INSTANCE=varnish4-centos-7
     - INSTANCE=varnish4-centos-6
     - INSTANCE=varnish41-ubuntu-1404
     - INSTANCE=varnish41-centos-7
