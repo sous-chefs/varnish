@@ -13,7 +13,7 @@ property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
 property :max_open_files, kind_of: Integer, default: 131_072
 property :max_locked_memory, kind_of: Integer, default: 82_000
 property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
-property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
+property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1, 5.0], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
@@ -56,7 +56,11 @@ action :configure do
   end
 
   service 'varnish' do
-    supports restart: true, reload: true
+    supports restart: true, reload: true if new_resource.major_version < 5
+
+    # https://github.com/varnishcache/varnish-cache/issues/2316
+    supports restart: false, reload: true if new_resource.major_version >= 5
+
     action :nothing
   end
 
