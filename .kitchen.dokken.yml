@@ -100,6 +100,13 @@ suites:
   attributes:
     varnish:
       major_version: 4.1
+- name: varnish5
+  run_list:
+    - recipe[install_varnish::test_reqs]
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 5
 - name: distro
   excludes:
     - centos-6 # Uses varnish 2 which we don't support

@@ -2,6 +2,15 @@ varnish Cookbook CHANGELOG
 ==========================
 This file is used to list changes made in each version of the varnish cookbook.
 
+v3.4.0
+------
+- Adds support Varnish 5
+- Updates reload-vcl file from upstream packaging
+- Add varnish5 TravisCI tests
+
+Known Bugs:
+- Specifying `5.0` as the major version can cause an older version to be installed, use `5` instead. https://github.com/sous-chefs/varnish/issues/150
+
 v3.3.1
 ------
 - Remove upper bound on yum cookbook dependency. #147

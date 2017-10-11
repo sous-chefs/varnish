@@ -14,7 +14,7 @@ Configures varnish.
 
 ### Platforms
 
-Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, and 4.1 unless otherwise noted.
+Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, and 5 unless otherwise noted.
 
 
 * Ubuntu 14.04
@@ -35,7 +35,7 @@ These attributes used as defaults for both resources and the `varnish::configure
 * `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
 * `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
 * `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
-* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, and default's to 4.1.
+* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, 5 and default's to 4.1.
 
 Recipes
 -------
@@ -114,7 +114,7 @@ Will configure the varnish repo specified by `node['varnish']['major_version']` 
 #### Parameters
 | Name | Type | Default Value |
 -------|------|---------------|
-| `major_version` | `3.0`, `4.0`, or `4.1` | `node['varnish']['major_version']` (4.1 by default) |
+| `major_version` | `3.0`, `4.0`, `4.1` or `5` | `node['varnish']['major_version']` (4.1 by default) |
 | `fetch_gpg_key` | `true` or `false` | `true` for debian distro's otherwise `false` (rpm packages are not signed) |
 
 #### Actions
@@ -139,7 +139,7 @@ files that come with your distro package will be used instead.
 | `start_on_boot` | `true` or `false` | `true` | Currently only used for initd
 | `max_open_files` | integer | `131_072` |
 | `max_locked_memory` | integer | `82_000` |
-| `major_version` | `3.0`, `4.0`, or `4.1` | `node['varnish']['major_version']` | major_version attribute defaults to 4.1
+| `major_version` | `3.0`, `4.0`, `4.1` or `5` | `node['varnish']['major_version']` | major_version attribute defaults to 4.1
 | `instance_name` | string | `` `hostname` ``]` |
 | `listen_address` | string | `nil` |
 | `listen_port` | integer | `6081` |
@@ -190,7 +190,7 @@ end
 | `owner` | string | `'root'` |
 | `group` | string | `'root'` |
 | `mode` | string or integer | `'0644'` | Follows the same behavior as the template resource
-| `variables` | hash | `{}` | Same behavior as the template resource but if the installed varnish major version (3.0, 4.0, or 4.1) can be found it is merged in at @varnish[:installed_version]
+| `variables` | hash | `{}` | Same behavior as the template resource but if the installed varnish major version (3.0, 4.0, 4.1 or 5) can be found it is merged in at @varnish[:installed_version]
 | `varnish_dir` | string | `'/etc/varnish'` | The directory to use for vcl files
 | `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified. 
 
@@ -245,7 +245,7 @@ Configures varnishlog or varnishncsa service. You can define both logfiles by ca
 | `ncsa_format_string` | string | `'%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'`
 | `instance_name` | string | `nil` |
 | `logrotate` | `true` or `false` | true for vanishlog, false for varnishncsa |
-| `major_version` | `3.0`, `4.0`, or `4.1` | currently installed major version | If varnish isn't installed yet then you will have to set this explicitly
+| `major_version` | `3.0`, `4.0`, `4.1`, or `5` | currently installed major version | If varnish isn't installed yet then you will have to set this explicitly
 | `logrotate_path` | `string` | `'/etc/logrotate.d'` if varnishncsa is used otherwise `nil` |
 
 #### Actions
