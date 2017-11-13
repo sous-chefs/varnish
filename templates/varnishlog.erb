@@ -18,7 +18,7 @@ LOG_FORMAT="<%= @config.ncsa_format_string %>"
 INSTANCE=<%= @config.instance_name %>
 # Override the Daemon options
 DAEMON_OPTS="-a -w $LOGFILE -D -P $PIDFILE \
-             <%- if node['platform_family'] == 'debian' %>
+             <%- unless @config.instance_name.nil? || @config.instance_name.empty? %>
               -n $INSTANCE \
              <%- end %>
 	     <%- if @config.ncsa_format_string %>
