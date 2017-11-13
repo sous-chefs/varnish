@@ -36,6 +36,9 @@ VARNISH_STORAGE="<%= storage %>"
 VARNISH_USER=varnish
 VARNISH_GROUP=varnish
 
+# Set the default TTL
+VARNISH_DEFAULT_TTL=<%= @config.ttl %>
+
 INSTANCE=<%= @config.instance_name %>
 
 <%-
