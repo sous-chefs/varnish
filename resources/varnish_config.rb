@@ -2,8 +2,6 @@ provides :varnish_config
 
 default_action :configure
 
-property :name, kind_of: String, name_attribute: true
-
 property :conf_source, kind_of: String, default: lazy { node['varnish']['conf_source'] }
 property :conf_cookbook, kind_of: String, default: lazy { node['varnish']['conf_cookbook'] }
 property :conf_path, kind_of: String, default: lazy { node['varnish']['conf_path'] }
