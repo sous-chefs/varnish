@@ -2,7 +2,6 @@ provides :varnish_log
 
 default_action :configure
 
-property :name, kind_of: String, name_attribute: true
 property :file_name, kind_of: String, default: lazy { "/var/log/varnish/#{log_format}.log" }
 property :pid, kind_of: String, default: lazy { "/var/run/#{log_format}.pid" }
 property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
