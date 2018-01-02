@@ -39,7 +39,7 @@ DAEMON_OPTS=" \
               -f <%= @config.path_to_vcl %> \
               -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> \
               -t <%= @config.ttl %> \
-             <%- if node['platform_family'] == 'debian' %>
+             <%- unless @config.instance_name.nil? || @config.instance_name.empty? %>
               -n $INSTANCE \
              <%- end %>
               -s $STORAGE \
