@@ -1,19 +1,15 @@
-provides :varnish_log
+property :file_name, String, default: lazy { "/var/log/varnish/#{log_format}.log" }
+property :pid, String, default: lazy { "/var/run/#{log_format}.pid" }
+property :log_format, String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
+property :logrotate, [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
+property :logrotate_path, String, default: '/etc/logrotate.d'
+property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 
-default_action :configure
-
-property :file_name, kind_of: String, default: lazy { "/var/log/varnish/#{log_format}.log" }
-property :pid, kind_of: String, default: lazy { "/var/run/#{log_format}.pid" }
-property :log_format, kind_of: String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
-property :logrotate, kind_of: [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
-property :logrotate_path, kind_of: String, default: '/etc/logrotate.d'
-property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
-
-property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
-property :ncsa_format_string, kind_of: [String, nil], default: lazy {
+property :ncsa_format_string, [String, nil], default: lazy {
   if log_format == 'varnishncsa' && major_version > 2.0
     '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
   end
