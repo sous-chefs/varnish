@@ -1,16 +1,14 @@
 provides :vcl_template
 
-default_action :configure
-
-property :vcl_name, kind_of: String, name_attribute: true
-property :source, kind_of: String, default: lazy { "#{::File.basename(vcl_name)}.erb" }
-property :cookbook, kind_of: String
-property :owner, kind_of: String, default: 'root'
-property :group, kind_of: String, default: 'root'
-property :mode, kind_of: String, default: '0644'
-property :variables, kind_of: Hash, default: {}
-property :varnish_dir, kind_of: String, default: '/etc/varnish'
-property :vcl_path, kind_of: String, default: lazy { ::File.join(varnish_dir, vcl_name) }
+property :vcl_name, String, name_attribute: true
+property :source, String, default: lazy { "#{::File.basename(vcl_name)}.erb" }
+property :cookbook, String
+property :owner, String, default: 'root'
+property :group, String, default: 'root'
+property :mode, String, default: '0644'
+property :variables, Hash, default: {}
+property :varnish_dir, String, default: '/etc/varnish'
+property :vcl_path, String, default: lazy { ::File.join(varnish_dir, vcl_name) }
 
 action :configure do
   extend VarnishCookbook::Helpers
