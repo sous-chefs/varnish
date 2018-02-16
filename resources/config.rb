@@ -1,44 +1,40 @@
-provides :varnish_config
-
-default_action :configure
-
-property :conf_source, kind_of: String, default: lazy { node['varnish']['conf_source'] }
-property :conf_cookbook, kind_of: String, default: lazy { node['varnish']['conf_cookbook'] }
-property :conf_path, kind_of: String, default: lazy { node['varnish']['conf_path'] }
+property :conf_source, String, default: lazy { node['varnish']['conf_source'] }
+property :conf_cookbook, String, default: lazy { node['varnish']['conf_cookbook'] }
+property :conf_path, String, default: lazy { node['varnish']['conf_path'] }
 
 # Service config options
-property :start_on_boot, kind_of: [TrueClass, FalseClass], default: true
-property :max_open_files, kind_of: Integer, default: 131_072
-property :max_locked_memory, kind_of: Integer, default: 82_000
-property :instance_name, kind_of: String, default: VarnishCookbook::Helpers.hostname
-property :major_version, kind_of: Float, equal_to: [3.0, 4.0, 4.1, 5], default: lazy {
+property :start_on_boot, [TrueClass, FalseClass], default: true
+property :max_open_files, Integer, default: 131_072
+property :max_locked_memory, Integer, default: 82_000
+property :instance_name, String, default: VarnishCookbook::Helpers.hostname
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
 # Daemon options
-property :listen_address, kind_of: String, default: '0.0.0.0'
-property :listen_port, kind_of: Integer, default: 6081
-property :path_to_vcl, kind_of: String, default: '/etc/varnish/default.vcl'
-property :admin_listen_address, kind_of: String, default: '127.0.0.1'
-property :admin_listen_port, kind_of: Integer, default: 6082
-property :user, kind_of: String, default: 'varnish'
-property :group, kind_of: String, default: 'varnish'
-property :ccgroup, kind_of: [String, nil]
-property :ttl, kind_of: Integer, default: 120
-property :storage, kind_of: String, default: 'file', equal_to: %w(file malloc)
-property :file_storage_path, kind_of: String, default: '/var/lib/varnish/%s_storage.bin'
-property :file_storage_size, kind_of: String, default: '1GB'
-property :malloc_percent, kind_of: [Integer, nil], default: 33
-property :malloc_size, kind_of: [String, nil]
-property :parameters, kind_of: Hash, default:
+property :listen_address, String, default: '0.0.0.0'
+property :listen_port, Integer, default: 6081
+property :path_to_vcl, String, default: '/etc/varnish/default.vcl'
+property :admin_listen_address, String, default: '127.0.0.1'
+property :admin_listen_port, Integer, default: 6082
+property :user, String, default: 'varnish'
+property :group, String, default: 'varnish'
+property :ccgroup, [String, nil]
+property :ttl, Integer, default: 120
+property :storage, String, default: 'file', equal_to: %w(file malloc)
+property :file_storage_path, String, default: '/var/lib/varnish/%s_storage.bin'
+property :file_storage_size, String, default: '1GB'
+property :malloc_percent, [Integer, nil], default: 33
+property :malloc_size, [String, nil]
+property :parameters, Hash, default:
     {
       'thread_pools' => '4',
       'thread_pool_min' => '5',
       'thread_pool_max' => '500',
       'thread_pool_timeout' => '300',
     }
-property :path_to_secret, kind_of: String, default: '/etc/varnish/secret'
-property :reload_cmd, kind_of: String, default: lazy { node['varnish']['reload_cmd'] }
+property :path_to_secret, String, default: '/etc/varnish/secret'
+property :reload_cmd, String, default: lazy { node['varnish']['reload_cmd'] }
 
 action :configure do
   extend VarnishCookbook::Helpers
