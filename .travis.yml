@@ -30,6 +30,10 @@ env:
     - INSTANCE=varnish5-ubuntu-1604
     - INSTANCE=varnish5-centos-7
     - INSTANCE=varnish5-centos-6
+    - INSTANCE=varnish6-ubuntu-1404
+    - INSTANCE=varnish6-ubuntu-1604
+    - INSTANCE=varnish6-centos-7
+    - INSTANCE=varnish6-centos-6
     - INSTANCE=distro-ubuntu-1404
     - INSTANCE=distro-ubuntu-1604
     - INSTANCE=distro-centos-7
