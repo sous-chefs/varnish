@@ -17,14 +17,18 @@ Configures varnish.
 Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, and 5 unless otherwise noted.
 
 
+Supported versions:
 * Ubuntu 14.04
+  * Upstream >= 3
+  * Distro version 3
 * Ubuntu 16.04
-  * Tested with Ubuntu's 16.04 distribution (version 4.1).
+  * Upstream >= 5
+  * Distro version 4.1
 * CentOS 6.8
-  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
+  * Upstream 3 and up
 * CentOS 7.3
-  * Tested with 4.1 and the CentOS 7 distrubution version
-  * 4.0 only works with the distro version (https://github.com/sous-chefs/varnish/issues/142)
+  * Upstream >= 4.1
+  * Distro version 4.0 (https://github.com/sous-chefs/varnish/issues/142)
 
 Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
