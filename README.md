@@ -19,13 +19,13 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 
 Supported versions:
 * Ubuntu 14.04
-  * Upstream >= 3
+  * Upstream >= 3 <= 5
   * Distro version 3
 * Ubuntu 16.04
   * Upstream >= 5
   * Distro version 4.1
 * CentOS 6.8
-  * Upstream 3 and up
+  * Upstream >= 3 <= 5
 * CentOS 7.3
   * Upstream >= 4.1
   * Distro version 4.0 (https://github.com/sous-chefs/varnish/issues/142)
