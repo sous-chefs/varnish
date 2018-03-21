@@ -6,11 +6,9 @@ v4.0.0
 ------
 - Adds support Varnish 6.0
 - Allow systemd platforms to set instance names. PR #157 and #153
+  - Note: In some cases (instance_name is set when using systemd) this will change the varnish instance name.
 - Escape ncsa_format_string for systemd. Fixes #137
 - Don't set -n when instance_name is nil or empty on systemd
-
-Known Bugs:
-- Specifying `5.0` as the major version can cause an older version to be installed, use `5` instead. https://github.com/sous-chefs/varnish/issues/150
 
 v3.4.0
 ------
