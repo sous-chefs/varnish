@@ -17,11 +17,9 @@ platforms:
 - name: centos-7.3
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
-    - recipe[yum-epel]
 - name: centos-6.8
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
-    - recipe[yum-epel]
 
 # Unless other wise noted excludes exist because the distro version get's installed instead (need pinning to support this)
 suites:
