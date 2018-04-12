@@ -72,7 +72,6 @@ platforms:
 suites:
 - name: varnish3
   excludes:
-    - centos-7
     - ubuntu-16.04
     - debian-8
   run_list:
@@ -83,8 +82,6 @@ suites:
       major_version: 3.0
 - name: varnish4
   excludes:
-    - centos-7
-    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::test_reqs]
     - recipe[install_varnish::vendor_install]
@@ -93,7 +90,6 @@ suites:
       major_version: 4.0
 - name: varnish41
   excludes:
-    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::test_reqs]
     - recipe[install_varnish::vendor_install]

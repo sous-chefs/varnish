@@ -25,7 +25,6 @@ platforms:
 suites:
 - name: varnish3
   excludes:
-    - centos-7.3
     - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
@@ -33,9 +32,6 @@ suites:
     varnish:
       major_version: 3.0
 - name: varnish4
-  excludes:
-    - centos-7.3
-    - ubuntu-16.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
