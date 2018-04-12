@@ -48,7 +48,7 @@ describe file('/etc/logrotate.d/varnishlog') do
 end
 
 describe command('sudo varnishadm backend.list') do
-  it 'exits succusfully' do
+  it 'exits successfully' do
     expect(subject.exit_status).to eq 0
   end
   its 'backend is setup' do
