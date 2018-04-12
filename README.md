@@ -1,6 +1,6 @@
 # varnish Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)  
+[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)
 [![Cookbook Version](https://img.shields.io/cookbook/v/varnish.svg)](https://supermarket.chef.io/cookbooks/varnish)
 
 Configures varnish.
@@ -14,17 +14,15 @@ Configures varnish.
 
 ### Platforms
 
-Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, and 5 unless otherwise noted.
+Tested on the platforms below with distro installs and upstream Varnish packaging versions 3.0, 4.0, 4.1, and 5 unless otherwise noted.
 
 
-* Ubuntu 14.04
-* Ubuntu 16.04
-  * Tested with Ubuntu's 16.04 distribution (version 4.1).
-* CentOS 6.8
-  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
-* CentOS 7.3
-  * Tested with 4.1 and the CentOS 7 distrubution version
-  * 4.0 only works with the distro version (https://github.com/sous-chefs/varnish/issues/142)
+| Varnish      | 3.0 | 4.0 | 4.1 | 5 | distro |
+|--------------|:---:|:---:|:---:|:-:|:------:|
+| CentOS 6.8   |  ✔  |  ✔  |  ✔  | ✔ |    ✘   |
+| CentOS 7.3   |  ✔  |  ✔  |  ✔  | ✔ |    ✔   |
+| Ubuntu 14.04 |  ✔  |  ✔  |  ✔  | ✔ |    ✔   |
+| Ubuntu 16.04 |  ✘  |  ✔  |  ✔  | ✔ |    ✔   |
 
 Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
@@ -35,7 +33,7 @@ These attributes used as defaults for both resources and the `varnish::configure
 * `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
 * `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
 * `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
-* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, 5 and default's to 4.1.
+* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, 5 and defaults to 4.1.
 
 Recipes
 -------
@@ -192,7 +190,7 @@ end
 | `mode` | string or integer | `'0644'` | Follows the same behavior as the template resource
 | `variables` | hash | `{}` | Same behavior as the template resource but if the installed varnish major version (3.0, 4.0, 4.1 or 5) can be found it is merged in at @varnish[:installed_version]
 | `varnish_dir` | string | `'/etc/varnish'` | The directory to use for vcl files
-| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified. 
+| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified.
 
 #### Example
 Create vcl file at '/etc/varnish/backends.vcl' using the template at 'templates/default/backends.vcl.erb' and pass it some variables:
@@ -221,7 +219,7 @@ end
 | `group` | string | `'root'` |
 | `mode` | string or integer | `'0644'` | Follows the same behavior as the cookbook_file resource
 | `varnish_dir` | string | `'/etc/varnish'` | The directory to use for vcl files
-| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified. 
+| `vcl_path` | string | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified.
 
 #### Example
 Create vcl file at '/etc/varnish/default.vcl' using the file at 'files/default/default.vcl':
