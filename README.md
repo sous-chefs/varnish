@@ -24,7 +24,7 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 | Ubuntu 14.04 |  ✔  |  ✔  |  ✔  | ✔ |    ✔   |
 | Ubuntu 16.04 |  ✘  |  ✔  |  ✔  | ✔ |    ✔   |
 
-Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
+Other operating systems and Varnish versions may work, but are not explicitly tested or supported.
 
 Global Attributes
 -----------------
