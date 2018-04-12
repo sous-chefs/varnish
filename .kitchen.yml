@@ -58,8 +58,18 @@ suites:
     - centos-6.8 # Uses varnish 2 which we don't support
   run_list:
     - recipe[install_varnish::distro_install]
+  attributes:
+    varnish:
+      configure:
+        repo:
+          action: :nothing
 - name: full_stack
   run_list:
     - recipe[install_varnish::full_stack]
   excludes:
     - centos-6.8 # Full stack tests use distro install so need to skip centos-6 for now.
+  attributes:
+    varnish:
+      configure:
+        repo:
+          action: :nothing
