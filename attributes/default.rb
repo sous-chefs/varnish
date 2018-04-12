@@ -9,7 +9,7 @@ if platform_family?('debian')
   default['varnish']['conf_path'] = '/etc/default/varnish'
   default['varnish']['reload_cmd'] = '/usr/share/varnish/reload-vcl'
   # Install specific version of Varnish on Debian/Ubuntu
-  default['varnish']['configure']['package']['version'] = "#{node['varnish']['major_version']}.\*"
+  default['varnish']['configure']['package']['version'] = "#{node['varnish']['major_version']}.\*" unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
 else
   default['varnish']['reload_cmd'] = if node['varnish']['major_version'] < 4
                                        '/usr/bin/varnish_reload_vcl'
