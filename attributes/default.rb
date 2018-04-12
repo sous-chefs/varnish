@@ -5,6 +5,11 @@
 default['varnish']['conf_cookbook'] = 'varnish'
 default['varnish']['major_version'] = 4.1
 
+default['varnish']['configure']['repo']['action'] = :configure
+
+# Prevent installation of distro varnish on RHEL/CentOS
+default['yum']['epel']['exclude'] = 'varnish' unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
+
 if platform_family?('debian')
   default['varnish']['conf_path'] = '/etc/default/varnish'
   default['varnish']['reload_cmd'] = '/usr/share/varnish/reload-vcl'
@@ -52,11 +57,6 @@ end
 
 # Disable logs:
 # override['varnish']['configure']['log']['action'] = :nothing
-
-default['varnish']['configure']['repo']['action'] = :configure
-
-# Prevent installation of distro varnish on RHEL/CentOS
-default['yum']['epel']['exclude'] = 'varnish' unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
 
 default['varnish']['configure']['package']['action'] = :install
 
