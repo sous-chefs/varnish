@@ -1,6 +1,6 @@
 provides :vcl_template
 
-property :vcl_name, String, name_attribute: true
+property :vcl_name, String, name_property: true
 property :source, String, default: lazy { "#{::File.basename(vcl_name)}.erb" }
 property :cookbook, String
 property :owner, String, default: 'root'

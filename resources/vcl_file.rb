@@ -1,6 +1,6 @@
 provides :vcl_file
 
-property :vcl_name, String, name_attribute: true
+property :vcl_name, String, name_property: true
 property :source, String, default: lazy { ::File.basename(vcl_name) }
 property :cookbook, String
 property :owner, String, default: 'root'
