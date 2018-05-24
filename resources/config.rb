@@ -14,6 +14,8 @@ property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy
 # Daemon options
 property :listen_address, String, default: '0.0.0.0'
 property :listen_port, Integer, default: 6081
+property :secondary_listen_address, [String, nil]
+property :secondary_listen_port, [Integer, nil]
 property :path_to_vcl, String, default: '/etc/varnish/default.vcl'
 property :admin_listen_address, String, default: '127.0.0.1'
 property :admin_listen_port, Integer, default: 6082
