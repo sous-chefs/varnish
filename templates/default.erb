@@ -36,6 +36,9 @@ DAEMON_OPTS=" \
                   -u <%= @config.user %> -g <%= @config.group %> \
               <%- end %>
               -a <%= @config.listen_address %>:<%= @config.listen_port %> \
+              <%- unless @config.secondary_listen_address.nil? || @config.secondary_listen_port.nil? %>
+                  -a <%= @config.secondary_listen_address %>:<%= @config.secondary_listen_port %> \
+              <%- end %>
               -f <%= @config.path_to_vcl %> \
               -T <%= @config.admin_listen_address %>:<%= @config.admin_listen_port %> \
               -t <%= @config.ttl %> \
