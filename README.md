@@ -1,6 +1,6 @@
 # varnish Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)  
+[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)
 [![Cookbook Version](https://img.shields.io/cookbook/v/varnish.svg)](https://supermarket.chef.io/cookbooks/varnish)
 
 Configures varnish.
@@ -145,29 +145,31 @@ end
 
 Configures the Varnish service through the defaults or systemd init file. If you do not include this, the config files that come with your distro package will be used instead.
 
-Name                   | Type                       | Default Value
----------------------- | -------------------------- | -------------------------------------------------------------------------------
-`conf`                 | `string`                   | `node['varnish']['conf_source']`                                                | Defaults to `default.erb` or `default_systemd.erb` depending on init system
-`start_on_boot`        | `true` or `false`          | `true`                                                                          | Currently only used for initd
-`max_open_files`       | integer                    | `131_072`
-`max_locked_memory`    | integer                    | `82_000`
-`major_version`        | `3.0`, `4.0`, `4.1` or `5` | `node['varnish']['major_version']`                                              | major_version attribute defaults to 4.1
-`instance_name`        | string                     | `` `hostname` `` ]`
-`listen_address`       | string                     | `nil`
-`listen_port`          | integer                    | `6081`
-`admin_listen_address` | string                     | `'127.0.0.1'`
-`admin_listen_port`    | integer                    | `6082`
-`user`                 | string                     | `'varnish'`
-`group`                | string                     | `'varnish'`                                                                     | Only used on varnish versions before 4.1
-`ccgroup`              | string                     | `nil`                                                                           | Only used on varnish 4.1
-`ttl`                  | integer                    | `120`                                                                           | Currently only used on initd systems
-`storage`              | `'malloc'` or `'file'`     | `'file'`
-`file_storage_path`    | string                     | `'/var/lib/varnish/%s_storage.bin'` where %s is replaced with the resource name
-`file_storage_size`    | string                     | `'1G'`
-`malloc_percent`       | Integer                    | `33`                                                                            | Percent of total memory to allocate to malloc
-`malloc_size`          | string                     | `nil`                                                                           | Size to allocate to malloc, a string like '500M'. Overrides malloc_percent.
-`path_to_secret`       | string                     | `'/etc/varnish/secret'`
-`reload_cmd`           | string                     | `node['varnish']['reload_cmd']`                                                 | Default to depends on system and is only needed for systemd currently.
+Name                       | Type                       | Default Value
+-------------------------- | -------------------------- | -------------------------------------------------------------------------------
+`conf`                     | `string`                   | `node['varnish']['conf_source']`                                                | Defaults to `default.erb` or `default_systemd.erb` depending on init system
+`start_on_boot`            | `true` or `false`          | `true`                                                                          | Currently only used for initd
+`max_open_files`           | integer                    | `131_072`
+`max_locked_memory`        | integer                    | `82_000`
+`major_version`            | `3.0`, `4.0`, `4.1` or `5` | `node['varnish']['major_version']`                                              | major_version attribute defaults to 4.1
+`instance_name`            | string                     | `` `hostname` `` ]`
+`listen_address`           | string                     | `nil`
+`listen_port`              | integer                    | `6081`
+`secondary_listen_address` | string                     | `nil`
+`secondary_listen_port`    | integer                    | `nil`
+`admin_listen_address`     | string                     | `'127.0.0.1'`
+`admin_listen_port`        | integer                    | `6082`
+`user`                     | string                     | `'varnish'`
+`group`                    | string                     | `'varnish'`                                                                     | Only used on varnish versions before 4.1
+`ccgroup`                  | string                     | `nil`                                                                           | Only used on varnish 4.1
+`ttl`                      | integer                    | `120`                                                                           | Currently only used on initd systems
+`storage`                  | `'malloc'` or `'file'`     | `'file'`
+`file_storage_path`        | string                     | `'/var/lib/varnish/%s_storage.bin'` where %s is replaced with the resource name
+`file_storage_size`        | string                     | `'1G'`
+`malloc_percent`           | Integer                    | `33`                                                                            | Percent of total memory to allocate to malloc
+`malloc_size`              | string                     | `nil`                                                                           | Size to allocate to malloc, a string like '500M'. Overrides malloc_percent.
+`path_to_secret`           | string                     | `'/etc/varnish/secret'`
+`reload_cmd`               | string                     | `node['varnish']['reload_cmd']`                                                 | Default to depends on system and is only needed for systemd currently.
 
 You can also send a hash to `parameters` which will add additional parameters to the varnish daemon via the `-p` option. The default hash is:
 
