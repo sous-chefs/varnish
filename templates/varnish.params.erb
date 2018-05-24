@@ -11,10 +11,10 @@ VARNISH_VCL_CONF=<%= @config.path_to_vcl %>
 # and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted
 # quad, or an IPv6 address in brackets.
 <%-
-    listen_arguments = [
-        [@config.listen_address, @config.listen_port].join(":"),
-        [@config.secondary_listen_address, @config.secondary_listen_port].compact.join(":")
-    ].join(" -a ")
+    listen_arguments = [@config.listen_address, @config.listen_port].join(":")
+    unless @config.secondary_listen_address.nil? || @config.secondary_listen_port.nil?
+      listen_arguments << " -a " << [@config.secondary_listen_address, @config.secondary_listen_port].compact.join(":")
+    end
 %>
 
 VARNISH_LISTEN_ARGUMENTS="-a <%= listen_arguments %>"
