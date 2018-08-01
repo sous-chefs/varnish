@@ -9,7 +9,7 @@ Configures varnish.
 
 ### chef-client
 
-- Requires chef-client 12.9 and above.
+- Requires chef-client 12.15 and above.
 
 ### Platforms
 
@@ -20,7 +20,7 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 * Ubuntu 16.04
   * Tested with Ubuntu's 16.04 distribution (version 4.1).
 * CentOS 6.8
-  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported) 
+  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported)
 * CentOS 7.3
   * Tested with 4.1 and the CentOS 7 distrubution version
   * 4.0 only works with the distro version (https://github.com/sous-chefs/varnish/issues/142)
@@ -287,7 +287,6 @@ end
 Install and configure varnish 4.1 using vcl config default.vcl in the current cookbook as well as a backend.vcl template.
 
 ```
-include_recipe 'apt'
 include_recipe 'varnish::default'
 
 varnish_repo 'configure' do

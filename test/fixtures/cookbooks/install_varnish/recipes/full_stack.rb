@@ -1,5 +1,5 @@
-include_recipe 'apt'
-include_recipe 'yum'
+apt_update
+
 include_recipe 'yum-epel'
 include_recipe 'varnish::default'
 
