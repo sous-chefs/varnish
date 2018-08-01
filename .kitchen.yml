@@ -14,11 +14,11 @@ provisioner:
 platforms:
 - name: ubuntu-14.04
 - name: ubuntu-16.04
-- name: centos-7.3
+- name: centos-7
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
-- name: centos-6.8
+- name: centos-6
   run_list:
     - recipe[disable_ipv6::disable_ipv6]
     - recipe[yum-epel]
