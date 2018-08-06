@@ -13,17 +13,22 @@ Configures varnish.
 
 ### Platforms
 
-Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, and 5 unless otherwise noted.
+Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, 5, and 6.0 unless otherwise noted.
 
 
+Supported versions:
 * Ubuntu 14.04
+  * Upstream >= 3 <= 5
+  * Distro version 3
 * Ubuntu 16.04
-  * Tested with Ubuntu's 16.04 distribution (version 4.1).
+  * Upstream >= 5
+  * Distro version 4.1
 * CentOS 6.8
   * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported)
+  * Upstream >= 3 <= 5
 * CentOS 7.3
-  * Tested with 4.1 and the CentOS 7 distrubution version
-  * 4.0 only works with the distro version (https://github.com/sous-chefs/varnish/issues/142)
+  * Upstream >= 4.1
+  * Distro version 4.0 (https://github.com/sous-chefs/varnish/issues/142)
 
 Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
 
@@ -31,11 +36,11 @@ Other versions may work but require pinning to the correct version which isn't i
 
 These attributes used as defaults for both resources and the `varnish::configure` cookbook but can be also overridden with other attributes and resource properties described later.
 
-- `node['varnish']['conf_path']` - location of the `default` file that controls the varnish init script on Debian/Ubuntu systems.
-- `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
-- `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
-- `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
-- `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, 5 and default's to 4.1.
+* `node['varnish']['conf_path']` - location of the `default` file that controls the varnish init script on Debian/Ubuntu systems.
+* `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
+* `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
+* `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
+* `node['varnish']['major_version']` - the major version of varnish to install. Can be 3.0, 4.0, 4.1, 5 or 6.0 and default's to 4.1.
 
 ## Recipes
 
@@ -120,6 +125,7 @@ Name            | Type                       | Default Value
 --------------- | -------------------------- | --------------------------------------------------------------------------
 `major_version` | `3.0`, `4.0`, `4.1` or `5` | `node['varnish']['major_version']` (4.1 by default)
 `fetch_gpg_key` | `true` or `false`          | `true` for debian distro's otherwise `false` (rpm packages are not signed)
+
 
 #### Actions
 
