@@ -5,7 +5,7 @@ After=varnish.service
 [Service]
 Type=forking
 PIDFile=<%= @config.pid %>
-ExecStart=/usr/bin/<%= @config.log_format %> -a -w <%= @config.file_name %> -D -P <%= @config.pid %> -n <%= @config.instance_name %> <%- if @config.ncsa_format_string %> -F <%= @config.ncsa_format_string %> <%- end %>
+ExecStart=/usr/bin/<%= @config.log_format %> -a -w <%= @config.file_name %> -D -P <%= @config.pid %> <%- unless @config.instance_name.nil? || @config.instance_name.empty? %> -n <%= @config.instance_name %> <%- end %> <%- if @config.ncsa_format_string %> -F <%= @config.ncsa_format_string.gsub("%", "%%") %> <%- end %>
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
