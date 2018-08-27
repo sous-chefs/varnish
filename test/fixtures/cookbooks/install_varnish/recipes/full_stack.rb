@@ -1,4 +1,4 @@
-apt_update
+apt_update 'update apt cache'
 
 include_recipe 'yum-epel'
 include_recipe 'varnish::default'
