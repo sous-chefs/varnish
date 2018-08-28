@@ -7,13 +7,15 @@ property :start_on_boot, [TrueClass, FalseClass], default: true
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
 # Daemon options
 property :listen_address, String, default: '0.0.0.0'
 property :listen_port, Integer, default: 6081
+property :secondary_listen_address, [String, nil]
+property :secondary_listen_port, [Integer, nil]
 property :path_to_vcl, String, default: '/etc/varnish/default.vcl'
 property :admin_listen_address, String, default: '127.0.0.1'
 property :admin_listen_port, Integer, default: 6082

@@ -4,16 +4,16 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+      - chef-current-trusty
     packages:
       - chefdk
 
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
-# branches:
-#   only:
-#     - master
+branches:
+  only:
+    - master
 
 services: docker
 
@@ -34,6 +34,8 @@ env:
     - INSTANCE=varnish5-ubuntu-1604
     - INSTANCE=varnish5-centos-7
     - INSTANCE=varnish5-centos-6
+    - INSTANCE=varnish6-ubuntu-1604
+    - INSTANCE=varnish6-centos-7
     - INSTANCE=distro-ubuntu-1404
     - INSTANCE=distro-ubuntu-1604
     - INSTANCE=distro-centos-7
@@ -43,15 +45,15 @@ env:
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
+  - eval "$(chef shell-init bash)"
+  - chef --version
+  - cookstyle --version
+  - foodcritic --version
 
-script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
     - script:
-      - /opt/chefdk/bin/chef exec delivery local all
+      - chef exec delivery local all
       env: UNIT_AND_LINT=1

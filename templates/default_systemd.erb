@@ -28,7 +28,7 @@ EnvironmentFile=/etc/varnish/varnish.params
 Type=forking
 PIDFile=/var/run/varnish.pid
 PrivateTmp=true
-ExecStart=/usr/sbin/varnishd -P /var/run/varnish.pid -f $VARNISH_VCL_CONF -a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} -T ${VARNISH_ADMIN_LISTEN_ADDRESS}:${VARNISH_ADMIN_LISTEN_PORT} -S $VARNISH_SECRET_FILE -s $VARNISH_STORAGE -n $INSTANCE -t $VARNISH_DEFAULT_TTL $DAEMON_OPTS
+ExecStart=/usr/sbin/varnishd -P /var/run/varnish.pid -f $VARNISH_VCL_CONF -T ${VARNISH_ADMIN_LISTEN_ADDRESS}:${VARNISH_ADMIN_LISTEN_PORT} -S $VARNISH_SECRET_FILE -s $VARNISH_STORAGE <%- unless @config.instance_name.nil? || @config.instance_name.empty? %> -n $INSTANCE <%- end %> -t $VARNISH_DEFAULT_TTL $DAEMON_OPTS $VARNISH_LISTEN_ARGUMENTS
 
 ExecReload=<%= @config.reload_cmd %>
 

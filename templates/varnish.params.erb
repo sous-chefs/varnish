@@ -10,8 +10,14 @@ VARNISH_VCL_CONF=<%= @config.path_to_vcl %>
 # Default address and port to bind to. Blank address means all IPv4
 # and IPv6 interfaces, otherwise specify a host name, an IPv4 dotted
 # quad, or an IPv6 address in brackets.
-VARNISH_LISTEN_ADDRESS=<%= @config.listen_address %>
-VARNISH_LISTEN_PORT=<%= @config.listen_port %>
+<%-
+    listen_arguments = [@config.listen_address, @config.listen_port].join(":")
+    unless @config.secondary_listen_address.nil? || @config.secondary_listen_port.nil?
+      listen_arguments << " -a " << [@config.secondary_listen_address, @config.secondary_listen_port].compact.join(":")
+    end
+%>
+
+VARNISH_LISTEN_ARGUMENTS="-a <%= listen_arguments %>"
 
 # Admin interface listen address and port
 VARNISH_ADMIN_LISTEN_ADDRESS=<%= @config.admin_listen_address %>
