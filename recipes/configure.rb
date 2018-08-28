@@ -33,12 +33,6 @@ package 'varnish' do
   end
 end
 
-service 'varnish' do
-  node['varnish']['configure']['service'].each do |key, value|
-    send(key, value) unless value.nil?
-  end
-end
-
 varnish_config 'default' do
   node['varnish']['configure']['config'].each do |key, value|
     send(key, value) unless value.nil?
@@ -47,6 +41,12 @@ end
 
 vcl_template 'default.vcl' do
   node['varnish']['configure']['vcl_template'].each do |key, value|
+    send(key, value) unless value.nil?
+  end
+end
+
+service 'varnish' do
+  node['varnish']['configure']['service'].each do |key, value|
     send(key, value) unless value.nil?
   end
 end

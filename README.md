@@ -13,24 +13,17 @@ Configures varnish.
 
 ### Platforms
 
-Tested on the platforms below with distro installs and upstream Varnish packaging versions 3, 4.0, 4.1, 5, and 6.0 unless otherwise noted.
+Tested on the platforms below with distro installs and upstream Varnish packaging versions 3.0, 4.0, 4.1, and 5 unless otherwise noted.
 
 
-Supported versions:
-* Ubuntu 14.04
-  * Upstream >= 3 <= 5
-  * Distro version 3
-* Ubuntu 16.04
-  * Upstream >= 5
-  * Distro version 4.1
-* CentOS 6.8
-  * Tested with 3, 4.0, and 4.1 (distro version is 2.0 which is not supported)
-  * Upstream >= 3 <= 5
-* CentOS 7.3
-  * Upstream >= 4.1
-  * Distro version 4.0 (https://github.com/sous-chefs/varnish/issues/142)
+| Varnish      | 3.0 | 4.0 | 4.1 | 5 | distro |
+|--------------|:---:|:---:|:---:|:-:|:------:|
+| CentOS 6.8   |  ✔  |  ✔  |  ✔  | ✔ |    ✘   |
+| CentOS 7.3   |  ✔  |  ✔  |  ✔  | ✔ |    ✔   |
+| Ubuntu 14.04 |  ✔  |  ✔  |  ✔  | ✔ |    ✔   |
+| Ubuntu 16.04 |  ✘  |  ✔  |  ✔  | ✔ |    ✔   |
 
-Other versions may work but require pinning to the correct version which isn't included in this cookbook currently.
+Other operating systems and Varnish versions may work, but are not explicitly tested or supported.
 
 ## Global Attributes
 
@@ -241,6 +234,7 @@ Name          | Type              | Default Value
 `mode`        | string or integer | `'0644'`                             | Follows the same behavior as the cookbook_file resource
 `varnish_dir` | string            | `'/etc/varnish'`                     | The directory to use for vcl files
 `vcl_path`    | string            | `::File.join(varnish_dir, vcl_name)` | Overrides both the vcl_name and varnish_dir if this is specified.
+
 
 #### Example
 

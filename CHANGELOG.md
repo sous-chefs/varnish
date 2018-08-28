@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the varnish cookbook.
 
+## v4.0.1
+
+- Adds support for Varnish 3 and 4.0 on CentOS 7
+- Adds support for Varnish 4.0 and 4.1 on Ubuntu 1604 
+
 ## v4.0.0
 
 - Adds support Varnish 6.0
