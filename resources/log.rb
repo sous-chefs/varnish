@@ -5,7 +5,7 @@ property :logrotate, [TrueClass, FalseClass], default: lazy { log_format == 'var
 property :logrotate_path, String, default: '/etc/logrotate.d'
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 

@@ -8,7 +8,7 @@ describe 'install_varnish::vendor_install' do
   end
 
   before do
-    stub_resources
+    stub_resources(4.0)
   end
 
   it 'does not configure the varnish vendor repo' do

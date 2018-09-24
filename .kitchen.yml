@@ -49,18 +49,39 @@ suites:
   attributes:
     varnish:
       major_version: 5
-- name: varnish6
+- name: varnish51
+  run_list:
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 5.1
+- name: varnish52
+  run_list:
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 5.2
+- name: varnish60
   excludes:
-    - centos-6.8
+    - centos-6
     - ubuntu-14.04
   run_list:
     - recipe[install_varnish::vendor_install]
   attributes:
     varnish:
       major_version: 6.0
+- name: varnish61
+  excludes:
+    - centos-6
+    - ubuntu-14.04
+  run_list:
+    - recipe[install_varnish::vendor_install]
+  attributes:
+    varnish:
+      major_version: 6.1
 - name: distro
   excludes:
-    - centos-6.8 # Uses varnish 2 which we don't support
+    - centos-6 # Uses varnish 2 which we don't support
   run_list:
     - recipe[install_varnish::distro_install]
   attributes:
@@ -72,7 +93,7 @@ suites:
   run_list:
     - recipe[install_varnish::full_stack]
   excludes:
-    - centos-6.8 # Full stack tests use distro install so need to skip centos-6 for now.
+    - centos-6 # Full stack tests use distro install so need to skip centos-6 for now.
   attributes:
     varnish:
       configure:

@@ -7,7 +7,7 @@ property :start_on_boot, [TrueClass, FalseClass], default: true
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
@@ -85,6 +85,12 @@ action :configure do
     )
     only_if { node['init_package'] == 'systemd' }
     only_if { node['platform_family'] == 'debian' }
+  end
+
+  execute 'generate secret file' do
+    command "dd if=/dev/random of=#{new_resource.path_to_secret} count=1"
+    creates new_resource.path_to_secret
+    only_if { new_resource.major_version >= 6.1 }
   end
 
   template new_resource.conf_path do
