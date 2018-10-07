@@ -11,5 +11,9 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
-      - kitchen/dokken:
-          suite: default
+      - kitchen/dokken-single:
+          suite: varnish6
+          platform: centos-7
+      - kitchen/dokken-single:
+          suite: varnish6
+          platform: ubuntu-1604
