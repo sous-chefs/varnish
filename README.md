@@ -18,8 +18,8 @@ Tested on the platforms below with distro installs and upstream Varnish packagin
 
 | Varnish      | 3.0 | 4.0 | 4.1 | 5 | 5.1 | 5.2 | 6.0 | 6.1 | distro |
 |--------------|:---:|:---:|:---:|:-:|:---:|:---:|:---:|:---:|:------:|
-| CentOS 6.8   |  ✔  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✘  |  ✘  |    ✘   |
-| CentOS 7.3   |  ✔  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✔  |  ✔  |    ✔   |
+| CentOS 6     |  ✔  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✘  |  ✘  |    ✘   |
+| CentOS 7     |  ✔  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✔  |  ✔  |    ✔   |
 | Ubuntu 14.04 |  ✔  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✘  |  ✘  |    ✔   |
 | Ubuntu 16.04 |  ✘  |  ✔  |  ✔  | ✔ |  ✔  |  ✔  |  ✔  |  ✔  |    ✔   |
 
