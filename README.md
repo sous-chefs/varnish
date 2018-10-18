@@ -1,6 +1,6 @@
 # varnish Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)
+[![CircleCI](https://circleci.com/gh/sous-chefs/varnish.svg?style=svg)](https://circleci.com/gh/sous-chefs/varnish)
 [![Cookbook Version](https://img.shields.io/cookbook/v/varnish.svg)](https://supermarket.chef.io/cookbooks/varnish)
 
 Configures varnish.
