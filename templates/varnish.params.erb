@@ -30,7 +30,7 @@ VARNISH_SECRET_FILE=<%= @config.path_to_secret %>
   if @config.storage == 'file' && @config.file_storage_path
     storage = [@config.storage, (@config.file_storage_path % @config.name), @config.file_storage_size].compact.join(",")
   else
-    storage = [@config.storage, @config.malloc_size].compact.join(",")
+    storage = [@config.storage, @malloc_size].compact.join(",")
   end
 %>
 
