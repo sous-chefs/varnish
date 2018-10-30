@@ -1,4 +1,4 @@
-provides :varnish_repo, platform_family: ['rhel', 'fedora']
+provides :varnish_repo, platform_family: %w(rhel fedora)
 
 property :major_version, Float, equal_to: [2.1, 3.0, 4.0, 4.1, 5, 6.0], default: lazy { node['varnish']['major_version'] }
 
