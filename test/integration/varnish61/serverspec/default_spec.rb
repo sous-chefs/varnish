@@ -6,8 +6,8 @@ describe command('varnishd -V') do
   it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
-  it 'returns varnish version-6' do
-    expect(subject.stderr).to match(/varnish-6/)
+  it 'returns varnish version-6.1' do
+    expect(subject.stderr).to match(/varnish-6\.1/)
   end
 end
 
@@ -52,7 +52,7 @@ describe command('sudo varnishadm backend.list') do
     expect(subject.exit_status).to eq 0
   end
   its 'backend is setup' do
-    expect(subject.stdout).to match(/default\s+probe\s+Healthy/)
+    expect(subject.stdout).to match(/default\s+probe\s+healthy/)
   end
 end
 
