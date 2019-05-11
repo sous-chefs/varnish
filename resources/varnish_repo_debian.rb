@@ -1,6 +1,9 @@
 provides :varnish_repo, platform_family: 'debian'
 
-property :major_version, Float, equal_to: [2.1, 3.0, 4.0, 4.1, 5, 6.0], default: lazy { node['varnish']['major_version'] }
+property :major_version, Float, equal_to: [2.1, 3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
+  node['varnish']['major_version']
+}
+
 property :fetch_gpg_key, [TrueClass, FalseClass], default: true
 
 action :configure do
