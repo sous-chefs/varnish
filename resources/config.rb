@@ -46,7 +46,11 @@ action :configure do
 
   template '/etc/varnish/varnish.params' do
     action :create
-    variables(config: new_resource)
+    variables(
+      major_version: new_resource.major_version,
+      malloc_size: new_resource.malloc_size || malloc_default,
+      config: new_resource
+    )
     cookbook 'varnish'
     only_if { node['init_package'] == 'systemd' }
   end
