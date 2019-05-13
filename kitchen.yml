@@ -1,0 +1,103 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  attributes:
+    apt:
+      compile_time_update: true
+    varnish:
+      backend_host: '127.0.0.10'
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+  - name: centos-7
+    run_list:
+      - recipe[disable_ipv6::disable_ipv6]
+      - recipe[yum-epel]
+  - name: centos-6
+    run_list:
+      - recipe[disable_ipv6::disable_ipv6]
+
+# Unless otherwise noted excludes exist
+# because the distro version get's installed instead
+# (need pinning to support this)
+suites:
+  - name: varnish3
+    excludes:
+      - ubuntu-16.04
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 3.0
+  - name: varnish4
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 4.0
+  - name: varnish41
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 4.1
+  - name: varnish5
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 5
+  - name: varnish51
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 5.1
+  - name: varnish52
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 5.2
+  - name: varnish60
+    excludes:
+      - centos-6
+      - ubuntu-14.04
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 6.0
+  - name: varnish61
+    excludes:
+      - centos-6
+      - ubuntu-14.04
+    run_list:
+      - recipe[install_varnish::vendor_install]
+    attributes:
+      varnish:
+        major_version: 6.1
+  - name: distro
+    excludes:
+      - centos-6
+    run_list:
+      - recipe[install_varnish::distro_install]
+    attributes:
+      varnish:
+        configure:
+          repo:
+            action: :nothing
+  - name: full_stack
+    run_list:
+      - recipe[install_varnish::full_stack]
+    excludes:
+      - centos-6
+    attributes:
+      varnish:
+        configure:
+          repo:
+            action: :nothing
