@@ -25,12 +25,7 @@ workflows:
           name: delivery
 
       - kitchen/dokken-single:
+          name: varnish6
           suite: varnish6
-          platform: centos-7
-          requires:
-            *lint_and_unit
-      - kitchen/dokken-single:
-          suite: varnish6
-          platform: ubuntu-1604
           requires:
             *lint_and_unit
