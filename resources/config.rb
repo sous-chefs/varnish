@@ -70,6 +70,7 @@ action :configure do
     extend VarnishCookbook::Helpers
     source 'reload-vcl'
     cookbook 'varnish'
+    mode '0755'
     only_if { platform_family?('debian') }
   end
 
