@@ -40,10 +40,6 @@ workflows:
           suite: varnish51-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish51-ubuntu-1804
-          suite: varnish51-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish52-debian-8
           suite: varnish52-debian-8
           requires: *lint_and_unit
