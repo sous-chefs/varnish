@@ -42,7 +42,7 @@ action :configure do
   link "/etc/sysconfig/#{new_resource.log_format}" do
     to "/etc/default/#{new_resource.log_format}"
     only_if { node['init_package'] == 'init' }
-    only_if { node['platform_family'] == 'rhel' }
+    only_if { platform_family?('rhel') }
   end
 
   template "init_#{new_resource.log_format}" do
