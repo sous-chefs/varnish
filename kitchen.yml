@@ -25,26 +25,6 @@ platforms:
 # because the distro version get's installed instead
 # (need pinning to support this)
 suites:
-  - name: varnish3
-    excludes:
-      - ubuntu-16.04
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 3.0
-  - name: varnish4
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 4.0
-  - name: varnish41
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 4.1
   - name: varnish5
     run_list:
       - recipe[install_varnish::vendor_install]
