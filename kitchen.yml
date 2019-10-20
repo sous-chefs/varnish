@@ -25,12 +25,6 @@ platforms:
 # because the distro version get's installed instead
 # (need pinning to support this)
 suites:
-  - name: varnish5
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 5
   - name: varnish51
     run_list:
       - recipe[install_varnish::vendor_install]

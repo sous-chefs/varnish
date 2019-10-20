@@ -20,30 +20,6 @@ workflows:
       - kitchen/delivery:
           name: delivery
       - kitchen/dokken-single:
-          name: varnish5-debian-8
-          suite: varnish5-debian-8
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-debian-9
-          suite: varnish5-debian-9
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-centos-6
-          suite: varnish5-centos-6
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-centos-7
-          suite: varnish5-centos-7
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-ubuntu-1604
-          suite: varnish5-ubuntu-1604
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-ubuntu-1804
-          suite: varnish5-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish51-debian-8
           suite: varnish51-debian-8
           requires: *lint_and_unit
