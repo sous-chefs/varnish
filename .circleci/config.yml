@@ -36,16 +36,8 @@ workflows:
           suite: varnish3-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish3-fedora-latest
-          suite: varnish3-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish3-ubuntu-1804
           suite: varnish3-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish3-opensuse-leap
-          suite: varnish3-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish4-debian-8
@@ -64,20 +56,12 @@ workflows:
           suite: varnish4-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish4-fedora-latest
-          suite: varnish4-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish4-ubuntu-1604
           suite: varnish4-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish4-ubuntu-1804
           suite: varnish4-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish4-opensuse-leap
-          suite: varnish4-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish41-debian-8
@@ -96,20 +80,12 @@ workflows:
           suite: varnish41-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish41-fedora-latest
-          suite: varnish41-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish41-ubuntu-1604
           suite: varnish41-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish41-ubuntu-1804
           suite: varnish41-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish41-opensuse-leap
-          suite: varnish41-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish5-debian-8
@@ -128,20 +104,12 @@ workflows:
           suite: varnish5-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish5-fedora-latest
-          suite: varnish5-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish5-ubuntu-1604
           suite: varnish5-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish5-ubuntu-1804
           suite: varnish5-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish5-opensuse-leap
-          suite: varnish5-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish51-debian-8
@@ -160,20 +128,12 @@ workflows:
           suite: varnish51-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish51-fedora-latest
-          suite: varnish51-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish51-ubuntu-1604
           suite: varnish51-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish51-ubuntu-1804
           suite: varnish51-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish51-opensuse-leap
-          suite: varnish51-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish52-debian-8
@@ -192,20 +152,12 @@ workflows:
           suite: varnish52-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish52-fedora-latest
-          suite: varnish52-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish52-ubuntu-1604
           suite: varnish52-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish52-ubuntu-1804
           suite: varnish52-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish52-opensuse-leap
-          suite: varnish52-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish60-debian-8
@@ -220,20 +172,12 @@ workflows:
           suite: varnish60-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish60-fedora-latest
-          suite: varnish60-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish60-ubuntu-1604
           suite: varnish60-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish60-ubuntu-1804
           suite: varnish60-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish60-opensuse-leap
-          suite: varnish60-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish61-debian-8
@@ -248,20 +192,12 @@ workflows:
           suite: varnish61-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: varnish61-fedora-latest
-          suite: varnish61-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: varnish61-ubuntu-1604
           suite: varnish61-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish61-ubuntu-1804
           suite: varnish61-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: varnish61-opensuse-leap
-          suite: varnish61-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: distro-debian-8
@@ -276,20 +212,12 @@ workflows:
           suite: distro-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: distro-fedora-latest
-          suite: distro-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: distro-ubuntu-1604
           suite: distro-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: distro-ubuntu-1804
           suite: distro-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: distro-opensuse-leap
-          suite: distro-opensuse-leap
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: full-stack-debian-8
@@ -304,18 +232,10 @@ workflows:
           suite: full-stack-centos-7
           requires: *lint_and_unit
       - kitchen/dokken-single:
-          name: full-stack-fedora-latest
-          suite: full-stack-fedora-latest
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
           name: full-stack-ubuntu-1604
           suite: full-stack-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: full-stack-ubuntu-1804
           suite: full-stack-ubuntu-1804
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: full-stack-opensuse-leap
-          suite: full-stack-opensuse-leap
           requires: *lint_and_unit
