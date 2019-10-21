@@ -4,16 +4,12 @@ lint_and_unit: &lint_and_unit
   - danger
   - lint-yaml
   - lint-markdown
-
 version: 2.1
-
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -23,9 +19,119 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-
       - kitchen/dokken-single:
-          name: varnish6
-          suite: varnish6
-          requires:
-            *lint_and_unit
+          name: varnish51-debian-8
+          suite: varnish51-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish51-debian-9
+          suite: varnish51-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish51-centos-6
+          suite: varnish51-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish51-centos-7
+          suite: varnish51-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish51-ubuntu-1604
+          suite: varnish51-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-debian-8
+          suite: varnish52-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-debian-9
+          suite: varnish52-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-centos-6
+          suite: varnish52-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-centos-7
+          suite: varnish52-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-ubuntu-1604
+          suite: varnish52-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish52-ubuntu-1804
+          suite: varnish52-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish60-debian-9
+          suite: varnish60-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish60-centos-7
+          suite: varnish60-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish60-ubuntu-1604
+          suite: varnish60-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish60-ubuntu-1804
+          suite: varnish60-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish61-debian-9
+          suite: varnish61-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish61-centos-7
+          suite: varnish61-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish61-ubuntu-1604
+          suite: varnish61-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish61-ubuntu-1804
+          suite: varnish61-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: distro-debian-8
+          suite: distro-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: distro-debian-9
+          suite: distro-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: distro-centos-7
+          suite: distro-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: distro-ubuntu-1604
+          suite: distro-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: distro-ubuntu-1804
+          suite: distro-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: full-stack-debian-8
+          suite: full-stack-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: full-stack-debian-9
+          suite: full-stack-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: full-stack-centos-7
+          suite: full-stack-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: full-stack-ubuntu-1604
+          suite: full-stack-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: full-stack-ubuntu-1804
+          suite: full-stack-ubuntu-1804
+          requires: *lint_and_unit

@@ -70,6 +70,7 @@ action :configure do
     extend VarnishCookbook::Helpers
     source 'reload-vcl'
     cookbook 'varnish'
+    mode '0755'
     only_if { platform_family?('debian') }
   end
 
@@ -88,7 +89,7 @@ action :configure do
       config: new_resource
     )
     only_if { node['init_package'] == 'systemd' }
-    only_if { node['platform_family'] == 'debian' }
+    only_if { platform_family?('debian') }
   end
 
   execute 'generate secret file' do
