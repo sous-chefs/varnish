@@ -1,4 +1,12 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
@@ -40,6 +48,10 @@ workflows:
           suite: varnish51-ubuntu-1604
           requires: *lint_and_unit
       - kitchen/dokken-single:
+          name: varnish51-ubuntu-1804
+          suite: varnish51-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
           name: varnish52-debian-8
           suite: varnish52-debian-8
           requires: *lint_and_unit
@@ -64,6 +76,10 @@ workflows:
           suite: varnish52-ubuntu-1804
           requires: *lint_and_unit
       - kitchen/dokken-single:
+          name: varnish60-debian-8
+          suite: varnish60-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
           name: varnish60-debian-9
           suite: varnish60-debian-9
           requires: *lint_and_unit
@@ -78,6 +94,10 @@ workflows:
       - kitchen/dokken-single:
           name: varnish60-ubuntu-1804
           suite: varnish60-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: varnish61-debian-8
+          suite: varnish61-debian-8
           requires: *lint_and_unit
       - kitchen/dokken-single:
           name: varnish61-debian-9
@@ -135,3 +155,37 @@ workflows:
           name: full-stack-ubuntu-1804
           suite: full-stack-ubuntu-1804
           requires: *lint_and_unit
+      - final:
+          requires:
+            - varnish51-debian-8
+            - varnish51-debian-9
+            - varnish51-centos-6
+            - varnish51-centos-7
+            - varnish51-ubuntu-1604
+            - varnish51-ubuntu-1804
+            - varnish52-debian-8
+            - varnish52-debian-9
+            - varnish52-centos-6
+            - varnish52-centos-7
+            - varnish52-ubuntu-1604
+            - varnish52-ubuntu-1804
+            - varnish60-debian-8
+            - varnish60-debian-9
+            - varnish60-centos-7
+            - varnish60-ubuntu-1604
+            - varnish60-ubuntu-1804
+            - varnish61-debian-8
+            - varnish61-debian-9
+            - varnish61-centos-7
+            - varnish61-ubuntu-1604
+            - varnish61-ubuntu-1804
+            - distro-debian-8
+            - distro-debian-9
+            - distro-centos-7
+            - distro-ubuntu-1604
+            - distro-ubuntu-1804
+            - full-stack-debian-8
+            - full-stack-debian-9
+            - full-stack-centos-7
+            - full-stack-ubuntu-1604
+            - full-stack-ubuntu-1804
