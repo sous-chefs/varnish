@@ -9,7 +9,7 @@ action :configure do
   major_version_no_dot = new_resource.major_version.to_s.tr('.', '')
   yum_repository "varnish-cache_#{new_resource.major_version}" do
     description "Varnish #{new_resource.major_version} repo (#{node['platform_version']} - $basearch)"
-    url "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/el/#{node['platform_version'].to_i}/$basearch"
+    baseurl "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/el/#{node['platform_version'].to_i}/$basearch"
     gpgcheck false
     repo_gpgcheck true
     gpgkey "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/gpgkey"
