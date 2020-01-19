@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated the yum_repository resource to use the newer baseurl property instead of the legacy url property
+- Migrated to actions
 
 ### Deprecated
 
