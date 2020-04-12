@@ -19,7 +19,6 @@ _Store
 *.tmp
 *.bk
 *.bkup
-.idea
 
 # ruby/bundler files
 .ruby-version
