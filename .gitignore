@@ -19,7 +19,6 @@ _Store
 *.tmp
 *.bk
 *.bkup
-.idea
 
 # ruby/bundler files
 .ruby-version
@@ -38,15 +37,12 @@ doc/
 # chef stuff
 Berksfile.lock
 .kitchen
-.kitchen.local.yml
+kitchen.local.yml
 vendor/
 .coverage/
 .zero-knife.rb
 Policyfile.lock.json
-Cheffile.lock
-.librarian/
 
 # vagrant stuff
 .vagrant/
 .vagrant.d/
-.kitchen/
