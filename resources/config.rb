@@ -3,7 +3,7 @@ property :conf_cookbook, String, default: lazy { node['varnish']['conf_cookbook'
 property :conf_path, String, default: lazy { node['varnish']['conf_path'] }
 
 # Service config options
-property :start_on_boot, [TrueClass, FalseClass], default: true
+property :start_on_boot, [true, false], default: true
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
