@@ -13,8 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - resolved cookstyle error: resources/varnish_repo_debian.rb:7:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
 - resolved cookstyle error: resources/varnish_repo_debian.rb:14:5 refactor: `ChefRedundantCode/AptRepositoryDistributionDefault`
 
-## [Unreleased]
-
 ### Added
 
 ### Changed
