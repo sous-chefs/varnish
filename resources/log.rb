@@ -1,7 +1,7 @@
 property :file_name, String, default: lazy { "/var/log/varnish/#{log_format}.log" }
 property :pid, String, default: lazy { "/var/run/#{log_format}.pid" }
 property :log_format, String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
-property :logrotate, [TrueClass, FalseClass], default: lazy { log_format == 'varnishlog' }
+property :logrotate, [true, false], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, String, default: '/etc/logrotate.d'
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 

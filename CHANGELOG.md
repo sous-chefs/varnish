@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- resolved cookstyle error: resources/config.rb:6:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+- resolved cookstyle error: resources/log.rb:4:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+- resolved cookstyle error: resources/varnish_repo_debian.rb:7:1 refactor: `ChefStyle/TrueClassFalseClassResourceProperties`
+- resolved cookstyle error: resources/varnish_repo_debian.rb:14:5 refactor: `ChefRedundantCode/AptRepositoryDistributionDefault`
+
 ## [Unreleased]
 
 ### Added
