@@ -5,7 +5,6 @@ module VarnishCookbook
   module Helpers
     extend Chef::Mixin::ShellOut
 
-    # rubocop:disable Style/ModuleFunction
     extend self # Stubbing with module_function doesn't seem to work
 
     def installed_major_version

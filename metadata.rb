@@ -7,11 +7,12 @@ version '4.1.0'
 
 source_url 'https://github.com/sous-chefs/varnish'
 issues_url 'https://github.com/sous-chefs/varnish/issues'
-chef_version '>= 12.15'
+chef_version '>= 14'
 
-%w(ubuntu debian redhat amazon centos).each do |os|
-  supports os
-end
+supports 'ubuntu'
+supports 'debian'
+supports 'redhat'
+supports 'amazon'
+supports 'centos'
 
-depends 'chef-sugar'
 depends 'yum-epel'

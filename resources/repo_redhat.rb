@@ -1,8 +1,5 @@
 provides :varnish_repo, platform_family: %w(rhel fedora)
-
-property :major_version, Float, default: lazy {
-  node['varnish']['major_version']
-}
+property :major_version, Float, default: 6.4
 
 action :configure do
   # packagecloud repos omit dot from major version

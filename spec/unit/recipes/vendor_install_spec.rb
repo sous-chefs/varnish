@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe 'install_varnish::vendor_install' do
   let(:chef_run) do

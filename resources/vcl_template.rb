@@ -2,11 +2,12 @@ provides :vcl_template
 
 property :vcl_name, String, name_property: true
 property :source, String, default: lazy { "#{::File.basename(vcl_name)}.erb" }
-property :cookbook, String
+property :cookbook, String, default: 'varnish'
 property :owner, String, default: 'root'
 property :group, String, default: 'root'
 property :mode, String, default: '0644'
-property :variables, Hash, default: {}
+property :backend_host, String, required: true
+property :backend_port, String, required: true
 property :varnish_dir, String, default: '/etc/varnish'
 property :vcl_path, String, default: lazy { ::File.join(varnish_dir, vcl_name) }
 
@@ -17,29 +18,16 @@ action :configure do
     action :nothing
   end
 
-  begin
-    installed_version = VarnishCookbook::Helpers.installed_major_version
-  rescue
-    installed_version = nil
-    Chef::Log.warn 'varnish version will not be available in vcl_template variables.'
-  end
-
-  var_hash = new_resource.variables
-  merged_var_hash = Chef::Mixin::DeepMerge.deep_merge(
-    {
-      varnish: {
-        installed_version: installed_version,
-      },
-    }, var_hash
-  )
-
   template new_resource.vcl_path do
     source new_resource.source
     cookbook new_resource.cookbook if new_resource.cookbook
     owner new_resource.owner
     group new_resource.group
     mode new_resource.mode
-    variables merged_var_hash
+    variables(
+      backend_host: new_resource.backend_host,
+      backend_port: new_resource.backend_port
+    )
     notifies :reload, 'service[varnish]', :delayed
   end
 end

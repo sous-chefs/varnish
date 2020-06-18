@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- Remove init.d support as we only support operating systems with systemd (@damacus)
+- Remove support for EOL Varnish cache versions (<5) (@damacus)
+-
+
 ## 4.1.0 - 2020-05-05
 
 ### Added

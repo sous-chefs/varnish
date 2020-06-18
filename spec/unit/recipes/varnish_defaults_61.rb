@@ -1,15 +1,15 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe 'install_varnish::vendor_install' do
   let(:chef_run) do
     ChefSpec::SoloRunner.new(step_into: [:varnish_config]) do |node|
       node_resources(node)
-      node.override['varnish']['major_version'] = 5.2
+      node.override['varnish']['major_version'] = 6.1
     end.converge(described_recipe)
   end
 
   before do
-    stub_resources(5.2)
+    stub_resources(6.1)
   end
 
   it 'creates the varnish default config' do

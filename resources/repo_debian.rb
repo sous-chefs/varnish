@@ -1,10 +1,6 @@
 provides :varnish_repo, platform_family: 'debian'
-
-property :major_version, Float, default: lazy {
-  node['varnish']['major_version']
-}
-
-property :fetch_gpg_key, [true, false], default: true
+property :major_version, Float, default: 6.4
+property :fetch_gpg_key, [true, false], default: false
 
 action :configure do
   # packagecloud repos omit dot from major version
