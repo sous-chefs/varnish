@@ -1,7 +1,7 @@
 ---
 name: ci
 
-on:
+"on":
   pull_request:
   push:
     branches:
@@ -40,18 +40,18 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'debian-8'
-          - 'debian-9'
-          - 'centos-7'
-          - 'ubuntu-1604'
-          - 'ubuntu-1804'
+          - "debian-8"
+          - "debian-9"
+          - "centos-7"
+          - "ubuntu-1604"
+          - "ubuntu-1804"
         suite:
-          - 'varnish51'
-          - 'varnish52'
-          - 'varnish60'
-          - 'varnish61'
-          - 'distro'
-          - 'full-stack'
+          - "varnish51"
+          - "varnish52"
+          - "varnish60"
+          - "varnish61"
+          - "distro"
+          - "full-stack"
       fail-fast: false
 
     steps:
