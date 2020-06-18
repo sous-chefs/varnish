@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 property :conf_source, String, default: 'default.erb'
 property :conf_cookbook, String
 property :conf_path, String, default: lazy { platform_family?('debian') ? '/etc/default/varnish' : '/etc/sysconfig/varnish' }
@@ -53,11 +55,7 @@ action :configure do
   end
 
   service 'varnish' do
-    supports restart: true, reload: true if new_resource.major_version < 5
-
-    # https://github.com/varnishcache/varnish-cache/issues/2316
-    supports restart: false, reload: true if new_resource.major_version >= 5
-
+    supports restart: false, reload: true
     action :nothing
   end
 
@@ -91,7 +89,6 @@ action :configure do
   execute 'generate secret file' do
     command "dd if=/dev/random of=#{new_resource.path_to_secret} count=1"
     creates new_resource.path_to_secret
-    only_if { new_resource.major_version >= 6.1 }
   end
 
   template new_resource.conf_path do

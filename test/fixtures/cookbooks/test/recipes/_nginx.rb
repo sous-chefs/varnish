@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 package 'nginx'
 
 cookbook_file '/etc/nginx/nginx.conf'

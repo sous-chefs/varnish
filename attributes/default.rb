@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 ## Resource settings
 ##
@@ -6,9 +8,9 @@ default['varnish']['configure']['repo']['action'] = :configure
 
 # Prevent installation of distro varnish on RHEL/CentOS
 default['yum']['epel']['exclude'] = 'varnish' unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
-default['varnish']['configure']['package']['version'] = "#{node['varnish']['major_version']}.\*" unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
-
-
+unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
+  default['varnish']['configure']['package']['version'] = "#{node['varnish']['major_version']}.\*"
+end
 
 ## varnish::configure recipe settings
 ##
@@ -36,7 +38,7 @@ default['varnish']['configure']['package']['version'] = "#{node['varnish']['majo
 
 default['varnish']['configure']['package']['action'] = :install
 
-default['varnish']['configure']['service']['action'] = [:start, :enable]
+default['varnish']['configure']['service']['action'] = %i(start enable)
 
 default['varnish']['configure']['config']['action'] = :configure
 

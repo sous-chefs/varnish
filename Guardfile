@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Guardfile built by Meez ( http://github.com/paulczar/meez )
 # for testing your chef cookbooks.
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 apt_update 'full_stack'
 
 include_recipe 'yum-epel'
@@ -9,7 +11,7 @@ include_recipe "#{cookbook_name}::_nginx"
 package 'varnish'
 
 service 'varnish' do
-  action [:enable, :start]
+  action %i(enable start)
 end
 
 varnish_config 'default' do

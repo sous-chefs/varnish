@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mixlib/shellout'
 
 module VarnishCookbook
@@ -5,7 +7,7 @@ module VarnishCookbook
   module Helpers
     extend Chef::Mixin::ShellOut
 
-    extend self # Stubbing with module_function doesn't seem to work
+    module_function # Stubbing with module_function doesn't seem to work
 
     def installed_major_version
       cmd_str = 'varnishd -V 2>&1'
@@ -13,6 +15,7 @@ module VarnishCookbook
       cmd_stdout = cmd.stdout.to_s
 
       raise "Output of #{cmd_str} was nil; can't determine varnish version" unless cmd_stdout
+
       Chef::Log.debug "#{cmd_str} ran and detected varnish version: #{cmd_stdout}"
 
       matches = cmd_stdout.match(/varnish-([0-9]\.[0-9])/)
@@ -20,9 +23,9 @@ module VarnishCookbook
       raise "Cannot parse varnish version from #{cmd_stdout}" unless version_found
 
       matches[1].to_f
-    rescue => ex
+    rescue StandardError => e
       Chef::Log.warn 'Unable to run varnishd to get version.'
-      raise ex
+      raise e
     end
 
     def percent_of_total_mem(total_mem, percent)

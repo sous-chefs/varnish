@@ -1,4 +1,5 @@
-# Encoding: utf-8
+# frozen_string_literal: true
+
 bash 'disable ipv6 for testing' do
   code <<-EOS
     echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6

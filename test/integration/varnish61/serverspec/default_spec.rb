@@ -6,8 +6,9 @@ describe command('varnishd -V') do
   it 'exits zero' do
     expect(subject.exit_status).to eq 0
   end
-  it 'returns varnish version-6.1' do
-    expect(subject.stderr).to match(/varnish-6\.1/)
+
+  it 'returns varnish version-6.4' do
+    expect(subject.stderr).to match(/varnish-6\.4/)
   end
 end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 include_recipe 'yum-epel'
 
 varnish_repo 'configure'

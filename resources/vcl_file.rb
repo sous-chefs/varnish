@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 provides :vcl_file
 
 property :vcl_name, String, name_property: true

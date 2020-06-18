@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Reference: http://danger.systems/reference.html
 
 # A pull request summary is required. Add a description of the pull request purpose.
@@ -32,16 +34,10 @@ warn 'This is a big Pull Request.' if git.lines_of_code > 400
 warn 'This is a Table Flip.' if git.lines_of_code > 2000
 
 # Require a CHANGELOG entry for non-test changes.
-if !git.modified_files.include?('CHANGELOG.md') && code_changes?
-  failure 'Please include a CHANGELOG entry.'
-end
+failure 'Please include a CHANGELOG entry.' if !git.modified_files.include?('CHANGELOG.md') && code_changes?
 
 # Require Major Minor Patch version labels
-unless github.pr_labels.grep /minor|major|patch/i
-  warn 'Please add a release label to this pull request'
-end
+warn 'Please add a release label to this pull request' unless github.pr_labels.grep(/minor|major|patch/i)
 
 # A sanity check for tests.
-if git.lines_of_code > 5 && code_changes? && !test_changes?
-  warn 'This Pull Request is probably missing tests.'
-end
+warn 'This Pull Request is probably missing tests.' if git.lines_of_code > 5 && code_changes? && !test_changes?

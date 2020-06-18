@@ -1,4 +1,5 @@
-provides :varnish_repo, platform_family: %w(rhel fedora)
+# frozen_string_literal: true
+
 property :major_version, Float, default: 6.4
 
 action :configure do

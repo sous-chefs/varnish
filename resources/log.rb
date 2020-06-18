@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 property :file_name, String, default: lazy { "/var/log/varnish/#{log_format}.log" }
 property :pid, String, default: lazy { "/var/run/#{log_format}.pid" }
 property :log_format, String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
@@ -8,9 +10,7 @@ property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 property :major_version, Float, equal_to: [6.1, 6.2, 6.3, 6.4], default: 6.4
 
 property :ncsa_format_string, [String, nil], default: lazy {
-  if log_format == 'varnishncsa'
-    '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"'
-  end
+  '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"' if log_format == 'varnishncsa'
 }
 
 action :configure do
