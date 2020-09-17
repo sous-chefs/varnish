@@ -1,4 +1,3 @@
-# Encoding: utf-8
 maintainer       'Jason Boyles'
 maintainer_email 'jason.boyles@rackspace.com'
 license          'Apache-2.0'
