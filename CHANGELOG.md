@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- resolved cookstyle error: test/fixtures/cookbooks/disable_ipv6/metadata.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/fixtures/cookbooks/disable_ipv6/recipes/default.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/fixtures/cookbooks/disable_ipv6/recipes/disable_ipv6.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/distro/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/distro/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/full_stack/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/full_stack/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish3/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish3/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish4/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish4/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish41/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish41/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish5/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish5/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish51/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish51/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish52/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish52/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish60/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish60/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish61/serverspec/default_spec.rb:1:1 convention: `Style/Encoding`
+- resolved cookstyle error: test/integration/varnish61/serverspec/spec_helper.rb:1:1 convention: `Style/Encoding`
+
 ## 4.1.0 - 2020-05-05
 
 ### Added
