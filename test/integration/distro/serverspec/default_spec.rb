@@ -1,5 +1,3 @@
-# Encoding: utf-8
-
 require_relative 'spec_helper'
 
 %w(varnish varnishlog varnishncsa).each do |varnish_service|
