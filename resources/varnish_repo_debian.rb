@@ -1,4 +1,5 @@
 provides :varnish_repo, platform_family: 'debian'
+unified_mode true
 
 property :major_version, Float, default: lazy {
   node['varnish']['major_version']

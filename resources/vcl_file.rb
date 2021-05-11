@@ -1,4 +1,5 @@
 provides :vcl_file
+unified_mode true
 
 property :vcl_name, String, name_property: true
 property :source, String, default: lazy { ::File.basename(vcl_name) }
