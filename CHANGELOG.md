@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 4.1.1 - *2021-06-01*
 
 - resolved cookstyle error: test/fixtures/cookbooks/disable_ipv6/metadata.rb:1:1 convention: `Style/Encoding`
 - resolved cookstyle error: test/fixtures/cookbooks/disable_ipv6/recipes/default.rb:1:1 convention: `Style/Encoding`
