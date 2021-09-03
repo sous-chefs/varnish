@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- resolved cookstyle error: attributes/default.rb:33:7 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/config.rb:43:28 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/config.rb:55:15 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/config.rb:91:15 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/config.rb:114:72 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/log.rb:20:28 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/log.rb:60:72 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/log.rb:84:9 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
+- resolved cookstyle error: resources/log.rb:94:9 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
 - resolved cookstyle error: resources/varnish_repo_debian.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
 - resolved cookstyle error: resources/varnish_repo_redhat.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
 - resolved cookstyle error: resources/vcl_file.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`

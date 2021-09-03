@@ -17,7 +17,7 @@ property :ncsa_format_string, [String, nil], default: lazy {
 
 action :configure do
   extend VarnishCookbook::Helpers
-  systemd_daemon_reload if node['init_package'] == 'systemd'
+  systemd_daemon_reload if systemd?
 
   # The varnishlog group was removed from some of the more recent varnish packages.
   group 'varnishlog' do
@@ -57,7 +57,7 @@ action :configure do
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed
-    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if systemd?
   end
 
   template "#{new_resource.logrotate_path}/#{new_resource.log_format}" do
@@ -81,7 +81,7 @@ end
 def template_path(log_format)
   if node['init_package'] == 'init'
     "/etc/default/#{log_format}"
-  elsif node['init_package'] == 'systemd'
+  elsif systemd?
     "/etc/systemd/system/#{log_format}.service"
   else
     "/etc/sysconfig/#{log_format}"
@@ -91,7 +91,7 @@ end
 def template_source
   if node['init_package'] == 'init'
     'varnishlog.erb'
-  elsif node['init_package'] == 'systemd'
+  elsif systemd?
     'varnishlog_systemd.erb'
   else
     'varnishlog.erb'

@@ -30,7 +30,7 @@ default['varnish']['reload_cmd'] = if node['varnish']['major_version'] >= 6.1
 
 if node['init_package'] == 'init'
   default['varnish']['conf_source'] = 'default.erb'
-elsif node['init_package'] == 'systemd'
+elsif systemd?
   # Ubuntu >= 15.04, Debian >= 8, CentOS >= 7
   default['varnish']['conf_source'] = 'default_systemd.erb'
   default['varnish']['conf_path'] = '/etc/systemd/system/varnish.service'

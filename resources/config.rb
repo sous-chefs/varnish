@@ -40,7 +40,7 @@ property :reload_cmd, String, default: lazy { node['varnish']['reload_cmd'] }
 
 action :configure do
   extend VarnishCookbook::Helpers
-  systemd_daemon_reload if node['init_package'] == 'systemd'
+  systemd_daemon_reload if systemd?
 
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
@@ -52,7 +52,7 @@ action :configure do
       config: new_resource
     )
     cookbook 'varnish'
-    only_if { node['init_package'] == 'systemd' }
+    only_if { systemd? }
   end
 
   service 'varnish' do
@@ -88,7 +88,7 @@ action :configure do
       malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )
-    only_if { node['init_package'] == 'systemd' }
+    only_if { systemd? }
     only_if { platform_family?('debian') }
   end
 
@@ -111,6 +111,6 @@ action :configure do
       config: new_resource
     )
     notifies :restart, 'service[varnish]', :delayed
-    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if systemd?
   end
 end
