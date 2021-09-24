@@ -15,6 +15,8 @@ property :ncsa_format_string, [String, nil], default: lazy {
   end
 }
 
+unified_mode true
+
 action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload if systemd?

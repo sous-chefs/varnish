@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Enable `unified_mode`
 - resolved cookstyle error: attributes/default.rb:33:7 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
 - resolved cookstyle error: resources/config.rb:43:28 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`
 - resolved cookstyle error: resources/config.rb:55:15 refactor: `Chef/Modernize/UseChefLanguageSystemdHelper`

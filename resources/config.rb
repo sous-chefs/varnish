@@ -38,6 +38,8 @@ property :parameters, Hash, default:
 property :path_to_secret, String, default: '/etc/varnish/secret'
 property :reload_cmd, String, default: lazy { node['varnish']['reload_cmd'] }
 
+unified_mode true
+
 action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload if systemd?
