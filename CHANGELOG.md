@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 
 - Enable `unified_mode`
+- Require Chef >= 15.5
 - Remove chef-sugar dependency
 - Various cookstyle fixes
 
