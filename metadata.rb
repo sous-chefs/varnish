@@ -13,5 +13,4 @@ chef_version '>= 12.15'
   supports os
 end
 
-depends 'chef-sugar'
 depends 'yum-epel'
