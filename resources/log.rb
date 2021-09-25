@@ -5,9 +5,9 @@ property :logrotate, [true, false], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, String, default: '/etc/logrotate.d'
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
-  VarnishCookbook::Helpers.installed_major_version
-}
+property :major_version, Float,
+  equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 7.0],
+  default: lazy { VarnishCookbook::Helpers.installed_major_version }
 
 property :ncsa_format_string, [String, nil], default: lazy {
   if log_format == 'varnishncsa' && major_version > 2.0

@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Require Chef >= 15.5
 - Remove chef-sugar dependency
 - Fix support for RHEL 8
+- Add new known Varnish releases
 - Various cookstyle fixes
 - Update test kitchen to standard modern platforms
 - Switch to InSpec for integration testing
