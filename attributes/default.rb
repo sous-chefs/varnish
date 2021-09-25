@@ -18,15 +18,18 @@ else
   default['varnish']['conf_path'] = '/etc/sysconfig/varnish'
 end
 
-default['varnish']['reload_cmd'] = if node['varnish']['major_version'] >= 6.1
-                                     '/usr/sbin/varnishreload'
-                                   elsif node['varnish']['major_version'] < 4
-                                     '/usr/bin/varnish_reload_vcl'
-                                   elsif platform_family?('debian')
-                                     '/usr/share/varnish/reload-vcl'
-                                   else
-                                     '/usr/sbin/varnish_reload_vcl'
-                                   end
+default['varnish']['reload_cmd'] =
+  if node['varnish']['major_version'] >= 6.1
+    '/usr/sbin/varnishreload'
+  elsif node['varnish']['major_version'] < 4
+    '/usr/bin/varnish_reload_vcl'
+  elsif platform_family?('debian')
+    '/usr/share/varnish/reload-vcl'
+  elsif platform_family?('rhel') && node['platform_version'].to_i >= 8
+    '/usr/sbin/varnishreload'
+  else
+    '/usr/sbin/varnish_reload_vcl'
+  end
 
 if node['init_package'] == 'init'
   default['varnish']['conf_source'] = 'default.erb'

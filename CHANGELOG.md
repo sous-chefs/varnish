@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Enable `unified_mode`
 - Require Chef >= 15.5
 - Remove chef-sugar dependency
+- Fix support for RHEL 8
 - Various cookstyle fixes
 - Update test kitchen to standard modern platforms
 - Switch to InSpec for integration testing
