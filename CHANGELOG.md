@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Require Chef >= 15.5
 - Remove chef-sugar dependency
 - Various cookstyle fixes
+- Update test kitchen to standard modern platforms
 
 ## 4.1.2 - *2021-08-30*
 
