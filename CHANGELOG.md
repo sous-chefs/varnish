@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Remove chef-sugar dependency
 - Various cookstyle fixes
 - Update test kitchen to standard modern platforms
+- Switch to InSpec for integration testing
 
 ## 4.1.2 - *2021-08-30*
 
