@@ -52,6 +52,9 @@ jobs:
           - 'varnish70'
           - 'distro'
           - 'full-stack'
+        exclude:
+          - os: debian-11
+            suite: varnish66
       fail-fast: false
 
     steps:

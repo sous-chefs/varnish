@@ -37,6 +37,8 @@ suites:
         - path: test/integration/varnish
       inputs:
         version: 6.6
+    excludes:
+      - debian-11
   - name: varnish70
     run_list:
       - recipe[install_varnish::vendor_install]
