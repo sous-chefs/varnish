@@ -32,7 +32,7 @@ action :configure do
   end
 
   template "init_#{new_resource.log_format}" do
-    path "/etc/systemd/system/#{log_format}.service"
+    path "/etc/systemd/system/#{new_resource.log_format}.service"
     source 'varnishlog_systemd.erb'
     cookbook 'varnish'
     owner 'root'
