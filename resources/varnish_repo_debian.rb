@@ -10,6 +10,13 @@ property :fetch_gpg_key, [true, false], default: true
 action :configure do
   # packagecloud repos omit dot from major version
   major_version_no_dot = new_resource.major_version.to_s.tr('.', '')
+
+  apt_preference 'varnish' do
+    glob '*'
+    pin "release l=varnish#{major_version_no_dot}"
+    pin_priority '1000'
+  end
+
   apt_repository "varnish-cache_#{new_resource.major_version}" do
     uri "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/#{node['platform']}/"
     components ['main']

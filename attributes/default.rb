@@ -9,14 +9,7 @@ default['varnish']['configure']['repo']['action'] = :configure
 
 # Prevent installation of distro varnish on RHEL/CentOS
 default['yum']['epel']['exclude'] = 'varnish' unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
-
-if platform_family?('debian')
-  default['varnish']['conf_path'] = '/etc/default/varnish'
-  # Install specific version of Varnish on Debian/Ubuntu
-  default['varnish']['configure']['package']['version'] = "#{node['varnish']['major_version']}.\*" unless node['varnish']['configure']['repo']['action'].to_sym == :nothing
-else
-  default['varnish']['conf_path'] = '/etc/sysconfig/varnish'
-end
+default['varnish']['conf_path'] = platform_family?('debian') ? '/etc/default/varnish' : '/etc/sysconfig/varnish'
 
 default['varnish']['reload_cmd'] =
   if node['varnish']['major_version'] >= 6.1
