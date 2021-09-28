@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Remove chef-sugar dependency
 - Fix support for RHEL 8
 - Add new known Varnish releases
+- Fix reload when using Varnish >= 7.0
 - Various cookstyle fixes
 - Update test kitchen to standard modern platforms
 - Switch to InSpec for integration testing
