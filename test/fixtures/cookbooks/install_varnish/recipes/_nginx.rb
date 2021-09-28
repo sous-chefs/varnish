@@ -5,6 +5,7 @@ cookbook_file '/etc/nginx/nginx.conf'
 # avoid depending on init system
 execute 'nginx_restart' do
   command 'pkill nginx; nginx'
+  creates '/tmp/nginx.pid'
 end
 
 public_html = '/var/www/public_html'
