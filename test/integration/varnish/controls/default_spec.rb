@@ -1,6 +1,8 @@
 version = input('version', value: 0)
 ncsa_format_string = input('ncsa_format_string')
 full_stack = input('full_stack')
+os_family = os.family
+os_release = os.release
 
 control 'default' do
   describe command 'varnishd -V' do
@@ -88,6 +90,8 @@ control 'default' do
     its('exit_status') { should eq 0 }
     if version.to_i >= 6
       its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+    elsif version == 0 && os_family == 'redhat' && os_release.to_i == 7
+      its('stdout') { should match(/default\(127.0.0.1,,8080\)\s+2\s+probe\s+Healthy/) }
     else
       its('stdout') { should match(/default\s+probe\s+[Hh]ealthy/) }
     end
