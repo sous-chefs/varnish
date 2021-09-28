@@ -19,7 +19,7 @@ unified_mode true
 
 action :configure do
   extend VarnishCookbook::Helpers
-  systemd_daemon_reload if systemd?
+  systemd_daemon_reload
 
   # The varnishlog group was removed from some of the more recent varnish packages.
   group 'varnishlog' do
@@ -31,25 +31,9 @@ action :configure do
     action :delete
   end
 
-  cookbook_file '/etc/init.d/varnishlog' do
-    source "varnishlog_initd_#{node['platform_family']}"
-    cookbook 'varnish'
-    owner 'root'
-    group 'root'
-    mode '0755'
-    only_if { node['init_package'] == 'init' }
-    only_if { new_resource.log_format == 'varnishlog' }
-  end
-
-  link "/etc/sysconfig/#{new_resource.log_format}" do
-    to "/etc/default/#{new_resource.log_format}"
-    only_if { node['init_package'] == 'init' }
-    only_if { platform_family?('rhel') }
-  end
-
   template "init_#{new_resource.log_format}" do
-    path template_path(new_resource.log_format)
-    source template_source
+    path "/etc/systemd/system/#{log_format}.service"
+    source 'varnishlog_systemd.erb'
     cookbook 'varnish'
     owner 'root'
     group 'root'
@@ -59,7 +43,7 @@ action :configure do
     )
     action :create
     notifies :restart, "service[#{new_resource.log_format}]", :delayed
-    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if systemd?
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
   end
 
   template "#{new_resource.logrotate_path}/#{new_resource.log_format}" do
@@ -77,25 +61,5 @@ action :configure do
   service new_resource.log_format do
     supports restart: true, reload: true
     action %w(enable start)
-  end
-end
-
-def template_path(log_format)
-  if node['init_package'] == 'init'
-    "/etc/default/#{log_format}"
-  elsif systemd?
-    "/etc/systemd/system/#{log_format}.service"
-  else
-    "/etc/sysconfig/#{log_format}"
-  end
-end
-
-def template_source
-  if node['init_package'] == 'init'
-    'varnishlog.erb'
-  elsif systemd?
-    'varnishlog_systemd.erb'
-  else
-    'varnishlog.erb'
   end
 end

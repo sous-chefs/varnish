@@ -42,7 +42,7 @@ unified_mode true
 
 action :configure do
   extend VarnishCookbook::Helpers
-  systemd_daemon_reload if systemd?
+  systemd_daemon_reload
 
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
@@ -54,7 +54,6 @@ action :configure do
       config: new_resource
     )
     cookbook 'varnish'
-    only_if { systemd? }
   end
 
   service 'varnish' do
@@ -73,24 +72,6 @@ action :configure do
     source 'reload-vcl'
     cookbook 'varnish'
     mode '0755'
-    only_if { platform_family?('debian') }
-  end
-
-  # This is needed on Ubuntu 16.04 since reload-vcl currently breaks with systemd
-  # Should be fixed with https://github.com/varnishcache/pkg-varnish-cache/pull/70
-  template '/etc/default/varnish' do
-    path '/etc/default/varnish'
-    source 'default.erb'
-    cookbook 'varnish'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      major_version: new_resource.major_version,
-      malloc_size: new_resource.malloc_size || malloc_default,
-      config: new_resource
-    )
-    only_if { systemd? }
     only_if { platform_family?('debian') }
   end
 
@@ -113,6 +94,6 @@ action :configure do
       config: new_resource
     )
     notifies :restart, 'service[varnish]', :delayed
-    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if systemd?
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
   end
 end
