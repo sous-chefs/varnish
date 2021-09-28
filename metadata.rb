@@ -14,4 +14,5 @@ supports 'debian'
 supports 'redhat'
 supports 'ubuntu'
 
+depends 'yum', '>= 7.2'
 depends 'yum-epel'

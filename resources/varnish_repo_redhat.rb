@@ -6,6 +6,11 @@ property :major_version, Float, default: lazy {
 }
 
 action :configure do
+  dnf_module 'varnish' do
+    action :disable
+    only_if { node['platform_version'].to_i >= 8 }
+  end
+
   # packagecloud repos omit dot from major version
   major_version_no_dot = new_resource.major_version.to_s.tr('.', '')
   yum_repository "varnish-cache_#{new_resource.major_version}" do
