@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Fix reload when using Varnish >= 7.0
 - Use apt pinning on Debian/Ubuntu when using vendor packages
 - Remove sysvinit support
+- Deprecate various unused parameters in `varnish_config` resource
 - Various cookstyle fixes
 - Update test kitchen to standard modern platforms
 - Switch to InSpec for integration testing

@@ -3,7 +3,9 @@ property :conf_cookbook, String, default: lazy { node['varnish']['conf_cookbook'
 property :conf_path, String, default: lazy { node['varnish']['conf_path'] }
 
 # Service config options
-property :start_on_boot, [true, false], default: true
+property :start_on_boot, [true, false],
+          default: true,
+          deprecated: 'This property has been deprecated and will be removed in a future release'
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
@@ -19,10 +21,17 @@ property :secondary_listen_port, [Integer, nil]
 property :path_to_vcl, String, default: '/etc/varnish/default.vcl'
 property :admin_listen_address, String, default: '127.0.0.1'
 property :admin_listen_port, Integer, default: 6082
-property :user, String, default: 'varnish'
-property :group, String, default: 'varnish'
-property :ccgroup, [String, nil]
-property :ttl, Integer, default: 120
+property :user, String,
+          default: 'varnish',
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :group, String,
+          default: 'varnish',
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :ccgroup, [String, nil],
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :ttl, Integer,
+          default: 120,
+          deprecated: 'This property has been deprecated and will be removed in a future release'
 property :storage, String, default: 'file', equal_to: %w(file malloc)
 property :file_storage_path, String, default: '/var/lib/varnish/%s_storage.bin'
 property :file_storage_size, String, default: '1GB'
