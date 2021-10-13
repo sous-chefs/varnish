@@ -34,7 +34,7 @@ These attributes used as defaults for both resources and the `varnish::configure
 - `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
 - `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
 - `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
-- `node['varnish']['major_version']` - the major version of varnish to install. Can be any valid major release and default's to 7.0.
+- `node['varnish']['major_version']` - the major version of varnish to install. Can be any valid major release. Defaults to 7.0.
 
 ## Recipes
 
@@ -48,7 +48,7 @@ Installs the varnish package, manages the varnish configuration file, and the in
 
 ## Usage
 
-You can either use include the `varnish::configure` recipe and configure the setup using the recipe attributes described below or include varnish::default and use the resources directly.
+You can either use include the `varnish::configure` recipe and configure the setup using the recipe attributes described below or use the resources directly.
 
 If running on a Redhat derivative then you may need to include yum-epel as it provides the jemalloc dependency that varnish needs.
 
@@ -115,7 +115,7 @@ The following resources are provided:
 
 ### Resource Recipe Example
 
-Install and configure varnish 6.6 using vcl config `default.vcl in the current cookbook as well as a backend.vcl template.
+Install and configure varnish 6.6 using vcl config `default.vcl` in the current cookbook as well as a backend.vcl template.
 
 ```ruby
 include_recipe 'varnish::default'

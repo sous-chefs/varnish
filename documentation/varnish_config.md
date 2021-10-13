@@ -18,7 +18,7 @@ Configures the Varnish service through the defaults or systemd init file. If you
 | `max_open_files`           | Integer                 | `131_072`                           |
 | `max_locked_memory`        | Integer                 | `82_000`                            |
 | `major_version`            | Minor supported release | `node['varnish']['major_version']`  |
-| `instance_name`            | String                  | `` `hostname` ``                    |
+| `instance_name`            | String                  | Node hostname                    |
 | `listen_address`           | String                  | `nil`                               |
 | `listen_port`              | Integer                 | `6081`                              |
 | `secondary_listen_address` | String                  | `nil`                               |
