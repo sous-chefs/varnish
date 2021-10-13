@@ -20,17 +20,9 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Platforms
 
-Tested on the platforms below with distro installs and upstream Varnish packaging versions 6.6 and 7.0 unless otherwise noted.
-
-| Varnish      |  6.6  |  7.0  | distro |
-| ------------ | :---: | :---: | :----: |
-| CentOS 7     |   ✔   |   ✔   |   ✔    |
-| CentOS 8     |   ✔   |   ✔   |   ✔    |
-| Debian 9     |   ✔   |   ✔   |   ✔    |
-| Debian 10    |   ✔   |   ✔   |   ✔    |
-| Debian 11    |   ✘   |   ✔   |   ✔    |
-| Ubuntu 18.04 |   ✔   |   ✔   |   ✔    |
-| Ubuntu 20.04 |   ✔   |   ✔   |   ✔    |
+- CentOS 7+
+- Debian 9+
+- Ubuntu 18.04+
 
 Other operating systems and Varnish versions may work, but are not explicitly tested or supported.
 
