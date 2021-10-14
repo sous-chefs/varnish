@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 5.0.0 - *2021-10-14*
 
 - Enable `unified_mode`
 - Require Chef >= 15.5
