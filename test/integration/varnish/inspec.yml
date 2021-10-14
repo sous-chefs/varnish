@@ -1,0 +1,11 @@
+---
+name: varnish
+inputs:
+  - name: version
+    type: Numeric
+  - name: ncsa_format_string
+    type: Boolean
+    value: false
+  - name: full_stack
+    type: Boolean
+    value: false

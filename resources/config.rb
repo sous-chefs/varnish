@@ -3,13 +3,15 @@ property :conf_cookbook, String, default: lazy { node['varnish']['conf_cookbook'
 property :conf_path, String, default: lazy { node['varnish']['conf_path'] }
 
 # Service config options
-property :start_on_boot, [true, false], default: true
+property :start_on_boot, [true, false],
+          default: true,
+          deprecated: 'This property has been deprecated and will be removed in a future release'
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
-  VarnishCookbook::Helpers.installed_major_version
-}
+property :major_version, Float,
+          equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 7.0],
+          default: lazy { VarnishCookbook::Helpers.installed_major_version }
 
 # Daemon options
 property :listen_address, String, default: '0.0.0.0'
@@ -19,10 +21,17 @@ property :secondary_listen_port, [Integer, nil]
 property :path_to_vcl, String, default: '/etc/varnish/default.vcl'
 property :admin_listen_address, String, default: '127.0.0.1'
 property :admin_listen_port, Integer, default: 6082
-property :user, String, default: 'varnish'
-property :group, String, default: 'varnish'
-property :ccgroup, [String, nil]
-property :ttl, Integer, default: 120
+property :user, String,
+          default: 'varnish',
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :group, String,
+          default: 'varnish',
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :ccgroup, [String, nil],
+          deprecated: 'This property has been deprecated and will be removed in a future release'
+property :ttl, Integer,
+          default: 120,
+          deprecated: 'This property has been deprecated and will be removed in a future release'
 property :storage, String, default: 'file', equal_to: %w(file malloc)
 property :file_storage_path, String, default: '/var/lib/varnish/%s_storage.bin'
 property :file_storage_size, String, default: '1GB'
@@ -38,9 +47,11 @@ property :parameters, Hash, default:
 property :path_to_secret, String, default: '/etc/varnish/secret'
 property :reload_cmd, String, default: lazy { node['varnish']['reload_cmd'] }
 
+unified_mode true
+
 action :configure do
   extend VarnishCookbook::Helpers
-  systemd_daemon_reload if node['init_package'] == 'systemd'
+  systemd_daemon_reload
 
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
 
@@ -52,7 +63,6 @@ action :configure do
       config: new_resource
     )
     cookbook 'varnish'
-    only_if { node['init_package'] == 'systemd' }
   end
 
   service 'varnish' do
@@ -71,24 +81,6 @@ action :configure do
     source 'reload-vcl'
     cookbook 'varnish'
     mode '0755'
-    only_if { platform_family?('debian') }
-  end
-
-  # This is needed on Ubuntu 16.04 since reload-vcl currently breaks with systemd
-  # Should be fixed with https://github.com/varnishcache/pkg-varnish-cache/pull/70
-  template '/etc/default/varnish' do
-    path '/etc/default/varnish'
-    source 'default.erb'
-    cookbook 'varnish'
-    owner 'root'
-    group 'root'
-    mode '0644'
-    variables(
-      major_version: new_resource.major_version,
-      malloc_size: new_resource.malloc_size || malloc_default,
-      config: new_resource
-    )
-    only_if { node['init_package'] == 'systemd' }
     only_if { platform_family?('debian') }
   end
 
@@ -111,6 +103,6 @@ action :configure do
       config: new_resource
     )
     notifies :restart, 'service[varnish]', :delayed
-    notifies :run, 'execute[systemctl-daemon-reload]', :immediately if node['init_package'] == 'systemd'
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
   end
 end

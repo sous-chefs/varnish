@@ -1,5 +1,3 @@
-apt_update 'full_stack'
-
 include_recipe 'yum-epel'
 include_recipe 'varnish::default'
 

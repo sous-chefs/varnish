@@ -3,61 +3,54 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
+  name: chef_infra
+  product_name: chef
+  deprecations_as_errors: true
+  enforce_idempotency: true
+  multiple_converge: 2
+  chef_license: accept-no-persist
   attributes:
-    apt:
-      compile_time_update: true
     varnish:
       backend_host: '127.0.0.10'
 
-platforms:
-  - name: ubuntu-14.04
-  - name: ubuntu-16.04
-  - name: centos-7
-    run_list:
-      - recipe[disable_ipv6::disable_ipv6]
-      - recipe[yum-epel]
-  - name: centos-6
-    run_list:
-      - recipe[disable_ipv6::disable_ipv6]
+verifier:
+  name: inspec
 
-# Unless otherwise noted excludes exist
-# because the distro version get's installed instead
-# (need pinning to support this)
+platforms:
+  - name: centos-7
+  - name: centos-8
+  - name: debian-9
+  - name: debian-10
+  - name: debian-11
+  - name: ubuntu-18.04
+  - name: ubuntu-20.04
+
 suites:
-  - name: varnish51
+  - name: varnish66
     run_list:
       - recipe[install_varnish::vendor_install]
     attributes:
       varnish:
-        major_version: 5.1
-  - name: varnish52
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 5.2
-  - name: varnish60
+        major_version: 6.6
+    verifier:
+      inspec_tests:
+        - path: test/integration/varnish
+      inputs:
+        version: 6.6
     excludes:
-      - centos-6
-      - ubuntu-14.04
+      - debian-11
+  - name: varnish70
     run_list:
       - recipe[install_varnish::vendor_install]
     attributes:
       varnish:
-        major_version: 6.0
-  - name: varnish61
-    excludes:
-      - centos-6
-      - ubuntu-14.04
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 6.1
+        major_version: 7.0
+    verifier:
+      inspec_tests:
+        - path: test/integration/varnish
+      inputs:
+        version: 7.0
   - name: distro
-    excludes:
-      - centos-6
     run_list:
       - recipe[install_varnish::distro_install]
     attributes:
@@ -65,13 +58,21 @@ suites:
         configure:
           repo:
             action: :nothing
+    verifier:
+      inspec_tests:
+        - path: test/integration/varnish
+      inputs:
+        ncsa_format_string: true
   - name: full_stack
     run_list:
       - recipe[install_varnish::full_stack]
-    excludes:
-      - centos-6
     attributes:
       varnish:
         configure:
           repo:
             action: :nothing
+    verifier:
+      inspec_tests:
+        - path: test/integration/varnish
+      inputs:
+        full_stack: true

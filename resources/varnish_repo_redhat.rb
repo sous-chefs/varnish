@@ -1,10 +1,15 @@
 provides :varnish_repo, platform_family: %w(rhel fedora)
+unified_mode true
 
-property :major_version, Float, default: lazy {
-  node['varnish']['major_version']
-}
+property :major_version, Float,
+          default: lazy { node['varnish']['major_version'] }
 
 action :configure do
+  dnf_module 'varnish' do
+    action :disable
+    only_if { node['platform_version'].to_i >= 8 }
+  end
+
   # packagecloud repos omit dot from major version
   major_version_no_dot = new_resource.major_version.to_s.tr('.', '')
   yum_repository "varnish-cache_#{new_resource.major_version}" do

@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Enable `unified_mode`
+- Require Chef >= 15.5
+- Remove chef-sugar dependency
+- Fix support for RHEL 8
+- Add new known Varnish releases
+- Fix reload when using Varnish >= 7.0
+- Use apt pinning on Debian/Ubuntu when using vendor packages
+- Remove sysvinit support
+- Deprecate various unused parameters in `varnish_config` resource
+- Various cookstyle fixes
+- Update test kitchen to standard modern platforms
+- Switch to InSpec for integration testing
+
 ## 4.1.2 - *2021-08-30*
 
 - Standardise files with files in sous-chefs/repo-management
