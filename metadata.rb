@@ -18,3 +18,4 @@ supports 'amazon'
 supports 'centos'
 
 depends 'yum-epel'
+depends 'packagecloud'

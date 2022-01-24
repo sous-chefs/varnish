@@ -6,7 +6,12 @@ All notable changes to this project will be documented in this file.
 
 - Remove init.d support as we only support operating systems with systemd (@damacus)
 - Remove support for EOL Varnish cache versions (<5) (@damacus)
--
+- Switch major version to version (as it also includes a minor version number) (@damacus)
+- Fix installing Varnish on RedHat systems
+  - Logic only tried to install it on Debian platforms
+- Depend on the package cloud cookbook for Debian platforms
+- Remove the multitude of test recipes and have one templated install method
+  - The version is now an attribute passed by test kitchen
 
 ## 4.1.0 - 2020-05-05
 

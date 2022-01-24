@@ -1,0 +1,6 @@
+---
+name: varnish-integration-tests
+title: Integration tests for the Varnish cookbook
+summary: This InSpec profile contains integration tests for the Varnish cookbook
+supports:
+  - os-family: linux

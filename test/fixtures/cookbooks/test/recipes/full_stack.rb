@@ -2,12 +2,9 @@
 
 apt_update 'full_stack'
 
-include_recipe 'yum-epel'
 include_recipe 'varnish::default'
 
 # Set up nginx first since it likes to start listening on port 80 during install
-include_recipe "#{cookbook_name}::_nginx"
-
 package 'varnish'
 
 service 'varnish' do

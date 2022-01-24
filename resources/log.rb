@@ -7,8 +7,6 @@ property :logrotate, [true, false], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, String, default: '/etc/logrotate.d'
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 
-property :major_version, Float, equal_to: [6.1, 6.2, 6.3, 6.4], default: 6.4
-
 property :ncsa_format_string, [String, nil], default: lazy {
   '%h|%l|%u|%t|\"%r\"|%s|%b|\"%{Referer}i\"|\"%{User-agent}i\"' if log_format == 'varnishncsa'
 }

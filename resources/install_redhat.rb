@@ -1,16 +1,23 @@
 # frozen_string_literal: true
 
-property :major_version, Float, default: 6.4
+property :version, Float, default: 6.4
 
 action :configure do
+  include_recipe 'yum-epel'
+
+  package %w(yum-utils)
+
   # packagecloud repos omit dot from major version
-  major_version_no_dot = new_resource.major_version.to_s.tr('.', '')
-  yum_repository "varnish-cache_#{new_resource.major_version}" do
-    description "Varnish #{new_resource.major_version} repo (#{node['platform_version']} - $basearch)"
-    baseurl "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/el/#{node['platform_version'].to_i}/$basearch"
+  version_no_dot = new_resource.version.to_s.tr('.', '')
+
+  yum_repository "varnish-cache_varnish#{version_no_dot}" do
+    description "Varnish #{new_resource.version} repo (#{node['platform_version']} - $basearch)"
+    baseurl "https://packagecloud.io/varnishcache/varnish#{version_no_dot}/el/#{node['platform_version'].to_i}/$basearch"
     gpgcheck false
     repo_gpgcheck true
-    gpgkey "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/gpgkey"
+    gpgkey "https://packagecloud.io/varnishcache/varnish#{version_no_dot}/gpgkey"
     action :create
   end
+
+  package 'varnish'
 end

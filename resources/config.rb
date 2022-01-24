@@ -9,7 +9,7 @@ property :start_on_boot, [true, false], default: true
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
-property :major_version, Float, equal_to: [6.1, 6.2, 6.3, 6.4], default: 6.4
+property :version, Float, equal_to: [6.1, 6.2, 6.3, 6.4], default: 6.4
 
 # Daemon options
 property :listen_address, String, default: '0.0.0.0'
@@ -48,7 +48,7 @@ action :configure do
     cookbook 'varnish'
     action :create
     variables(
-      major_version: new_resource.major_version,
+      version: new_resource.version,
       malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )
@@ -80,7 +80,7 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-      major_version: new_resource.major_version,
+      version: new_resource.version,
       malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )
@@ -99,7 +99,7 @@ action :configure do
     group 'root'
     mode '0644'
     variables(
-      major_version: new_resource.major_version,
+      version: new_resource.version,
       malloc_size: new_resource.malloc_size || malloc_default,
       config: new_resource
     )

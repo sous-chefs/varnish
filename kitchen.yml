@@ -3,18 +3,16 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_zero
   attributes:
     varnish:
       backend_host: "127.0.0.10"
 
 platforms:
+  - name: debian-9
+  - name: debian-10
   - name: ubuntu-18.04
   - name: ubuntu-20.04
   - name: centos-7
-    run_list:
-      - recipe[disable_ipv6::disable_ipv6]
-      - recipe[yum-epel]
 
 suites:
   - name: default

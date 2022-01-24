@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-include_recipe 'yum-epel'
+# include_recipe 'yum-epel'
+# include_recipe "#{cookbook_name}::_nginx"
 
-varnish_repo 'configure'
-
-package 'varnish'
+varnish_install 'configure'
 
 varnish_config 'default'
 

@@ -9,7 +9,7 @@ action :configure do
       version new_resource.version
       fetch_gpg_key new_resource.fetch_gpg_key
     end
-  elsif platform_family?('debian')
+  elsif platform_family?('rhel')
     varnish_install_redhat 'redhat' do
       version new_resource.version
     end
