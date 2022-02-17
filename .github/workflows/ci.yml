@@ -24,7 +24,7 @@ jobs:
       matrix:
         os:
           - almalinux-8
-          - amazonlinux-2
+          # - amazonlinux-2
           - debian-10
           - debian-11
           - centos-7
@@ -33,7 +33,7 @@ jobs:
           - ubuntu-1804
           - ubuntu-2004
           - rockylinux-8
-          - opensuse-leap-15
+          # - opensuse-leap-15
         suite:
           - 'varnish66'
           - 'varnish70'

@@ -18,7 +18,7 @@ verifier:
 
 platforms:
   - name: almalinux-8
-  - name: amazonlinux-2
+  # - name: amazonlinux-2
   - name: debian-10
   - name: debian-11
   - name: centos-7
@@ -27,7 +27,7 @@ platforms:
   - name: ubuntu-18.04
   - name: ubuntu-20.04
   - name: rockylinux-8
-  - name: opensuse-leap-15
+  # - name: opensuse-leap-15
 
 suites:
   - name: varnish66
