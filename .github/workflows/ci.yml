@@ -10,6 +10,12 @@ name: ci
 jobs:
   lint-unit:
     uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.0.3
+    permissions:
+      actions: write
+      checks: write
+      pull-requests: write
+      statuses: write
+      issues: write
 
   integration:
     needs: lint-unit
@@ -24,8 +30,8 @@ jobs:
           - centos-7
           - centos-stream-8
           - fedora-latest
-          - ubuntu-18.04
-          - ubuntu-20.04
+          - ubuntu-1804
+          - ubuntu-2004
           - rockylinux-8
           - opensuse-leap-15
         suite:
