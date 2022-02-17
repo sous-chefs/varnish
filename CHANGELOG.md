@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - Standardise files with files in sous-chefs/repo-management
 - Remove delivery folder
+- Update tested platforms
 
 ## 5.0.0 - *2021-10-14*
 
