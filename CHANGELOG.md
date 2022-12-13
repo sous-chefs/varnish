@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+Standardise files with files in sous-chefs/repo-management
+
+Standardise files with files in sous-chefs/repo-management
+
+- Standardise files with files in sous-chefs/repo-management
+- Remove delivery folder
+- Update tested platforms
+
 ## 5.0.0 - *2021-10-14*
 
 - Enable `unified_mode`

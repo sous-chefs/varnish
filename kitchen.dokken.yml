@@ -2,7 +2,7 @@
 driver:
   name: dokken
   privileged: true
-  chef_version: <%= ENV['CHEF_VERSION'] || "current" %>
+  chef_version: <%= ENV['CHEF_VERSION'] || 'stable' %>
   env: [CHEF_LICENSE=accept]
 
 transport:
@@ -10,16 +10,17 @@ transport:
 
 provisioner:
   name: dokken
-  deprecations_as_errors: true
-
-verifier:
-  name: inspec
 
 platforms:
-  - name: debian-9
+  - name: almalinux-8
     driver:
-      image: dokken/debian-9
-      pid_one_command: /bin/systemd
+      image: dokken/almalinux-8
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: amazonlinux-2
+    driver:
+      image: dokken/amazonlinux-2
+      pid_one_command: /usr/lib/systemd/systemd
 
   - name: debian-10
     driver:
@@ -36,9 +37,14 @@ platforms:
       image: dokken/centos-7
       pid_one_command: /usr/lib/systemd/systemd
 
-  - name: centos-8
+  - name: centos-stream-8
     driver:
-      image: dokken/centos-8
+      image: dokken/centos-stream-8
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: fedora-latest
+    driver:
+      image: dokken/fedora-latest
       pid_one_command: /usr/lib/systemd/systemd
 
   - name: ubuntu-18.04
@@ -50,3 +56,13 @@ platforms:
     driver:
       image: dokken/ubuntu-20.04
       pid_one_command: /bin/systemd
+
+  - name: opensuse-leap-15
+    driver:
+      image: dokken/opensuse-leap-15
+      pid_one_command: /usr/lib/systemd/systemd
+
+  - name: rockylinux-8
+    driver:
+      image: dokken/rockylinux-8
+      pid_one_command: /usr/lib/systemd/systemd
