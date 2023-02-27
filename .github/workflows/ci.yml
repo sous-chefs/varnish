@@ -4,12 +4,11 @@ name: ci
 "on":
   pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.0.3
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.1.1
     permissions:
       actions: write
       checks: write
@@ -35,10 +34,10 @@ jobs:
           - rockylinux-8
           # - opensuse-leap-15
         suite:
-          - 'varnish66'
-          - 'varnish70'
-          - 'distro'
-          - 'full-stack'
+          - "varnish66"
+          - "varnish70"
+          - "distro"
+          - "full-stack"
         exclude:
           - os: debian-11
             suite: varnish66
