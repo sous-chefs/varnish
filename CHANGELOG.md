@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+Add new varnish releases
+
+Make default 7.7.
+
 ## 5.0.20 - *2024-11-18*
 
 Standardise files with files in sous-chefs/repo-management
