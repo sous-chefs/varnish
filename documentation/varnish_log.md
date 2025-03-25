@@ -17,7 +17,7 @@ Configures varnishlog or varnishncsa service. You can define both logfiles by ca
 | `file_name`          | String                            | `'/var/log/varnish/varnishlog.log'`                                                                          |
 | `pid`                | String                            | `'/var/run/varnishlog.pid'`                                                                                  |
 | `log_format`         | `'varnishlog'` or `'varnishncsa'` | `'varnishlog'`                                                                                               |
-| `ncsa_format_string` | String                            | `'%h \| %l \| %u \| %t \| \"%r\" \| %s \| %b \| \"%{Referer}i\" | \"%{User-agent}i\"'`                       |
+| `ncsa_format_string` | String                            | `'%h \| %l \| %u \| %t \| \"%r\" \| %s \| %b \| \"%{Referer}i\" \| \"%{User-agent}i\"'`                      |
 | `instance_name`      | String                            | name property                                                                                                |
 | `logrotate`          | `true`, `false`                   | `true` vanishlog, `false` for varnishncsa                                                                    |
 | `major_version`      | Minor supported release           | Currently installed major version (If varnish isn't installed yet then you will have to set this explicitly) |
