@@ -89,7 +89,7 @@ control 'default' do
   describe command "varnishadm #{varnishadm_opts} backend.list" do
     its('exit_status') { should eq 0 }
     if os_family == 'redhat' && os_release.start_with?('8.')
-      its('stdout') { should match(%r{default\s+probe\s+[Hh]ealthy}) }
+      its('stdout') { should match(/default\s+probe\s+[Hh]ealthy/) }
     else
       its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
     end
