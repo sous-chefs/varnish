@@ -23,16 +23,16 @@ jobs:
       matrix:
         os:
           - almalinux-8
-          # - amazonlinux-2
-          - debian-10
+          - almalinux-9
           - debian-11
-          - centos-7
-          - centos-stream-8
-          # - fedora-latest
-          - ubuntu-1804
+          - debian-12
+          - centos-stream-9
+          - centos-stream-10
           - ubuntu-2004
+          - ubuntu-2204
+          - ubuntu-2404
           - rockylinux-8
-          # - opensuse-leap-15
+          - rockylinux-9
         suite:
           - "varnish66"
           - "varnish77"
