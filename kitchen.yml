@@ -43,17 +43,17 @@ suites:
         version: 6.6
     excludes:
       - debian-11
-  - name: varnish70
+  - name: varnish77
     run_list:
       - recipe[install_varnish::vendor_install]
     attributes:
       varnish:
-        major_version: 7.0
+        major_version: 7.7
     verifier:
       inspec_tests:
         - path: test/integration/varnish
       inputs:
-        version: 7.0
+        version: 7.7
   - name: distro
     run_list:
       - recipe[install_varnish::distro_install]

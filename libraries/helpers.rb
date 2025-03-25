@@ -8,6 +8,13 @@ module VarnishCookbook
     # rubocop:disable Style/ModuleFunction
     extend self # Stubbing with module_function doesn't seem to work
 
+    def supported_major_versions
+      [
+        3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3,
+        6.4, 6.5, 6.6, 7.0, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7
+      ]
+    end
+
     def installed_major_version
       cmd_str = 'varnishd -V 2>&1'
       cmd = shell_out!(cmd_str)

@@ -10,7 +10,7 @@ property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 property :major_version, Float,
-          equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 7.0],
+          equal_to: VarnishCookbook::Helpers.supported_major_versions,
           default: lazy { VarnishCookbook::Helpers.installed_major_version }
 
 # Daemon options

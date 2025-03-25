@@ -34,7 +34,7 @@ These attributes used as defaults for both resources and the `varnish::configure
 - `node['varnish']['reload_cmd']` - location of the varnish reload script used by the systemd config file. This is not used for initd currently.
 - `node['varnish']['conf_source']` - template file source to use for the `default` varnish init config.
 - `node['varnish']['conf_cookbook']` - template cookbook source to use for the `default` varnish init config.
-- `node['varnish']['major_version']` - the major version of varnish to install. Can be any valid major release. Defaults to 7.0.
+- `node['varnish']['major_version']` - the major version of varnish to install. Can be any valid major release. Defaults to 7.7.
 
 ## Recipes
 

@@ -3,7 +3,7 @@
 ##
 
 default['varnish']['conf_cookbook'] = 'varnish'
-default['varnish']['major_version'] = 4.1
+default['varnish']['major_version'] = 7.7
 
 default['varnish']['configure']['repo']['action'] = :configure
 
