@@ -1,6 +1,6 @@
-[Back to resource list](../README.md#resources)
-
 # varnish_config
+
+[Back to resource list](../README.md#resources)
 
 Configures the Varnish service through the defaults or systemd init file. If you do not include this, the config files that come with your distro package will be used instead.
 

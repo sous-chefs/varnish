@@ -232,7 +232,7 @@ Known Bugs:
 
 ## 2.2.2
 
-- # 86 - Removed monkey patching of service providers
+- Removed monkey patching of service providers (#86)
 
 ## 2.2.1
 
@@ -271,13 +271,13 @@ Known Bugs:
 
 ### Bug
 
-- **[COOK-3531](https://tickets.chef.io/browse/COOK-3531)** - Fix default instance name
+- [COOK-3531] - Fix default instance name
 
 ## 0.9.8
 
 ### Improvement
 
-- **[COOK-3095](https://tickets.chef.io/browse/COOK-3095)** - Add MiniTest Chef Handler and Test Kitchen
+- [COOK-3095] - Add MiniTest Chef Handler and Test Kitchen
 
 ## 0.9.6
 

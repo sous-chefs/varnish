@@ -1,6 +1,6 @@
-[Back to resource list](../README.md#resources)
-
 # varnish_repo
+
+[Back to resource list](../README.md#resources)
 
 Configure's the varnish vendor repo.
 
