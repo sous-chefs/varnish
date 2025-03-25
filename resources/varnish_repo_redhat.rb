@@ -7,7 +7,7 @@ property :major_version, Float,
 action :configure do
   dnf_module 'varnish' do
     action :disable
-    only_if { node['platform_version'].to_i >= 8 }
+    only_if { node['platform_version'].to_i == 8 }
   end
 
   # packagecloud repos omit dot from major version
