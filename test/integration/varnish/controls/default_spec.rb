@@ -1,6 +1,8 @@
 version = input('version', value: 0)
 ncsa_format_string = input('ncsa_format_string')
 full_stack = input('full_stack')
+os_family = os.family
+os_release = os.release
 
 control 'default' do
   describe command 'varnishd -V' do
@@ -86,7 +88,11 @@ control 'default' do
 
   describe command "varnishadm #{varnishadm_opts} backend.list" do
     its('exit_status') { should eq 0 }
-    its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+    if os_family == 'redhat' && os_release.start_with?('8.')
+      its('stdout') { should match(%r{default\s+probe\s+[Hh]ealthy}) }
+    else
+      its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+    end
   end
 
   describe command "varnishadm #{varnishadm_opts} param.show thread_pool_max" do
