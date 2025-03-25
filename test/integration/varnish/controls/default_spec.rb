@@ -1,9 +1,6 @@
 version = input('version', value: 0)
 ncsa_format_string = input('ncsa_format_string')
 full_stack = input('full_stack')
-os_family = os.family
-os_release = os.release
-os_name = os.name
 
 control 'default' do
   describe command 'varnishd -V' do
