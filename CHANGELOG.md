@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 Standardise files with files in sous-chefs/repo-management
 Standardise files with files in sous-chefs/repo-management
 
+## [6.0.0](https://github.com/sous-chefs/varnish/compare/v5.0.22...v6.0.0) (2026-05-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate varnish to custom resources ([#268](https://github.com/sous-chefs/varnish/issues/268))
+
+### Features
+
+* migrate varnish to custom resources ([#268](https://github.com/sous-chefs/varnish/issues/268)) ([c87bbd5](https://github.com/sous-chefs/varnish/commit/c87bbd528c3b15e46d473e561204afcfa98a733b))
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#263](https://github.com/sous-chefs/varnish/issues/263)) ([1b50e74](https://github.com/sous-chefs/varnish/commit/1b50e74f948f7d9870a8cdfed6144010c509d76b))
+
 ## [5.0.22](https://github.com/sous-chefs/varnish/compare/5.0.21...v5.0.22) (2025-10-16)
 
 
