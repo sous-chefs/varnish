@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 provides :varnish_repo, platform_family: %w(rhel fedora)
 unified_mode true
 
-property :major_version, Float,
-          default: lazy { node['varnish']['major_version'] }
+property :major_version, Float, default: 6.0
+
+default_action :configure
 
 action :configure do
   dnf_module 'varnish' do
@@ -19,5 +22,16 @@ action :configure do
     repo_gpgcheck true
     gpgkey "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/gpgkey"
     action :create
+  end
+end
+
+action :unconfigure do
+  dnf_module 'varnish' do
+    action :reset
+    only_if { node['platform_version'].to_i >= 8 }
+  end
+
+  yum_repository "varnish-cache_#{new_resource.major_version}" do
+    action :remove
   end
 end

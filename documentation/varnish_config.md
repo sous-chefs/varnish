@@ -1,24 +1,25 @@
-[Back to resource list](../README.md#resources)
-
 # varnish_config
 
-Configures the Varnish service through the defaults or systemd init file. If you do not include this, the config files that come with your distro package will be used instead.
+[Back to resource list](../README.md#resources)
+
+Configures the Varnish service through the systemd unit and `/etc/varnish/varnish.params`.
 
 ## Actions
 
-| Action       | Description                                          |
-| ------------ | ---------------------------------------------------- |
+| Action | Description |
+| --- | --- |
 | `:configure` | Creates the varnish configuration file from template |
+| `:unconfigure` | Removes the files created by `:configure` |
 
 ## Properties
 
-| Name                       | Type                    | Default                             |
-| -------------------------- | ----------------------- | ----------------------------------- |
+| Name | Type | Default |
+| --- | --- | --- |
 | `conf_source`              | String                  | `default_systemd.erb`               |
 | `max_open_files`           | Integer                 | `131_072`                           |
 | `max_locked_memory`        | Integer                 | `82_000`                            |
-| `major_version`            | Minor supported release | `node['varnish']['major_version']`  |
-| `instance_name`            | String                  | Node hostname                    |
+| `major_version`            | Minor supported release | installed major version             |
+| `instance_name`            | String                  | Node hostname                       |
 | `listen_address`           | String                  | `nil`                               |
 | `listen_port`              | Integer                 | `6081`                              |
 | `secondary_listen_address` | String                  | `nil`                               |
@@ -31,7 +32,7 @@ Configures the Varnish service through the defaults or systemd init file. If you
 | `malloc_percent`           | Integer                 | `33`                                |
 | `malloc_size`              | String                  | `nil`                               |
 | `path_to_secret`           | String                  | `'/etc/varnish/secret'`             |
-| `reload_cmd`               | String                  | `node['varnish']['reload_cmd']`     |
+| `reload_cmd`               | String                  | version/platform default            |
 
 You can also send a hash to `parameters` which will add additional parameters to the varnish daemon via the `-p` option. The default hash is:
 

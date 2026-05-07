@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require 'chefspec'
 require 'chefspec/berkshelf'
 require_relative '../libraries/helpers'
 
 RSpec.configure do |config|
   config.platform = 'ubuntu'
-  config.version = '20.04'
+  config.version = '24.04'
+  config.log_level = :error
 end
 
 def stub_resources(version)

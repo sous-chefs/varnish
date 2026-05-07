@@ -1,6 +1,11 @@
-property :conf_source, String, default: lazy { node['varnish']['conf_source'] }
-property :conf_cookbook, String, default: lazy { node['varnish']['conf_cookbook'] }
-property :conf_path, String, default: lazy { node['varnish']['conf_path'] }
+# frozen_string_literal: true
+
+provides :varnish_config
+unified_mode true
+
+property :conf_source, String, default: 'default_systemd.erb'
+property :conf_cookbook, String, default: 'varnish'
+property :conf_path, String, default: '/etc/systemd/system/varnish.service'
 
 # Service config options
 property :start_on_boot, [true, false],
@@ -8,7 +13,7 @@ property :start_on_boot, [true, false],
           deprecated: 'This property has been deprecated and will be removed in a future release'
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
-property :instance_name, String, default: VarnishCookbook::Helpers.hostname
+property :instance_name, String, default: lazy { VarnishCookbook::Helpers.hostname }
 property :major_version, Float,
           equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 7.0],
           default: lazy { VarnishCookbook::Helpers.installed_major_version }
@@ -45,22 +50,24 @@ property :parameters, Hash, default:
       'thread_pool_timeout' => '300',
     }
 property :path_to_secret, String, default: '/etc/varnish/secret'
-property :reload_cmd, String, default: lazy { node['varnish']['reload_cmd'] }
+property :reload_cmd, [String, nil]
 
-unified_mode true
+default_action :configure
 
 action :configure do
   extend VarnishCookbook::Helpers
   systemd_daemon_reload
 
   malloc_default = percent_of_total_mem(node['memory']['total'], new_resource.malloc_percent)
+  reload_command = new_resource.reload_cmd || default_reload_cmd(new_resource.major_version)
 
   template '/etc/varnish/varnish.params' do
     action :create
     variables(
       major_version: new_resource.major_version,
       malloc_size: new_resource.malloc_size || malloc_default,
-      config: new_resource
+      config: new_resource,
+      reload_cmd: reload_command
     )
     cookbook 'varnish'
   end
@@ -100,9 +107,39 @@ action :configure do
     variables(
       major_version: new_resource.major_version,
       malloc_size: new_resource.malloc_size || malloc_default,
-      config: new_resource
+      config: new_resource,
+      reload_cmd: reload_command
     )
     notifies :restart, 'service[varnish]', :delayed
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+  end
+end
+
+action :unconfigure do
+  extend VarnishCookbook::Helpers
+  systemd_daemon_reload
+
+  service 'varnish' do
+    action :nothing
+  end
+
+  file '/etc/varnish/varnish.params' do
+    action :delete
+    notifies :restart, 'service[varnish]', :delayed
+  end
+
+  file '/usr/share/varnish/reload-vcl' do
+    action :delete
+    only_if { platform_family?('debian') }
+  end
+
+  file new_resource.path_to_secret do
+    action :delete
+    only_if { new_resource.major_version >= 6.1 }
+  end
+
+  file new_resource.conf_path do
+    action :delete
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
   end
 end

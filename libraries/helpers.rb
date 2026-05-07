@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mixlib/shellout'
 
 module VarnishCookbook
@@ -38,6 +40,20 @@ module VarnishCookbook
       execute 'systemctl-daemon-reload' do
         command '/bin/systemctl --system daemon-reload'
         action :nothing
+      end
+    end
+
+    def default_reload_cmd(major_version)
+      if major_version >= 6.1
+        '/usr/sbin/varnishreload'
+      elsif major_version < 4
+        '/usr/bin/varnish_reload_vcl'
+      elsif platform_family?('debian')
+        '/usr/share/varnish/reload-vcl'
+      elsif platform_family?('rhel') && node['platform_version'].to_i >= 8
+        '/usr/sbin/varnishreload'
+      else
+        '/usr/sbin/varnish_reload_vcl'
       end
     end
   end

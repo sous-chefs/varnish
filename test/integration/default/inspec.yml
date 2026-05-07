@@ -1,0 +1,17 @@
+---
+name: default
+title: Varnish Default Tests
+maintainer: Sous Chefs
+license: Apache-2.0
+summary: Default integration tests for the varnish cookbook
+version: 1.0.0
+inputs:
+  - name: version
+    type: Numeric
+    value: 0
+  - name: ncsa_format_string
+    type: Boolean
+    value: false
+  - name: full_stack
+    type: Boolean
+    value: false
