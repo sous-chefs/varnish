@@ -1,24 +1,25 @@
-[Back to resource list](../README.md#resources)
-
 # varnish_log
+
+[Back to resource list](../README.md#resources)
 
 Configures varnishlog or varnishncsa service. You can define both logfiles by calling `varnish_log` more than once. You can install logrotate config files if you wish as well.
 
 ## Actions
 
-| Action         | Description                                          |
-| -------------- | ---------------------------------------------------- |
+| Action | Description |
+| --- | --- |
 | `:configure`   | configures the `varnishlog` or `varnishncsa` service |
+| `:unconfigure` | removes the service unit and logrotate file |
 
 ## Properties
 
-| Name                 | Type                              | Default                                                                                                      |
-| -------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Name | Type | Default |
+| --- | --- | --- |
 | `file_name`          | String                            | `'/var/log/varnish/varnishlog.log'`                                                                          |
 | `pid`                | String                            | `'/var/run/varnishlog.pid'`                                                                                  |
 | `log_format`         | `'varnishlog'` or `'varnishncsa'` | `'varnishlog'`                                                                                               |
-| `ncsa_format_string` | String                            | `'%h \| %l \| %u \| %t \| \"%r\" \| %s \| %b \| \"%{Referer}i\" | \"%{User-agent}i\"'`                       |
-| `instance_name`      | String                            | name property                                                                                                |
+| `ncsa_format_string` | String                            | `'%h \| %l \| %u \| %t \| \"%r\" \| %s \| %b \| \"%{Referer}i\" \| \"%{User-agent}i\"'`                    |
+| `instance_name`      | String                            | Node hostname                                                                                                |
 | `logrotate`          | `true`, `false`                   | `true` vanishlog, `false` for varnishncsa                                                                    |
 | `major_version`      | Minor supported release           | Currently installed major version (If varnish isn't installed yet then you will have to set this explicitly) |
 | `logrotate_path`     | String                            | `'/etc/logrotate.d'` if varnishncsa is used otherwise `nil`                                                  |

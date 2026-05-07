@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 version = input('version', value: 0)
 ncsa_format_string = input('ncsa_format_string')
 full_stack = input('full_stack')
@@ -5,7 +7,10 @@ os_family = os.family
 os_release = os.release
 os_name = os.name
 
-control 'default' do
+control 'varnish-default-01' do
+  impact 1.0
+  title 'Varnish is installed and running'
+
   describe command 'varnishd -V' do
     its('exit_status') { should eq 0 }
     its('stderr') { should match(/varnish-#{version}/) } unless version == 0
@@ -15,6 +20,11 @@ control 'default' do
     it { should be_enabled }
     it { should be_running }
   end
+end
+
+control 'varnish-default-02' do
+  impact 1.0
+  title 'Varnish responds on the configured listener'
 
   if full_stack
     describe port 80 do
@@ -34,18 +44,11 @@ control 'default' do
       its('body') { should match /Hello World!/ }
     end
 
-    # This needs to run as a command so that varnish can cache
     describe command('sleep 2; curl -v localhost') do
-      it 'exits zero' do
-        expect(subject.exit_status).to eq 0
-      end
-      it 'returns the correct file' do
-        expect(subject.stdout).to match(/Hello World!/)
-      end
-      it 'the file is cached in varnish' do
-        expect(subject.stderr).to_not match(/Age: 0\s*/)
-        expect(subject.stderr).to match(/Age: [0-9]+/)
-      end
+      its('exit_status') { should eq 0 }
+      its('stdout') { should match(/Hello World!/) }
+      its('stderr') { should_not match(/Age: 0\s*/) }
+      its('stderr') { should match(/Age: [0-9]+/) }
     end
 
     describe http 'localhost:80' do
@@ -79,6 +82,11 @@ control 'default' do
     its('protocols') { should include 'tcp' }
     its('addresses') { should include '127.0.0.1' }
   end
+end
+
+control 'varnish-default-03' do
+  impact 0.7
+  title 'Varnish administration and logging are configured'
 
   describe file '/etc/logrotate.d/varnishlog' do
     it { should exist }
@@ -90,15 +98,15 @@ control 'default' do
   describe command "varnishadm #{varnishadm_opts} backend.list" do
     its('exit_status') { should eq 0 }
     if version.to_i >= 6
-      its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+      its('stdout') { should match(%r{(?:reload_\d+_\d+_)?default\s+healthy\s+0/0\s+[Hh]ealthy}) }
     elsif version == 0 && os_family == 'redhat' && os_release.to_i == 7
       its('stdout') { should match(/default\(127.0.0.1,,8080\)\s+2\s+probe\s+Healthy/) }
     elsif version == 0 && os_name == 'debian' && os_release.to_i >= 11
-      its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+      its('stdout') { should match(%r{(?:reload_\d+_\d+_)?default\s+healthy\s+0/0\s+[Hh]ealthy}) }
     elsif version == 0 && os_name == 'ubuntu' && os_release.to_f >= 20.04
-      its('stdout') { should match(%r{default\s+healthy\s+0/0\s+[Hh]ealthy}) }
+      its('stdout') { should match(%r{(?:reload_\d+_\d+_)?default\s+healthy\s+0/0\s+[Hh]ealthy}) }
     else
-      its('stdout') { should match(/default\s+probe\s+[Hh]ealthy/) }
+      its('stdout') { should match(%r{(?:reload_\d+_\d+_)?default\s+(?:healthy\s+0/0|probe)\s+[Hh]ealthy}) }
     end
   end
 

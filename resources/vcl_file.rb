@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 provides :vcl_file
 unified_mode true
 
@@ -9,6 +11,8 @@ property :group, String, default: 'root'
 property :mode, String, default: '0644'
 property :varnish_dir, String, default: '/etc/varnish'
 property :vcl_path, String, default: lazy { ::File.join(varnish_dir, vcl_name) }
+
+default_action :configure
 
 action :configure do
   service 'varnish' do
@@ -33,6 +37,7 @@ action :unconfigure do
   end
 
   file new_resource.vcl_path do
+    action :delete
     notifies :reload, 'service[varnish]', :delayed
   end
 end

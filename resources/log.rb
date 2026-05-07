@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
+provides :varnish_log
+unified_mode true
+
 property :file_name, String, default: lazy { "/var/log/varnish/#{log_format}.log" }
 property :pid, String, default: lazy { "/var/run/#{log_format}.pid" }
 property :log_format, String, default: 'varnishlog', equal_to: %w(varnishlog varnishncsa)
 property :logrotate, [true, false], default: lazy { log_format == 'varnishlog' }
 property :logrotate_path, String, default: '/etc/logrotate.d'
-property :instance_name, String, default: VarnishCookbook::Helpers.hostname
+property :instance_name, String, default: lazy { VarnishCookbook::Helpers.hostname }
 
 property :major_version, Float,
   equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 7.0],
@@ -15,7 +20,7 @@ property :ncsa_format_string, [String, nil], default: lazy {
   end
 }
 
-unified_mode true
+default_action :configure
 
 action :configure do
   extend VarnishCookbook::Helpers
@@ -61,5 +66,24 @@ action :configure do
   service new_resource.log_format do
     supports restart: true, reload: true
     action %w(enable start)
+  end
+end
+
+action :unconfigure do
+  extend VarnishCookbook::Helpers
+  systemd_daemon_reload
+
+  service new_resource.log_format do
+    supports restart: true, reload: true
+    action [:stop, :disable]
+  end
+
+  file "/etc/systemd/system/#{new_resource.log_format}.service" do
+    action :delete
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+  end
+
+  file "#{new_resource.logrotate_path}/#{new_resource.log_format}" do
+    action :delete
   end
 end

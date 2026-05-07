@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 provides :vcl_template
 unified_mode true
 
@@ -10,6 +12,8 @@ property :mode, String, default: '0644'
 property :variables, Hash, default: {}
 property :varnish_dir, String, default: '/etc/varnish'
 property :vcl_path, String, default: lazy { ::File.join(varnish_dir, vcl_name) }
+
+default_action :configure
 
 action :configure do
   extend VarnishCookbook::Helpers
@@ -52,6 +56,7 @@ action :unconfigure do
   end
 
   file new_resource.vcl_path do
+    action :delete
     notifies :reload, 'service[varnish]', :delayed
   end
 end

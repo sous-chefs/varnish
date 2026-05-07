@@ -5,78 +5,59 @@ driver:
 provisioner:
   name: chef_infra
   product_name: chef
+  product_version: latest
+  channel: stable
   deprecations_as_errors: true
   enforce_idempotency: true
   multiple_converge: 2
-  chef_license: accept-no-persist
-  attributes:
-    varnish:
-      backend_host: '127.0.0.10'
+  chef_license: accept
 
 verifier:
   name: inspec
+  sudo: true
 
 platforms:
   - name: almalinux-8
-  # - name: amazonlinux-2
-  - name: debian-10
-  - name: debian-11
-  - name: centos-7
-  - name: centos-stream-8
-  - name: fedora-latest
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
+  - name: almalinux-9
+  - name: centos-stream-9
+  - name: debian-12
+  - name: oraclelinux-8
+  - name: oraclelinux-9
   - name: rockylinux-8
-  # - name: opensuse-leap-15
+  - name: rockylinux-9
+  - name: ubuntu-22.04
+  - name: ubuntu-24.04
+
+x-run_lists:
+  default: &default_run_list
+    - recipe[test::default]
+  distro: &distro_run_list
+    - recipe[test::distro]
+  full_stack: &full_stack_run_list
+    - recipe[test::full_stack]
+
+x-verifiers:
+  default: &default_verifier
+    inspec_tests:
+      - path: test/integration/default
 
 suites:
-  - name: varnish66
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 6.6
-    verifier:
-      inspec_tests:
-        - path: test/integration/varnish
-      inputs:
-        version: 6.6
-    excludes:
-      - debian-11
-  - name: varnish70
-    run_list:
-      - recipe[install_varnish::vendor_install]
-    attributes:
-      varnish:
-        major_version: 7.0
-    verifier:
-      inspec_tests:
-        - path: test/integration/varnish
-      inputs:
-        version: 7.0
+  - name: default
+    run_list: *default_run_list
+    verifier: *default_verifier
+
   - name: distro
-    run_list:
-      - recipe[install_varnish::distro_install]
-    attributes:
-      varnish:
-        configure:
-          repo:
-            action: :nothing
+    run_list: *distro_run_list
     verifier:
       inspec_tests:
-        - path: test/integration/varnish
+        - path: test/integration/default
       inputs:
         ncsa_format_string: true
+
   - name: full_stack
-    run_list:
-      - recipe[install_varnish::full_stack]
-    attributes:
-      varnish:
-        configure:
-          repo:
-            action: :nothing
+    run_list: *full_stack_run_list
     verifier:
       inspec_tests:
-        - path: test/integration/varnish
+        - path: test/integration/default
       inputs:
         full_stack: true

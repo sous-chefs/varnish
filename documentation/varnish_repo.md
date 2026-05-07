@@ -1,20 +1,21 @@
-[Back to resource list](../README.md#resources)
-
 # varnish_repo
 
-Configure's the varnish vendor repo.
+[Back to resource list](../README.md#resources)
+
+Configures the Varnish Packagecloud repository.
 
 ## Actions
 
-| Action       | Description                |
-| ------------ | -------------------------- |
+| Action | Description |
+| --- | --- |
 | `:configure` | Configure the varnish repo |
+| `:unconfigure` | Remove the varnish repo |
 
 ## Properties
 
-| Name            | Type            | Default | Description              |
-| --------------- | --------------- | ------- | ------------------------ |
-| `major_version` | Float           | `7.0`   | Major version repository |
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `major_version` | Float           | `6.0`   | Major version repository |
 | `fetch_gpg_key` | `true`, `false` | `true`  | Fetch repository gpg key |
 
 ## Examples

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 source 'https://supermarket.chef.io'
 
 metadata
 
 group :integration do
-  cookbook 'install_varnish', path: 'test/fixtures/cookbooks/install_varnish'
+  cookbook 'test', path: 'test/cookbooks/test'
 end
