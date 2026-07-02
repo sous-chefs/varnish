@@ -3,8 +3,12 @@ driver:
   privileged: true
   chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
 
-transport: { name: dokken }
-provisioner: { name: dokken }
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  policyfile: Policyfile.rb
 
 platforms:
   - name: almalinux-8

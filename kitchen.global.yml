@@ -4,6 +4,7 @@ provisioner:
   product_name: chef
   product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   channel: stable
+  policyfile: Policyfile.rb
   install_strategy: once
   chef_license: accept
   enforce_idempotency: <%= ENV['ENFORCE_IDEMPOTENCY'] || true %>
