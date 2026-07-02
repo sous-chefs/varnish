@@ -1,4 +1,10 @@
-# Limitations
+# AGENTS.md
+
+## Agent Guidance
+
+This cookbook uses `Policyfile.rb` for dependency resolution. Run `chef install Policyfile.rb`
+after changing cookbook dependencies or test cookbook recipes, and keep Kitchen suites mapped to
+Policyfile named run lists.
 
 ## Package Availability
 

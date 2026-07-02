@@ -7,6 +7,7 @@ provisioner:
   product_name: chef
   product_version: latest
   channel: stable
+  policyfile: Policyfile.rb
   deprecations_as_errors: true
   enforce_idempotency: true
   multiple_converge: 2
@@ -28,14 +29,6 @@ platforms:
   - name: ubuntu-22.04
   - name: ubuntu-24.04
 
-x-run_lists:
-  default: &default_run_list
-    - recipe[test::default]
-  distro: &distro_run_list
-    - recipe[test::distro]
-  full_stack: &full_stack_run_list
-    - recipe[test::full_stack]
-
 x-verifiers:
   default: &default_verifier
     inspec_tests:
@@ -43,11 +36,13 @@ x-verifiers:
 
 suites:
   - name: default
-    run_list: *default_run_list
+    provisioner:
+      named_run_list: default
     verifier: *default_verifier
 
   - name: distro
-    run_list: *distro_run_list
+    provisioner:
+      named_run_list: distro
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -55,7 +50,8 @@ suites:
         ncsa_format_string: true
 
   - name: full_stack
-    run_list: *full_stack_run_list
+    provisioner:
+      named_run_list: full_stack
     verifier:
       inspec_tests:
         - path: test/integration/default

@@ -1,0 +1,139 @@
+{
+  "revision_id": "fdd2c5203fbea00951d8183f0b6172dcadf8b1a7ce604a4f2e348c0cfd1f19d1",
+  "name": "varnish",
+  "run_list": [
+    "recipe[test::default]"
+  ],
+  "named_run_lists": {
+    "default": [
+      "recipe[test::default]"
+    ],
+    "distro": [
+      "recipe[test::distro]"
+    ],
+    "full_stack": [
+      "recipe[test::full_stack]"
+    ]
+  },
+  "included_policy_locks": [
+
+  ],
+  "cookbook_locks": {
+    "test": {
+      "version": "0.0.1",
+      "identifier": "9f51b46453623e5e00569cfca8df877c3044c59d",
+      "dotted_decimal_identifier": "44844356516143678.26459019811793119.148967455507869",
+      "source": "test/cookbooks/test",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": "9ad5350b254332e6f7c8a02ab618b5546d4be096",
+        "working_tree_clean": false,
+        "published": true,
+        "synchronized_remote_branches": [
+          "origin/HEAD -> origin/main",
+          "origin/main",
+          "origin/renovate/actions"
+        ]
+      },
+      "source_options": {
+        "path": "test/cookbooks/test"
+      }
+    },
+    "varnish": {
+      "version": "6.0.0",
+      "identifier": "ac07b0c01fca0a67acabb916c3e14e0b9f162215",
+      "dotted_decimal_identifier": "48422151713180170.29181776145859553.85811820634645",
+      "source": ".",
+      "cache_key": null,
+      "scm_info": {
+        "scm": "git",
+        "remote": null,
+        "revision": "9ad5350b254332e6f7c8a02ab618b5546d4be096",
+        "working_tree_clean": false,
+        "published": true,
+        "synchronized_remote_branches": [
+          "origin/HEAD -> origin/main",
+          "origin/main",
+          "origin/renovate/actions"
+        ]
+      },
+      "source_options": {
+        "path": "."
+      }
+    },
+    "yum": {
+      "version": "8.0.0",
+      "identifier": "a4f3da1691d5c1bcd08e339bed45d3babcbf420a",
+      "dotted_decimal_identifier": "46430014187623873.53146604791393605.232798984028682",
+      "cache_key": "yum-8.0.0-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/yum/versions/8.0.0/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/yum/versions/8.0.0/download",
+        "version": "8.0.0"
+      }
+    },
+    "yum-epel": {
+      "version": "5.0.9",
+      "identifier": "e001464b1be96e91578d9f2eae7db84345d2c611",
+      "dotted_decimal_identifier": "63051796202645870.40910137395687037.202599073760785",
+      "cache_key": "yum-epel-5.0.9-supermarket.chef.io",
+      "origin": "https://supermarket.chef.io:443/api/v1/cookbooks/yum-epel/versions/5.0.9/download",
+      "source_options": {
+        "artifactserver": "https://supermarket.chef.io:443/api/v1/cookbooks/yum-epel/versions/5.0.9/download",
+        "version": "5.0.9"
+      }
+    }
+  },
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  },
+  "solution_dependencies": {
+    "Policyfile": [
+      [
+        "test",
+        ">= 0.0.0"
+      ],
+      [
+        "varnish",
+        ">= 0.0.0"
+      ],
+      [
+        "yum",
+        "= 8.0.0"
+      ],
+      [
+        "yum-epel",
+        "= 5.0.9"
+      ]
+    ],
+    "dependencies": {
+      "test (0.0.1)": [
+        [
+          "varnish",
+          ">= 0.0.0"
+        ]
+      ],
+      "varnish (6.0.0)": [
+        [
+          "yum",
+          ">= 7.2.0"
+        ],
+        [
+          "yum-epel",
+          ">= 0.0.0"
+        ]
+      ],
+      "yum (8.0.0)": [
+
+      ],
+      "yum-epel (5.0.9)": [
+
+      ]
+    }
+  }
+}

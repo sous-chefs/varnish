@@ -19,7 +19,7 @@ Requires Chef Infra Client 15.3 and above.
 
 ### Platforms
 
-See [LIMITATIONS.md](LIMITATIONS.md) for package availability and platform notes.
+See [AGENTS.md](AGENTS.md) for package availability and platform notes.
 
 ## Breaking Migration
 
